@@ -25,7 +25,10 @@ Rails.application.configure do
   # config.public_file_server.enabled = false
 
   # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
+  # Tailwind CSS 4 outputs modern media queries such as `(width >= 40rem)`
+  # which SassC cannot parse, so disable the Sass compressor and serve the
+  # generated CSS as-is.
+  config.assets.css_compressor = nil
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
