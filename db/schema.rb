@@ -20,11 +20,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_150342) do
   end
 
   create_table "medicaments", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "quantity"
+    t.string "nom"
+    t.string "format"
+    t.boolean "ordonnance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "prise", default: [], array: true
   end
 
   create_table "users", force: :cascade do |t|
