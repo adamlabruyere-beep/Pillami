@@ -1,0 +1,73 @@
+<div class="py-8 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Ajouter un médicament</h1>
+      <p class="mt-2 text-sm text-gray-600">Recherchez et ajoutez des médicaments à votre pillathèque</p>
+    </div>
+
+    <!-- Search bar -->
+    <div class="mb-8">
+      <%= form_with url: medicaments_path, method: :get, class: "flex gap-2" do |f| %>
+        <%= f.text_field :query,
+              value: params[:query],
+              placeholder: "Rechercher un médicament...",
+              class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        <%= f.submit "Rechercher", class: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+      <% end %>
+    </div>
+
+    <!-- Medicaments list -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordonnance</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @medicaments.each do |medicament| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900"><%= medicament.nom %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-500"><%= medicament.format %></div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <% if medicament.ordonnance %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
+                <% else %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
+                <% end %>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <% if @pillatheque.medicaments.include?(medicament) %>
+                  <span class="text-gray-400">Déjà ajouté</span>
+                <% else %>
+                  <%= button_to pillatheque_pillatheque_medicaments_path(@pillatheque, medicament_id: medicament.id),
+                        method: :post,
+                        class: "text-blue-600 hover:text-blue-900 cursor-pointer" do %>
+                    Ajouter
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if @medicaments.empty? %>
+        <div class="text-center py-8 text-gray-500">
+          Aucun médicament trouvé
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-6 text-center">
+      <%= link_to "← Retour", root_path, class: "text-sm font-medium text-gray-600 hover:text-gray-500" %>
+    </div>
+  </div>
+</div>
