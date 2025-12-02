@@ -12,12 +12,12 @@
   </head>
 
   <body>
-    <div class="grid grid-cols-12 gap-2">
-      <div class="col-span-2 sidebar">
+    <div class="flex min-h-screen">
+      <div class="shrink-0 transition-all duration-300">
         <%= render "shared/navbar" %>
-        <%= render "shared/flashes" %>
       </div>
-      <div class="col-span-10">
+      <div class="flex-1">
+        <%= render "shared/flashes" %>
         <%= yield %>
       </div>
     </div>
