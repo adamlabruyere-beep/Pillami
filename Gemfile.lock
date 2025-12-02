@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/heartcombo/simple_form.git
-  revision: 44384d3ca7c77aef1e56d965b22197af62a80c5f
-  specs:
-    simple_form (5.4.0)
-      actionpack (>= 7.0)
-      activemodel (>= 7.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -99,8 +91,6 @@ GEM
     bindex (0.8.1)
     bootsnap (1.19.0)
       msgpack (~> 1.2)
-    bootstrap (5.3.5)
-      popper_js (>= 2.11.8, < 3)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -209,7 +199,6 @@ GEM
     pg (1.6.2-x86_64-darwin)
     pg (1.6.2-x86_64-linux)
     pg (1.6.2-x86_64-linux-musl)
-    popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -287,6 +276,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
+    simple_form (5.4.0)
+      actionpack (>= 7.0)
+      activemodel (>= 7.0)
+    simple_form-tailwind (0.2.0)
+      railties (>= 7.0)
+      simple_form (>= 5.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -297,7 +292,17 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
-    stringio (3.1.8)
+    stringio (3.1.9)
+    tailwindcss-rails (4.4.0)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.16)
+    tailwindcss-ruby (4.1.16-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.16-aarch64-linux-musl)
+    tailwindcss-ruby (4.1.16-arm64-darwin)
+    tailwindcss-ruby (4.1.16-x86_64-darwin)
+    tailwindcss-ruby (4.1.16-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.16-x86_64-linux-musl)
     thor (1.4.0)
     tilt (2.6.1)
     timeout (0.4.4)
@@ -331,14 +336,12 @@ PLATFORMS
   arm-linux-musl
   arm64-darwin
   x86_64-darwin
-  x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
 
 DEPENDENCIES
   autoprefixer-rails
   bootsnap
-  bootstrap (~> 5.3)
   capybara
   debug
   devise
@@ -351,9 +354,12 @@ DEPENDENCIES
   rails (~> 7.1.6)
   sassc-rails
   selenium-webdriver
-  simple_form!
+  simple_form
+  simple_form-tailwind
   sprockets-rails
   stimulus-rails
+  tailwindcss-rails (~> 4.4)
+  tailwindcss-ruby (~> 4.1)
   turbo-rails
   tzinfo-data
   web-console
