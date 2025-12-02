@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_150342) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_02_161234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_150342) do
     t.string "prise", default: [], array: true
   end
 
+  create_table "pillatheque_medicaments", force: :cascade do |t|
+    t.bigint "pillatheque_id", null: false
+    t.bigint "medicament_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medicament_id"], name: "index_pillatheque_medicaments_on_medicament_id"
+    t.index ["pillatheque_id"], name: "index_pillatheque_medicaments_on_pillatheque_id"
+  end
+
+  create_table "pillatheques", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pillatheques_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -43,4 +59,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_150342) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "pillatheque_medicaments", "medicaments"
+  add_foreign_key "pillatheque_medicaments", "pillatheques"
+  add_foreign_key "pillatheques", "users"
 end
