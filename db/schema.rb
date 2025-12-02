@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_161234) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_02_170715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,17 +22,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_161234) do
   create_table "medicaments", force: :cascade do |t|
     t.string "nom"
     t.string "format"
-    t.string "prise"
     t.boolean "ordonnance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "sensations", force: :cascade do |t|
-    t.text "content"
-    t.integer "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "prise", default: [], array: true
   end
 
   create_table "pillatheque_medicaments", force: :cascade do |t|
@@ -49,6 +42,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_161234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pillatheques_on_user_id"
+  end
+
+  create_table "sensations", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
