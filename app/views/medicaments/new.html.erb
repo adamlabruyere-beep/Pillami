@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center py-12 px-4">
+  <div class="max-w-md w-full space-y-8">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-gray-900">Ajouter un médicament</h2>
+      <p class="mt-2 text-sm text-gray-600">Renseignez les informations de votre médicament</p>
+    </div>
+
+    <%= simple_form_for @medicament, html: { class: "mt-8 space-y-6" } do |f| %>
+      <%= f.error_notification message: "Veuillez corriger les erreurs ci-dessous :", class: "bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg" %>
+
+      <div class="space-y-4">
+        <div>
+          <%= f.label :nom, "Nom du médicament", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.text_field :nom,
+                required: true,
+                placeholder: "Ex: Doliprane",
+                class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+
+        <div>
+          <%= f.label :format, "Format", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.select :format,
+                [["Comprimé", "comprime"], ["Gélule", "gelule"], ["Sirop", "sirop"], ["Injection", "injection"], ["Crème", "creme"], ["Autre", "autre"]],
+                { include_blank: "Sélectionnez un format" },
+                class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+        </div>
+
+        <div>
+          <p class="block text-sm font-medium text-gray-700 mb-2">Mode de prise</p>
+          <div class="space-y-2">
+            <% [["Orale", "orale"], ["Cutanée", "cutanee"], ["Intraveineuse", "intraveineuse"], ["Intramusculaire", "intramusculaire"], ["Autre", "autre"]].each do |label, value| %>
+              <div class="flex items-center">
+                <%= check_box_tag "medicament[prise][]", value, @medicament.prise&.include?(value), id: "prise_#{value}", class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+                <%= label_tag "prise_#{value}", label, class: "ml-2 block text-sm text-gray-700" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <%= f.check_box :ordonnance, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+          <%= f.label :ordonnance, "Nécessite une ordonnance", class: "ml-2 block text-sm text-gray-700" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.submit "Ajouter le médicament", class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <div class="text-center">
+      <%= link_to "← Retour", root_path, class: "text-sm font-medium text-gray-600 hover:text-gray-500" %>
+    </div>
+  </div>
+</div>
