@@ -356,13 +356,9 @@ DEPENDENCIES
   rails (~> 7.1.6)
   sassc-rails
   selenium-webdriver
-<<<<<<< HEAD
   simple_calendar (~> 2.4)
-  simple_form!
-=======
   simple_form
   simple_form-tailwind
->>>>>>> master
   sprockets-rails
   stimulus-rails
   tailwindcss-rails (~> 4.4)
