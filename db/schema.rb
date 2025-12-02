@@ -20,9 +20,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_161234) do
   end
 
   create_table "medicaments", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "quantity"
+    t.string "nom"
+    t.string "format"
+    t.string "prise"
+    t.boolean "ordonnance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sensations", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

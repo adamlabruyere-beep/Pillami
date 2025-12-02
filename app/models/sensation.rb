@@ -1,0 +1,2 @@
+class Sensation < ApplicationRecord
+end
