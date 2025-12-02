@@ -1,0 +1,18 @@
+<h1>Calendrier</h1>
+
+<%= week_calendar events: @events do |date, entries_for_day| %>
+  <div class="calendar-day">
+
+    <% entries_for_day.each do |entry| %>
+      <div class="calendar-marker"></div>
+    <% end %>
+
+  </div>
+<% end %>
+
+<!-- Bandeau -->
+<turbo-frame id="day-panel">
+  <div class="day-panel">
+    <p>Sélectionne une date pour afficher les événements.</p>
+  </div>
+</turbo-frame>
