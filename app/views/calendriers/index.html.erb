@@ -1,12 +1,7 @@
 <h1>Calendrier</h1>
 
-<%= week_calendar events: @calendriers do |date, entries_for_day| %>
+<%= week_calendar events: @events do |date, entries_for_day| %>
   <div class="calendar-day">
-
-    <%= link_to date.day,
-                by_day_calendriers_path(date: date),
-                data: { turbo_frame: "day-panel" },
-                class: "calendar-day-link" %>
 
     <% entries_for_day.each do |entry| %>
       <div class="calendar-marker"></div>

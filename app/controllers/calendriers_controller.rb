@@ -1,6 +1,7 @@
 class CalendriersController < ApplicationController
   def index
     start_date = params.fetch(:start_date, Date.today).to_date
+    @events ||= []
   end
 
   def by_day
