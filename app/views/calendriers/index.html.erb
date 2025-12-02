@@ -1,5 +1,23 @@
-<%= week_calendar do |date| %>
-  <div class="date">
-    <%= date %>
+<h1>Calendrier</h1>
+
+<%= week_calendar events: @calendriers do |date, entries_for_day| %>
+  <div class="calendar-day">
+
+    <%= link_to date.day,
+                by_day_calendriers_path(date: date),
+                data: { turbo_frame: "day-panel" },
+                class: "calendar-day-link" %>
+
+    <% entries_for_day.each do |entry| %>
+      <div class="calendar-marker"></div>
+    <% end %>
+
   </div>
 <% end %>
+
+<!-- Bandeau -->
+<turbo-frame id="day-panel">
+  <div class="day-panel">
+    <p>Sélectionne une date pour afficher les événements.</p>
+  </div>
+</turbo-frame>
