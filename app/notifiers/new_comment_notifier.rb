@@ -2,12 +2,12 @@
 #
 # NewCommentNotifier.with(record: @post, message: "New post").deliver(User.all)
 
-# class NewCommentNotifier < ApplicationNotifier
-#   deliver_by :action_cable do |config|
-#     config.channel = "Noticed::NotificationChannel"
-#     config.stream = current_user.id
-#     config.message = current_user.email
-#   end
+class NewCommentNotifier < ApplicationNotifier
+  # deliver_by :action_cable do |config|
+    # config.channel = "Noticed::NotificationChannel"
+    # config.stream = current_user.id
+    # config.message = current_user.email
+  end
   # Add your delivery methods
   #
   # deliver_by :email do |config|
