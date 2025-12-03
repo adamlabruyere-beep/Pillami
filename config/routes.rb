@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :sensations, only: [:create, :show]
+  resources :sensations
   devise_for :users
   root to: "pages#home"
   resources :calendriers, only: [:index]
