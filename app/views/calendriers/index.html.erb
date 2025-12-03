@@ -1,24 +1,48 @@
 <div class="min-h-screen flex flex-col items-center justify-center">
   <div class="container mx-auto">
-    <div class="calendar-week flex flex-col items-center text-center gap-12">
-      <div class="calendar-week_intro">
+    <div class="flex flex-col items-center text-center space-y-8">
+      <div>
         <p>Semaine du</p>
         <h1>
           <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
         </h1>
-        <p>
-        </p>
       </div>
 
-      <div class="calendar-week_list flex flex-col items-center gap-12">
+      <div class="flex items-center justify-between w-full max-w-md mb-10">
+
+  <%= link_to calendriers_path(date: @week_start - 7),
+      class: "px-4 py-2 rounded-full border shadow-sm hover:bg-gray-100 transition" do %>
+        ⟵ Précédente
+  <% end %>
+
+  <%= link_to calendriers_path(date: @week_start + 7),
+      class: "px-4 py-2 rounded-full border shadow-sm hover:bg-gray-100 transition" do %>
+        Suivante ⟶
+  <% end %>
+
+</div>
+
+      <!-- Liste des jours -->
+      <div class="flex flex-col items-center space-y-8">
         <% @week_days.each do |date| %>
-          <div class="calendar-week_day border w-50 h-50 rounded-full border flex flex-col items-center justify-center text-center px-3">
-            <p class="calendar-week_weekday"><%= l(date, format: "%A") %></p>
-            <p class="calendar-week_daynumber"><%= date.day %></p>
-            <p class="calendar-week_month"><%= l(date, format: "%B") %></p>
+          <div class="w-48 aspect-square rounded-full border border-black
+                      flex items-center justify-center space-y-8">
+            <div class="flex flex-col items-center text-center
+                        px-4 py-6 space-y-1">
+              <p class="text-sm leading-tight">
+                <%= l(date, format: "%A") %>
+              </p>
+              <p class="text-3xl font-semibold leading-none">
+                <%= date.day %>
+              </p>
+              <p class="text-sm leading-tight">
+                <%= l(date, format: "%B") %>
+              </p>
+            </div>
           </div>
         <% end %>
       </div>
+
     </div>
   </div>
 </div>

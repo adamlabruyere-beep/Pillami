@@ -2,10 +2,14 @@ class CalendriersController < ApplicationController
   around_action :switch_to_french_locale, only: :index
 
   def index
-    @start_date = params.fetch(:start_date, Date.today).to_date
-    week_start  = @start_date.beginning_of_week(:monday)
+    # On part de la date donnée ou d'aujourd'hui
+    @current_date = params[:date]&.to_date || Date.today
 
-    @week_days = 0.upto(6).map { |offset| week_start + offset.days }
+    # On calcule le début de la semaine (lundi → style européen)
+    @week_start = @current_date.beginning_of_week(:monday)
+
+    # Les 7 jours de la semaine
+    @week_days = (@week_start..@week_start + 6).to_a
   end
 
   def by_day
