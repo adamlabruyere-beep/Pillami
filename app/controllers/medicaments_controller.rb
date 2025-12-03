@@ -12,7 +12,7 @@ class MedicamentsController < ApplicationController
   def create
     @medicament = Medicament.new(medicament_params)
     if @medicament.save
-      redirect_to root_path, notice: "Médicament créé avec succès."
+      redirect_to pillatheque_path(current_user.pillatheque), notice: "Médicament créé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
