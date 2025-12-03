@@ -1,18 +1,54 @@
-<h1>Calendrier</h1>
+<div data-controller="calendrier" class="min-h-screen flex flex-col items-center justify-center">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-3 gap-8 justify-items-center items-center text-center space-y-8">
+      <div>
+        <p>Semaine du</p>
+        <h1>
+          <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
+        </h1>
+      </div>
 
-<%= week_calendar events: @events do |date, entries_for_day| %>
-  <div class="calendar-day">
+      <div class="flex items-center justify-between">
+        <%= link_to "◀︎ Semaine précédente",
+            calendriers_path(date: @week_start - 7),
+            class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
 
-    <% entries_for_day.each do |entry| %>
-      <div class="calendar-marker"></div>
-    <% end %>
+        <%= link_to "Semaine suivante ▶︎",
+            calendriers_path(date: @week_start + 7),
+            class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
+      </div>
+      <!-- Panneau qui réagit au clic -->
 
+      <!-- Liste des jours -->
+      <div class="grid grid-cols-3 gap-8 justify-items-center items-center space-y-8">
+        <% @week_days.each_with_index do |date, index| %>
+          <div
+            data-action="click->calendrier#select"
+            data-calendrier-target="day"
+            data-date="<%= date %>"
+            data-weekday="<%= l(date, format: '%A') %>"
+            data-month="<%= l(date, format: '%B') %>"
+
+            class="w-48 aspect-square rounded-full border border-black
+                   flex items-center justify-center space-y-8 cursor-pointer"
+          >
+            <div class="grid grid-cols-3 gap-8 justify-items-center items-center text-center px-4 py-6 space-y-1">
+              <p class="text-sm leading-tight">
+                <%= l(date, format: "%A") %>
+              </p>
+              <p class="text-3xl font-semibold leading-none">
+                <%= date.day %>
+              </p>
+              <p class="text-sm leading-tight">
+                <%= l(date, format: "%B") %>
+              </p>
+            </div>
+          </div>
+      <div
+        data-calendrier-target="panel"class="mb-6">
+      </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<!-- Bandeau -->
-<turbo-frame id="day-panel">
-  <div class="day-panel">
-    <p>Sélectionne une date pour afficher les événements.</p>
-  </div>
-</turbo-frame>
+</div>
