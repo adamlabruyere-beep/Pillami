@@ -12,14 +12,14 @@
   </head>
 
   <body>
-    <div class="flex min-h-screen">
-      <div class="shrink-0 transition-all duration-300">
-        <%= render "shared/navbar" %>
+      <div class="flex min-h-screen">
+        <div class="shrink-0 transition-all duration-300">
+          <%= render "shared/navbar" %>
+        </div>
+        <div class="flex-1">
+          <%= render "shared/flashes" %>
+          <%= yield %>
+        </div>
       </div>
-      <div class="flex-1">
-        <%= render "shared/flashes" %>
-        <%= yield %>
-      </div>
-    </div>
   </body>
 </html>
