@@ -1,23 +1,23 @@
 require "json"
 require "open-uri"
 
-categories =["amoxicilline", "azithromycine", "ciprofloxacine",
-  "metformine", "insuline", "glibenclamide",
-  "amlodipine", "ramipril", "losartan"]
+categories =["methotrexate", "fluorouracile", "cyclophosphamide",
+  "alprazolam", "bromazepam", "diazepam",
+  "sertraline", "fluoxetine", "paroxetine"]
 # to do
 
 
 
 # [
 #   "paracetamol", "ibuprofene", "aspirine", "codeine",
-#   "diclofenac", "ketoprofene", "naproxene"] done
+#   "diclofenac", "ketoprofene", "naproxene"]["amoxicilline", "azithromycine", "ciprofloxacine",
+  # "metformine", "insuline", "glibenclamide",
+  # "amlodipine", "ramipril", "losartan"] done
 
 
 #
-#   ["methotrexate", "fluorouracile", "cyclophosphamide",
-#   "alprazolam", "bromazepam", "diazepam",
-#   "sertraline", "fluoxetine", "paroxetine",
-#   "cetirizine", "loratadine", "desloratadine",
+#
+#   ["cetirizine", "loratadine", "desloratadine",
 #   "omeprazole", "pantoprazole", "esomeprazole"
 # ]
 
