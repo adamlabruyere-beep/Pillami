@@ -11,14 +11,19 @@ class RemindersController < ApplicationController
   def new
     @reminder = Reminder.new
     @reminder.days_of_week ||= []
+    @pillatheque = current_user.pillatheque
+    @medicaments = @pillatheque.medicaments
   end
 
   def create
     @reminder = Reminder.new(reminder_params)
-    @reminder.message = "#{params[:reminder][:quantity]} #{params[:reminder][:measure]}"
+    @reminder.user_id = current_user.id
+
     if @reminder.save
-      redirect_to @reminder, notice: 'Rappel créé avec succès.'
+      redirect_to reminders_path, notice: 'Rappel créé avec succès.'
     else
+      @pillatheque = current_user.pillatheque
+      @medicaments = @pillatheque.medicaments
       render :new
     end
   end
@@ -35,6 +40,6 @@ class RemindersController < ApplicationController
   end
 
   def reminder_params
-    params.require(:reminder).permit(:user_id, :message, :days_of_week, :time, :active)
+    params.require(:reminder).permit(:medicament_id, :quantity, :mesure, :time, :active, days_of_week: [])
   end
 end
