@@ -1,18 +1,24 @@
-<h1>Calendrier</h1>
+<div class="min-h-screen flex flex-col items-center justify-center">
+  <div class="container mx-auto">
+    <div class="calendar-week flex flex-col items-center text-center gap-12">
+      <div class="calendar-week_intro">
+        <p>Semaine du</p>
+        <h1>
+          <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
+        </h1>
+        <p>
+        </p>
+      </div>
 
-<%= week_calendar events: @events do |date, entries_for_day| %>
-  <div class="calendar-day">
-
-    <% entries_for_day.each do |entry| %>
-      <div class="calendar-marker"></div>
-    <% end %>
-
+      <div class="calendar-week_list flex flex-col items-center gap-12">
+        <% @week_days.each do |date| %>
+          <div class="calendar-week_day border w-50 h-50 rounded-full border flex flex-col items-center justify-center text-center px-3">
+            <p class="calendar-week_weekday"><%= l(date, format: "%A") %></p>
+            <p class="calendar-week_daynumber"><%= date.day %></p>
+            <p class="calendar-week_month"><%= l(date, format: "%B") %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<!-- Bandeau -->
-<turbo-frame id="day-panel">
-  <div class="day-panel">
-    <p>Sélectionne une date pour afficher les événements.</p>
-  </div>
-</turbo-frame>
+</div>
