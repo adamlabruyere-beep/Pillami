@@ -30,8 +30,8 @@
         <tbody class="bg-white divide-y divide-gray-200">
           <% @medicaments.each do |medicament| %>
             <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm font-medium text-gray-900"><%= medicament.nom %></div>
+              <td class="px-6 py-4 max-w-xs">
+                <div class="text-xs font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-500"><%= medicament.format %></div>
@@ -64,10 +64,6 @@
           Aucun médicament trouvé
         </div>
       <% end %>
-    </div>
-
-    <div class="mt-6 text-center">
-      <%= link_to "← Retour", root_path, class: "text-sm font-medium text-gray-600 hover:text-gray-500" %>
     </div>
   </div>
 </div>
