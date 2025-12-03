@@ -1,22 +1,25 @@
 require "json"
 require "open-uri"
 
-categories = [
-  "paracetamol", "ibuprofene", "aspirine", "codeine",
-  "diclofenac", "ketoprofene", "naproxene",
-  "amoxicilline", "azithromycine", "ciprofloxacine",
-  "metformine", "insuline", "glibenclamide",
-  "amlodipine", "ramipril", "losartan",
-  "methotrexate", "fluorouracile", "cyclophosphamide",
+categories =["methotrexate", "fluorouracile", "cyclophosphamide",
   "alprazolam", "bromazepam", "diazepam",
-  "sertraline", "fluoxetine", "paroxetine",
-  "cetirizine", "loratadine", "desloratadine",
-  "omeprazole", "pantoprazole", "esomeprazole"
-]
+  "sertraline", "fluoxetine", "paroxetine"]
+# to do
 
-p "Resetting database..."
-Medicament.destroy_all
-p "All medicaments deleted"
+
+
+# [
+#   "paracetamol", "ibuprofene", "aspirine", "codeine",
+#   "diclofenac", "ketoprofene", "naproxene"]["amoxicilline", "azithromycine", "ciprofloxacine",
+  # "metformine", "insuline", "glibenclamide",
+  # "amlodipine", "ramipril", "losartan"] done
+
+
+#
+#
+#   ["cetirizine", "loratadine", "desloratadine",
+#   "omeprazole", "pantoprazole", "esomeprazole"
+# ]
 
 categories.each do |category|
   p "Fetching medicaments for category: #{category}"

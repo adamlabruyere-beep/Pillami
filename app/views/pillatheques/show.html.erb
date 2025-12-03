@@ -1,67 +1,50 @@
 <div class="py-8 px-4">
-  <div class="max-w-4xl mx-auto">
-    <div class="flex justify-between items-center mb-8">
+  <div id="ici" class="max-w-4xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
       <div>
         <h1 class="text-3xl font-bold text-gray-900">Ma Pillathèque</h1>
         <p class="mt-2 text-sm text-gray-600"><%= @medicaments.count %> médicament(s)</p>
       </div>
-      <%= link_to medicaments_path, class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" do %>
+      <%= link_to medicaments_path, class: "inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-center" do %>
         + Ajouter un médicament
       <% end %>
     </div>
-
-    <% if @medicaments.any? %>
-      <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prise</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordonnance</th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <% @medicaments.each do |medicament| %>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm font-medium text-gray-900"><%= medicament.nom %></div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500"><%= medicament.format %></div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-500"><%= medicament.prise&.join(", ") %></div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <% if medicament.ordonnance %>
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
-                  <% else %>
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
-                  <% end %>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
-                  <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
-                        method: :delete,
-                        class: "text-red-600 hover:text-red-900 cursor-pointer",
-                        data: { turbo_confirm: "Retirer ce médicament de votre pillathèque ?" } do %>
-                    Retirer
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <div class="text-center py-12 bg-white rounded-lg shadow">
-        <p class="text-gray-500 mb-4">Votre pillathèque est vide</p>
-        <%= link_to medicaments_path, class: "text-blue-600 hover:text-blue-500 font-medium" do %>
-          Ajouter votre premier médicament
+    <div class="space-y-3">
+      <% if @medicaments.any? %>
+        <% @medicaments.each do |medicament| %>
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex justify-between items-start gap-3">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
+                <p class="text-sm text-gray-500 mt-1"><%= medicament.format %></p>
+              </div>
+              <div>
+                <% if medicament.ordonnance %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
+                <% else %>
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
+                <% end %>
+              </div>
+              <div>
+                <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
+                <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
+                      method: :delete,
+                      class: "text-red-600 hover:text-red-900 cursor-pointer",
+                      data: { turbo_confirm: "Retirer ce médicament de votre pillathèque ?" } do %>
+                  Retirer
+                <% end %>
+              </div>
+            </div>
+          </div>
         <% end %>
-      </div>
-    <% end %>
+      <% else %>
+        <div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+          <p class="mb-4">Votre pillathèque est vide</p>
+          <%= link_to medicaments_path, class: "text-blue-600 hover:text-blue-500 font-medium" do %>
+            Ajouter votre premier médicament
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
