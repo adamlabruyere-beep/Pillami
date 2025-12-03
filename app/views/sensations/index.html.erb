@@ -1,4 +1,57 @@
 <div>
-  <h1 class="font-bold text-4xl">Sensations#index</h1>
-  <p>Find me in app/views/sensations/index.html.erb</p>
+  <%= form_with model: Sensation.new, url: sensations_path do |f| %>
+    <label for="sensation_content">
+      <span class="text-sm font-medium text-gray-700">Prenons soin de vous ensemble. Comment vous sentez-vous aujourd’hui ?</span>
+
+      <%= f.text_area :content,
+        id: "sensation_content",
+        rows: 4,
+        class: "mt-0.5 w-full resize-none rounded border-gray-300 shadow-sm sm:text-sm",
+        placeholder: "Je me sens..."
+      %>
+    </label>
+
+    <div class="mt-1.5 flex items-center justify-end gap-2">
+      <button type="button"
+              class="rounded border border-transparent px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
+              onclick="document.getElementById('sensation_content').value = ''">
+        Clear
+      </button>
+
+      <%= f.submit "Save",
+        class: "rounded border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-900 shadow-sm transition-colors hover:bg-gray-100" %>
+    </div>
+  <% end %>
 </div>
+
+<ul class="mt-6 space-y-2">
+  <% @sensations.each do |sensation| %>
+    <li class="p-3 bg-gray-100 rounded">
+      <%= sensation.content %>
+      <span class="text-xs text-gray-500">
+        • <%= time_ago_in_words(sensation.created_at) %> ago
+
+        <%= link_to "Supprimer",
+          sensation_path(sensation),
+          data: {
+            turbo_method: :delete,
+          },
+          class: "rounded border border-transparent px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
+        %>
+
+      </span>
+    </li>
+  <% end %>
+</ul>
+
+<% if flash[:notice] %>
+  <div class="mb-4 rounded bg-green-100 p-3 text-green-700">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="mb-4 rounded bg-red-100 p-3 text-red-700">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
