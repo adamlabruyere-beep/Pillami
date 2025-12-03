@@ -46,7 +46,6 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "devise"
-gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem 'simple_form-tailwind'
