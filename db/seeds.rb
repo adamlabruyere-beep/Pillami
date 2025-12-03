@@ -3,16 +3,18 @@ require "open-uri"
 
 categories = [
   "paracetamol", "ibuprofene", "aspirine", "codeine",
-  "diclofenac", "ketoprofene", "naproxene",
-  "amoxicilline", "azithromycine", "ciprofloxacine",
-  "metformine", "insuline", "glibenclamide",
-  "amlodipine", "ramipril", "losartan",
-  "methotrexate", "fluorouracile", "cyclophosphamide",
-  "alprazolam", "bromazepam", "diazepam",
-  "sertraline", "fluoxetine", "paroxetine",
-  "cetirizine", "loratadine", "desloratadine",
-  "omeprazole", "pantoprazole", "esomeprazole"
-]
+  "diclofenac", "ketoprofene", "naproxene"]
+
+
+#   ["amoxicilline", "azithromycine", "ciprofloxacine",
+#   "metformine", "insuline", "glibenclamide",
+#   "amlodipine", "ramipril", "losartan",
+#   "methotrexate", "fluorouracile", "cyclophosphamide",
+#   "alprazolam", "bromazepam", "diazepam",
+#   "sertraline", "fluoxetine", "paroxetine",
+#   "cetirizine", "loratadine", "desloratadine",
+#   "omeprazole", "pantoprazole", "esomeprazole"
+# ]
 
 p "Resetting database..."
 Medicament.destroy_all
