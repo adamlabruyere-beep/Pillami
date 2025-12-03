@@ -37,7 +37,7 @@ gem "jbuilder"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -51,11 +51,12 @@ gem "font-awesome-sass", "~> 6.1"
 gem "sassc-rails"
 gem 'simple_form-tailwind'
 gem 'simple_form'
+gem "solid_cable"
 
 group :development, :test do
   gem "dotenv-rails"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
+  gem "debug", platforms: %i[mri windows]
 end
 
 group :development do
@@ -78,3 +79,5 @@ end
 gem "tailwindcss-ruby", "~> 4.1"
 
 gem "tailwindcss-rails", "~> 4.4"
+
+gem "noticed", "~> 2.9"

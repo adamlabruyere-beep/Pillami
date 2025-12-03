@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_02_170715) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_03_102526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,30 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_170715) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "prise", default: [], array: true
+  end
+
+  create_table "noticed_events", force: :cascade do |t|
+    t.string "type"
+    t.string "record_type"
+    t.bigint "record_id"
+    t.jsonb "params"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "notifications_count"
+    t.index ["record_type", "record_id"], name: "index_noticed_events_on_record"
+  end
+
+  create_table "noticed_notifications", force: :cascade do |t|
+    t.string "type"
+    t.bigint "event_id", null: false
+    t.string "recipient_type", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "read_at", precision: nil
+    t.datetime "seen_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_noticed_notifications_on_event_id"
+    t.index ["recipient_type", "recipient_id"], name: "index_noticed_notifications_on_recipient"
   end
 
   create_table "pillatheque_medicaments", force: :cascade do |t|
@@ -49,6 +73,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_02_170715) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.text "channel"
+    t.text "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "users", force: :cascade do |t|
