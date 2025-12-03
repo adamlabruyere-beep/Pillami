@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_03_102526) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_03_155426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_102526) do
     t.index ["user_id"], name: "index_pillatheques_on_user_id"
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "medicament_id", null: false
+    t.string "message"
+    t.string "days_of_week"
+    t.time "time"
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.string "measure"
+    t.index ["medicament_id"], name: "index_reminders_on_medicament_id"
+    t.index ["user_id"], name: "index_reminders_on_user_id"
+  end
+
   create_table "sensations", force: :cascade do |t|
     t.text "content"
     t.integer "rating"
@@ -102,4 +117,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_102526) do
   add_foreign_key "pillatheque_medicaments", "medicaments"
   add_foreign_key "pillatheque_medicaments", "pillatheques"
   add_foreign_key "pillatheques", "users"
+  add_foreign_key "reminders", "medicaments"
+  add_foreign_key "reminders", "users"
 end
