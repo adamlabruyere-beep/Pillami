@@ -1,6 +1,6 @@
-<div class="min-h-screen flex flex-col items-center justify-center">
+<div data-controller="calendrier" class="min-h-screen flex flex-col items-center justify-center">
   <div class="container mx-auto">
-    <div class="flex flex-col items-center text-center space-y-8">
+    <div class="grid grid-cols-3 gap-8 justify-items-center items-center text-center space-y-8">
       <div>
         <p>Semaine du</p>
         <h1>
@@ -8,7 +8,7 @@
         </h1>
       </div>
 
-      <div class="flex items-center justify-between w-full max-w-md mb-10">
+      <div class="flex items-center justify-between">
         <%= link_to "◀︎ Semaine précédente",
             calendriers_path(date: @week_start - 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
@@ -17,23 +17,22 @@
             calendriers_path(date: @week_start + 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
       </div>
-
       <!-- Panneau qui réagit au clic -->
-      <div id="calendar-panel" class="mb-6">
-        <!-- Contenu par défaut -->
-        <p>Cliques sur une date pour voir son contenu.</p>
-      </div>
 
       <!-- Liste des jours -->
-      <div class="flex flex-col items-center space-y-8">
-        <% @week_days.each do |date| %>
+      <div class="grid grid-cols-3 gap-8 justify-items-center items-center space-y-8">
+        <% @week_days.each_with_index do |date, index| %>
           <div
-            class="w-48 aspect-square rounded-full border border-black
-                   flex items-center justify-center space-y-8 cursor-pointer calendar-day"
+            data-action="click->calendrier#select"
+            data-calendrier-target="day"
             data-date="<%= date %>"
             data-weekday="<%= l(date, format: '%A') %>"
-            data-month="<%= l(date, format: '%B') %>">
-            <div class="flex flex-col items-center text-center px-4 py-6 space-y-1">
+            data-month="<%= l(date, format: '%B') %>"
+
+            class="w-48 aspect-square rounded-full border border-black
+                   flex items-center justify-center space-y-8 cursor-pointer"
+          >
+            <div class="grid grid-cols-3 gap-8 justify-items-center items-center text-center px-4 py-6 space-y-1">
               <p class="text-sm leading-tight">
                 <%= l(date, format: "%A") %>
               </p>
@@ -45,9 +44,11 @@
               </p>
             </div>
           </div>
+      <div
+        data-calendrier-target="panel"class="mb-6">
+      </div>
         <% end %>
       </div>
-
     </div>
   </div>
 </div>
