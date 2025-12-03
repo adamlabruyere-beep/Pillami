@@ -10,6 +10,12 @@ class CalendriersController < ApplicationController
 
     # Les 7 jours de la semaine
     @week_days = (@week_start..@week_start + 6).to_a
+
+    @selected_date = if params[:date].present?
+                       Date.parse(params[:date])
+                     else
+                       @week_days.first
+                     end
   end
 
   def by_day
