@@ -17,33 +17,23 @@
     </div>
 
     <!-- Medicaments list -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordonnance</th>
-            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <% @medicaments.each do |medicament| %>
-            <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 max-w-xs">
-                <div class="text-xs font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-500"><%= medicament.format %></div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
+    <div class="space-y-3">
+      <% unless @medicaments.nil? %>
+        <% @medicaments.each do |medicament| %>
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex justify-between items-start gap-3">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
+                <p class="text-sm text-gray-500 mt-1"><%= medicament.format %></p>
+              </div>
+              <div>
                 <% if medicament.ordonnance %>
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
                 <% else %>
                   <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
                 <% end %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              </div>
+              <div>
                 <% if @pillatheque.medicaments.include?(medicament) %>
                   <span class="text-gray-400">Déjà ajouté</span>
                 <% else %>
@@ -53,14 +43,12 @@
                     Ajouter
                   <% end %>
                 <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <% if @medicaments.empty? %>
-        <div class="text-center py-8 text-gray-500">
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">
           Aucun médicament trouvé
         </div>
       <% end %>
