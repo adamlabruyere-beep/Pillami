@@ -21,10 +21,6 @@ categories =["amoxicilline", "azithromycine", "ciprofloxacine",
 #   "omeprazole", "pantoprazole", "esomeprazole"
 # ]
 
-p "Resetting database..."
-Medicament.destroy_all
-p "All medicaments deleted"
-
 categories.each do |category|
   p "Fetching medicaments for category: #{category}"
   url = "https://medicaments-api.giygas.dev/medicament/#{category}"
