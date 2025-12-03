@@ -4,10 +4,7 @@ export default class extends Controller {
   static targets = ["sidebar", "text", "expandIcon", "collapseIcon"]
 
   connect() {
-    const isCollapsed = localStorage.getItem("sidebarCollapsed") === "true"
-    if (isCollapsed) {
-      this.collapse()
-    }
+    this.collapse()
   }
 
   toggle() {

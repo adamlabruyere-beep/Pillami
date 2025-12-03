@@ -18,52 +18,53 @@
 
     <!-- Medicaments list -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordonnance</th>
-            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <% @medicaments.each do |medicament| %>
-            <tr class="hover:bg-gray-50">
-              <td class="px-6 py-4 max-w-xs">
-                <div class="text-xs font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-500"><%= medicament.format %></div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <% if medicament.ordonnance %>
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
-                <% else %>
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
-                <% end %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <% if @pillatheque.medicaments.include?(medicament) %>
-                  <span class="text-gray-400">Déjà ajouté</span>
-                <% else %>
-                  <%= button_to pillatheque_pillatheque_medicaments_path(@pillatheque, medicament_id: medicament.id),
-                        method: :post,
-                        class: "text-blue-600 hover:text-blue-900 cursor-pointer" do %>
-                    Ajouter
-                  <% end %>
-                <% end %>
-              </td>
+      <% unless @medicaments.empty? %>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Format</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ordonnance</th>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
             </tr>
-          <% end %>
+          </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+              <% @medicaments.each do |medicament| %>
+                <tr class="hover:bg-gray-50">
+                  <td class="px-6 py-4 max-w-xs">
+                    <div class="text-xs font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-500"><%= medicament.format %></div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <% if medicament.ordonnance %>
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
+                    <% else %>
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
+                    <% end %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <% if @pillatheque.medicaments.include?(medicament) %>
+                      <span class="text-gray-400">Déjà ajouté</span>
+                    <% else %>
+                      <%= button_to pillatheque_pillatheque_medicaments_path(@pillatheque, medicament_id: medicament.id),
+                            method: :post,
+                            class: "text-blue-600 hover:text-blue-900 cursor-pointer" do %>
+                        Ajouter
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <div class="text-center py-8 text-gray-500">
+                Aucun médicament trouvé
+              </div>
+            <% end %>
         </tbody>
       </table>
 
-      <% if @medicaments.empty? %>
-        <div class="text-center py-8 text-gray-500">
-          Aucun médicament trouvé
-        </div>
-      <% end %>
     </div>
   </div>
 </div>
