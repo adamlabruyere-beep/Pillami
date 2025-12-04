@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   after_create_commit :initialize_pillatheque
-  after_create :create_default_calendrier
+  after_create_commit :create_default_calendrier
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
