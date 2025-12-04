@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_04_135248) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_04_142156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_04_135248) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_sensations_on_user_id"
   end
 
   create_table "solid_cable_messages", force: :cascade do |t|
@@ -122,4 +124,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_04_135248) do
   add_foreign_key "pillatheques", "users"
   add_foreign_key "reminders", "medicaments"
   add_foreign_key "reminders", "users"
+  add_foreign_key "sensations", "users"
 end
