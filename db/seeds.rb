@@ -1,11 +1,126 @@
 require "json"
 require "open-uri"
 
+#//////////// SEED POUR MEDICAMENTS COURANTS EN FRANCE /////////////
 
+# Médicaments les plus couramment utilisés en France
+MEDICAMENTS_COURANTS = [
+  # Douleur / Fièvre
+  "paracetamol", "doliprane", "efferalgan", "dafalgan",
+  "ibuprofene", "advil", "nurofen", "aspirine", "aspegic",
+  # Anti-inflammatoires
+  "ketoprofene", "diclofenac", "voltarene", "naproxene",
+  # Antibiotiques
+  "amoxicilline", "augmentin", "azithromycine", "zithromax",
+  "ciprofloxacine", "ofloxacine", "metronidazole",
+  "doxycycline", "penicilline", "cefixime",
+  # Allergies
+  "cetirizine", "zyrtec", "loratadine", "clarityne",
+  "desloratadine", "aerius", "bilastine",
+  # Estomac / Digestion
+  "omeprazole", "mopral", "pantoprazole", "esomeprazole",
+  "gaviscon", "smecta", "spasfon", "domperidone", "motilium",
+  "loperamide", "imodium", "lansoprazole",
+  # Cardiovasculaire
+  "amlodipine", "ramipril", "losartan", "valsartan",
+  "atenolol", "bisoprolol", "lisinopril", "enalapril",
+  "furosemide", "lasilix", "hydrochlorothiazide",
+  # Cholestérol
+  "atorvastatine", "tahor", "simvastatine", "rosuvastatine",
+  "pravastatine", "fenofibrate",
+  # Diabète
+  "metformine", "glucophage", "insuline", "glibenclamide",
+  "gliclazide", "sitagliptine", "januvia",
+  # Thyroïde
+  "levothyrox", "levothyroxine", "euthyrox",
+  # Anxiolytiques / Sommeil
+  "alprazolam", "xanax", "bromazepam", "lexomil",
+  "diazepam", "valium", "lorazepam", "temesta",
+  "zolpidem", "stilnox", "zopiclone", "imovane",
+  # Antidépresseurs
+  "sertraline", "zoloft", "fluoxetine", "prozac",
+  "paroxetine", "deroxat", "escitalopram", "seroplex",
+  "venlafaxine", "effexor", "duloxetine", "cymbalta",
+  # Respiratoire / Toux
+  "ventoline", "salbutamol", "seretide", "symbicort",
+  "flixotide", "singulair", "montelukast",
+  "codeine", "bronchokod", "carbocisteine", "acetylcysteine",
+  # Corticoïdes
+  "prednisolone", "solupred", "prednisone", "cortancyl",
+  "betamethasone", "dexamethasone",
+  # Anticoagulants
+  "kardegic", "plavix", "clopidogrel", "xarelto",
+  "eliquis", "pradaxa", "previscan",
+  # Contraception / Hormones
+  "pilule", "levonorgestrel", "ethinylestradiol",
+  "duphaston", "utrogestan", "progesterone",
+  # Douleurs neuropathiques
+  "pregabaline", "lyrica", "gabapentine", "neurontin",
+  # Migraine
+  "triptan", "sumatriptan", "zomig",
+  # Peau
+  "fucidine", "acide fusidique", "betadine", "biafine",
+  "dexeryl", "cicatryl", "diprosone",
+  # Yeux
+  "collyre", "vitamine a", "dulcilarme",
+  # Vitamines / Suppléments
+  "vitamine d", "uvedose", "vitamine b12", "fer", "tardyferon",
+  "magnesium", "magne b6", "acide folique", "speciafoldine",
+  # Autres courants
+  "tramadol", "lamaline", "toplexil", "humex", "actifed",
+  "fervex", "rhinadvil", "strepsil", "lysopaïne"
+]
+
+Medicament.destroy_all
+puts "Base nettoyée"
+
+noms_existants = Set.new
+medicaments = []
+
+MEDICAMENTS_COURANTS.each_with_index do |terme, index|
+  puts "Recherche #{index + 1}/#{MEDICAMENTS_COURANTS.size}: #{terme}..."
+
+  begin
+    url = "https://medicaments-api.giygas.dev/medicament/#{URI.encode_www_form_component(terme)}"
+    response = URI.parse(url).read
+    items = JSON.parse(response)
+
+    items.each do |med|
+      nom = med["elementPharmaceutique"]
+      next if nom.blank? || noms_existants.include?(nom)
+
+      noms_existants.add(nom)
+      medicaments << {
+        nom: nom,
+        format: med["formePharmaceutique"],
+        prise: med["voiesAdministration"],
+        ordonnance: !med["conditions"].nil?
+      }
+    end
+
+    sleep(0.35) # Respecte le rate limit de 3/sec
+
+  rescue OpenURI::HTTPError => e
+    if e.message.include?("429")
+      puts "Rate limited, pause 5s..."
+      sleep(5)
+      retry
+    else
+      puts "Erreur pour #{terme}: #{e.message}"
+    end
+  rescue JSON::ParserError => e
+    puts "Erreur JSON pour #{terme}: #{e.message}"
+  end
+end
+
+# Insert en bulk
+Medicament.insert_all(medicaments) if medicaments.any?
+
+puts "Terminé ! #{Medicament.count} médicaments créés (#{noms_existants.size} uniques)"
 
 #////////:/regex pour enlever le format aux noms des medicaments//////
 
-Medicament.update_all("nom = regexp_replace(nom, ',.+', '', 'g')")
+
 
 
 
