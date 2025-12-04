@@ -16,23 +16,43 @@
     </div>
     <!-- Medicaments list -->
     <div class="space-y-3">
-      <% unless @medicaments.nil? %>
-        <% unless @medicaments.empty? %>
-          <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex justify-between items-start gap-3">
-              <div class="flex-1 min-w-0">
-                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"> Nom du medicament</h3>
-                <p class="text-sm text-gray-500 mt-1">Format</p>
-              </div>
-              <div>
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">Sous ordonance</span>
-              </div>
-              <div>
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Action</span>
-              </div>
+      <% if @empty_query %>
+        <!-- Recherche vide -->
+        <div class="bg-white rounded-lg shadow p-8 text-center">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">Recherche vide</h3>
+          <p class="mt-2 text-sm text-gray-500">Veuillez entrer un terme de recherche pour trouver un médicament.</p>
+        </div>
+      <% elsif @medicaments.nil? %>
+        <!-- État initial : pas encore de recherche -->
+      <% elsif @medicaments.empty? %>
+        <!-- Aucun résultat trouvé -->
+        <div class="bg-white rounded-lg shadow p-8 text-center">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">Aucun médicament trouvé</h3>
+          <p class="mt-2 text-sm text-gray-500">Aucun résultat pour "<%= params[:query] %>".<br>Essayez avec un autre terme de recherche.</p>
+        </div>
+      <% else %>
+        <!-- En-tête du tableau -->
+        <div class="bg-white rounded-lg shadow p-4">
+          <div class="flex justify-between items-start gap-3">
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium text-gray-900 wrap-break-word"> Nom du medicament</h3>
+              <p class="text-sm text-gray-500 mt-1">Format</p>
+            </div>
+            <div>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">Sous ordonance</span>
+            </div>
+            <div>
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Action</span>
             </div>
           </div>
-        <% end %>
+        </div>
+        <!-- Liste des médicaments -->
         <% @medicaments.each do |medicament| %>
           <div class="bg-white rounded-lg shadow p-4">
             <div class="flex justify-between items-start gap-3">
@@ -61,10 +81,6 @@
             </div>
           </div>
         <% end %>
-      <% else %>
-        <div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">
-          Aucun médicament trouvé
-        </div>
       <% end %>
     </div>
   </div>
