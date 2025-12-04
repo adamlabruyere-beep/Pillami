@@ -34,6 +34,20 @@ class RemindersController < ApplicationController
     redirect_to user_reminders_path(@user), notice: 'Rappel supprimé.'
   end
 
+  def by_date
+    date = Date.parse(params[:date])
+
+    weekday_name = date.strftime("%A")
+
+    reminders = current_user.reminders.select do |r|
+      r.days_of_week.include?(weekday_name)
+    end
+
+    render json: reminders.as_json(only: [:id, :time, :quantity, :measure], include: {
+      medicament: { only: [:nom] }
+    })
+  end
+
   private
 
   def set_user

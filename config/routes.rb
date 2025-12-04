@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :reminders
   end
+  get "reminders/by_date", to: "reminders#by_date"
   resources :users do
     resources :sensations
   end
