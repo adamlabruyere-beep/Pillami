@@ -18,6 +18,16 @@ class CalendriersController < ApplicationController
                      end
   end
 
+  def create
+    @calendrier = current_user.calendriers.new(calendrier_params)
+
+    if @calendrier.save
+      redirect_to @calendrier
+    else
+      render :new
+    end
+  end
+
   def by_day
     @date  = params[:date]&.to_date || Date.today
 
