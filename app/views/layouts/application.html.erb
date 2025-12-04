@@ -6,14 +6,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
     <div data-controller="mobile-menu" class="min-h-screen">
       <!-- Bouton hamburger mobile -->
+      <div class="p-8 md:hidden">
+      </div>
       <button data-action="click->mobile-menu#toggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg text-gray-600 hover:text-gray-900">
         <svg data-mobile-menu-target="openIcon" xmlns="http://www.w3.org/2000/svg" class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -22,10 +22,8 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
-
       <!-- Overlay -->
       <div data-mobile-menu-target="overlay" data-action="click->mobile-menu#close" class="hidden fixed inset-0 bg-black/50 z-30 md:hidden"></div>
-
       <div class="flex min-h-screen">
         <div class="shrink-0 transition-all duration-300">
           <%= render "shared/navbar" %>
