@@ -1,9 +1,9 @@
 require "json"
 require "open-uri"
 
-categories =["methotrexate", "fluorouracile", "cyclophosphamide",
-  "alprazolam", "bromazepam", "diazepam",
-  "sertraline", "fluoxetine", "paroxetine"]
+categories =["cetirizine", "loratadine", "desloratadine",
+  "omeprazole", "pantoprazole", "esomeprazole"
+]
 # to do
 
 
@@ -12,14 +12,12 @@ categories =["methotrexate", "fluorouracile", "cyclophosphamide",
 #   "paracetamol", "ibuprofene", "aspirine", "codeine",
 #   "diclofenac", "ketoprofene", "naproxene"]["amoxicilline", "azithromycine", "ciprofloxacine",
   # "metformine", "insuline", "glibenclamide",
-  # "amlodipine", "ramipril", "losartan"] done
+  # "amlodipine", "ramipril", "losartan"] done["methotrexate", "fluorouracile", "cyclophosphamide",
+  # "alprazolam", "bromazepam", "diazepam",
+  # "sertraline", "fluoxetine", "paroxetine"]
 
 
-#
-#
-#   ["cetirizine", "loratadine", "desloratadine",
-#   "omeprazole", "pantoprazole", "esomeprazole"
-# ]
+
 
 categories.each do |category|
   p "Fetching medicaments for category: #{category}"
