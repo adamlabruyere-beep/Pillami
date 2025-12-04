@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_03_155426) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_04_104812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_03_155426) do
     t.bigint "user_id", null: false
     t.bigint "medicament_id", null: false
     t.string "message"
-    t.string "days_of_week"
+    t.text "days_of_week"
     t.time "time"
     t.boolean "active"
     t.datetime "created_at", null: false

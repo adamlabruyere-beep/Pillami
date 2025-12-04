@@ -7,6 +7,7 @@ class RemindersController < ApplicationController
   end
 
   def show
+    redirect_to user_reminders_path(@user)
   end
 
   def new
