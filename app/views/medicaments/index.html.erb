@@ -4,7 +4,6 @@
       <h1 class="text-3xl font-bold text-gray-900">Ajouter un médicament</h1>
       <p class="mt-2 text-sm text-gray-600">Recherchez et ajoutez des médicaments à votre pillathèque</p>
     </div>
-
     <!-- Search bar -->
     <div class="mb-8">
       <%= form_with url: medicaments_path, method: :get, class: "flex gap-2" do |f| %>
@@ -15,10 +14,25 @@
         <%= f.submit "Rechercher", class: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
       <% end %>
     </div>
-
     <!-- Medicaments list -->
     <div class="space-y-3">
       <% unless @medicaments.nil? %>
+        <% unless @medicaments.empty? %>
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex justify-between items-start gap-3">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"> Nom du medicament</h3>
+                <p class="text-sm text-gray-500 mt-1">Format</p>
+              </div>
+              <div>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">Sous ordonance</span>
+              </div>
+              <div>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Action</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
         <% @medicaments.each do |medicament| %>
           <div class="bg-white rounded-lg shadow p-4">
             <div class="flex justify-between items-start gap-3">

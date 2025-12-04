@@ -11,6 +11,22 @@
     </div>
     <div class="space-y-3">
       <% if @medicaments.any? %>
+        <% unless @medicaments.empty? %>
+          <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex justify-between items-start gap-3">
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"> Nom du medicament</h3>
+                <p class="text-sm text-gray-500 mt-1">Format</p>
+              </div>
+              <div>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">Sous ordonance</span>
+              </div>
+              <div>
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Action</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
         <% @medicaments.each do |medicament| %>
           <div class="bg-white rounded-lg shadow p-4">
             <div class="flex justify-between items-start gap-3">
