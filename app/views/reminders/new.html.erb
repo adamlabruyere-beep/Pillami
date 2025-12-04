@@ -26,6 +26,7 @@
               class: "w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
       </div>
 
+
       <!-- Jours de la semaine -->
       <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4 mb-4">
         <legend class="fieldset-legend font-medium">Choisissez les jours</legend>
@@ -34,11 +35,19 @@
           <% Date::DAYNAMES.each do |day| %>
             <label class="flex items-center space-x-2">
               <%= check_box_tag "reminder[days_of_week][]", day, selected_days.include?(day), class: "checkbox" %>
-              <span class="label-text"><%= day %></span>
+              <span class="label-text">
+                <%= I18n.t("date.day_names")[Date::DAYNAMES.index(day)] %>
+              </span>
             </label>
           <% end %>
         </div>
       </fieldset>
+
+      <!-- Affichage des jours choisis -->
+      <p>
+        Jours :
+        <%= @reminder.days_of_week&.map { |d| I18n.t("date.day_names")[Date::DAYNAMES.index(d)] }&.join(", ") || "Aucun" %>
+      </p>
 
       <!-- Heure du rappel -->
       <div class="mb-4">
@@ -70,9 +79,6 @@
     <div class="text-center mt-4">
       <%= link_to "← Retour", user_reminders_path(@user), class: "text-sm font-medium text-gray-600 hover:text-gray-500" %>
     </div>
-
-  </div>
-</div>
 
   </div>
 </div>

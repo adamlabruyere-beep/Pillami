@@ -1,4 +1,5 @@
 class RemindersController < ApplicationController
+  around_action :switch_to_french_locale, only: %i[index new]
   before_action :set_user
   before_action :set_reminder, only: %i[show destroy]
 
@@ -46,5 +47,9 @@ class RemindersController < ApplicationController
 
   def reminder_params
     params.require(:reminder).permit(:medicament_id, :quantity, :measure, :time, :active, days_of_week: [])
+  end
+
+  def switch_to_french_locale(&)
+    I18n.with_locale(:fr, &)
   end
 end

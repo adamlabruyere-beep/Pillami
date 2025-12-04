@@ -15,7 +15,7 @@
             Heure : <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
             Quantité : <%= reminder.quantity || "Non définie" %> |
             Mesure : <%= reminder.measure || "Non définie" %> |
-            Jours : <%= reminder.days_of_week&.join(", ") || "Aucun" %>
+            Jours : <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
           </p>
 
           <div class="card-actions justify-end">
