@@ -9,6 +9,9 @@ class User < ApplicationRecord
   validates :nom, presence: true
 
   has_one :pillatheque, dependent: :destroy
+  has_one :calendrier
+
+
   has_many :reminders, dependent: :destroy
 
   def initialize_pillatheque
