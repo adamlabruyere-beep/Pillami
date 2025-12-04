@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_one :calendrier
 
 
+  has_many :reminders, dependent: :destroy
 
   def initialize_pillatheque
     Pillatheque.create(user: self)
