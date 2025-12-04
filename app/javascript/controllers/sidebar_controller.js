@@ -4,7 +4,15 @@ export default class extends Controller {
   static targets = ["sidebar", "text", "expandIcon", "collapseIcon"]
 
   connect() {
-    this.collapse()
+    if (this.isMobile()) {
+      this.expand()
+    } else {
+      this.collapse()
+    }
+  }
+
+  isMobile() {
+    return window.innerWidth < 768
   }
 
   toggle() {
@@ -16,6 +24,8 @@ export default class extends Controller {
   }
 
   collapse() {
+    if (this.isMobile()) return
+
     // Sidebar width
     this.sidebarTarget.classList.remove("w-64")
     this.sidebarTarget.classList.add("w-16")
