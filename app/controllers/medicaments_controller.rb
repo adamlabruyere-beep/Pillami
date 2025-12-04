@@ -1,10 +1,10 @@
 class MedicamentsController < ApplicationController
   def index
-    if params[:query]
-      @medicaments = Medicament.all.where("nom ILIKE ?", "%#{params[:query]}%") if params[:query].present?
-      @pillatheque = current_user.pillatheque
-    else
-      @medicaments = []
+    @pillatheque = current_user.pillatheque
+    if params[:query].present?
+      @medicaments = Medicament.where("nom ILIKE ?", "%#{params[:query]}%")
+    elsif params[:query] == ""
+      @empty_query = true
     end
   end
 
