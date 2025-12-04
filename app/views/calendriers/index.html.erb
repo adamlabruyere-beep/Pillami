@@ -1,6 +1,6 @@
 <div data-controller="calendrier" class="min-h-screen flex flex-col items-center justify-center">
   <div class="container mx-auto">
-    <div class="grid grid-cols-3 gap-8 justify-items-center items-center text-center space-y-8">
+    <div class="justify-items-center items-center text-center space-y-8">
       <div>
         <p>Semaine du</p>
         <h1>
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Liste des jours -->
-      <div class="grid grid-cols-3 gap-8 justify-items-center items-center space-y-8">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 justify-items-center items-center">
         <% @week_days.each do |date| %>
         <div
           data-action="click->calendrier#select"
@@ -27,10 +27,10 @@
           data-date="<%= date %>"
           data-weekday="<%= l(date, format: '%A') %>"
           data-month="<%= l(date, format: '%B') %>"
-          class="w-48"
+          class="w-40"
         >
           <!-- Le cercle -->
-          <div class="w-48 aspect-square rounded-full border border-black
+          <div class="w-40 aspect-square rounded-full border border-black
                       flex items-center justify-center cursor-pointer">
             <div class="flex flex-col items-center text-center px-4 py-6 space-y-1">
               <p class="text-sm leading-tight">
