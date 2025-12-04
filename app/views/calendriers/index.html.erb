@@ -21,12 +21,22 @@
       <!-- Liste des jours -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-8 justify-items-center items-center">
         <% @week_days.each do |date| %>
+        <% day_reminders = @reminders_by_day[date] || [] %>
+
         <div
           data-action="click->calendrier#select"
           data-calendrier-target="day"
           data-date="<%= date %>"
           data-weekday="<%= l(date, format: '%A') %>"
           data-month="<%= l(date, format: '%B') %>"
+          data-reminders='<%= day_reminders.map { |r|
+            {
+              name:  r.medicament.nom,
+              time:  (r.time&.strftime("%H:%M")),
+              qty:   r.quantity,
+              unit:  r.measure
+            }
+          }.to_json %>'
           class="w-40"
         >
           <!-- Le cercle -->

@@ -2,13 +2,8 @@ class CalendriersController < ApplicationController
   around_action :switch_to_french_locale, only: :index
 
   def index
-    # On part de la date donnée ou d'aujourd'hui
     @current_date = params[:date]&.to_date || Date.today
-
-    # On calcule le début de la semaine (lundi → style européen)
     @week_start = @current_date.beginning_of_week(:monday)
-
-    # Les 7 jours de la semaine
     @week_days = (@week_start..@week_start + 6).to_a
 
     @selected_date = if params[:date].present?
@@ -16,6 +11,13 @@ class CalendriersController < ApplicationController
                      else
                        @week_days.first
                      end
+
+    @reminders = current_user.reminders.includes(:medicament)
+
+    @reminders_by_day = @week_days.index_with do |date|
+      english_day_name = Date::DAYNAMES[date.wday]
+      @reminders.select { |r| (r.days_of_week || []).include?(english_day_name) }
+    end
   end
 
   def create
