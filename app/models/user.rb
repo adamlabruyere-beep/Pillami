@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :nom, presence: true
 
   has_one :pillatheque, dependent: :destroy
+  has_one :calendrier
 
 
 
