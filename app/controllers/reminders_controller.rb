@@ -1,28 +1,29 @@
 class RemindersController < ApplicationController
+  before_action :set_user
   before_action :set_reminder, only: %i[show destroy]
 
   def index
-    @reminders = Reminder.all
+    @reminders = @user.reminders
   end
 
   def show
+    redirect_to user_reminders_path(@user)
   end
 
   def new
-    @reminder = Reminder.new
+    @reminder = @user.reminders.new
     @reminder.days_of_week ||= []
-    @pillatheque = current_user.pillatheque
+    @pillatheque = @user.pillatheque
     @medicaments = @pillatheque.medicaments
   end
 
   def create
-    @reminder = Reminder.new(reminder_params)
-    @reminder.user_id = current_user.id
+    @reminder = @user.reminders.new(reminder_params)
 
     if @reminder.save
-      redirect_to reminders_path, notice: 'Rappel créé avec succès.'
+      redirect_to user_reminders_path(@user), notice: 'Rappel créé avec succès.'
     else
-      @pillatheque = current_user.pillatheque
+      @pillatheque = @user.pillatheque
       @medicaments = @pillatheque.medicaments
       render :new
     end
@@ -30,16 +31,20 @@ class RemindersController < ApplicationController
 
   def destroy
     @reminder.destroy
-    redirect_to reminders_path, notice: 'Rappel supprimé avec succès.'
+    redirect_to user_reminders_path(@user), notice: 'Rappel supprimé.'
   end
 
   private
 
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
   def set_reminder
-    @reminder = Reminder.find(params[:id])
+    @reminder = @user.reminders.find(params[:id])
   end
 
   def reminder_params
-    params.require(:reminder).permit(:medicament_id, :quantity, :mesure, :time, :active, days_of_week: [])
+    params.require(:reminder).permit(:medicament_id, :quantity, :measure, :time, :active, days_of_week: [])
   end
 end
