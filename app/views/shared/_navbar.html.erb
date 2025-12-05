@@ -38,6 +38,11 @@
               Mes rappels
             <% end %>
           </li>
+          <li data-sidebar-target="text">
+            <%= link_to entourage_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+              Mon entourage
+            <% end %>
+          </li>
         <% else %>
           <li data-sidebar-target="text">
             <%= link_to new_user_session_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
