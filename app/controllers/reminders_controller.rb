@@ -41,7 +41,10 @@ class RemindersController < ApplicationController
     weekday_name = date.strftime("%A")
 
     reminders = current_user.reminders.select do |r|
-      r.days_of_week.include?(weekday_name)
+      next false unless r.days_of_week.include?(weekday_name)
+
+      end_date = r.created_at.to_date + r.repeat_for_weeks.to_i.weeks
+      (r.created_at.to_date..end_date).cover?(date)
     end
 
     render json: reminders.as_json(only: [:id, :time, :quantity, :measure], include: {
