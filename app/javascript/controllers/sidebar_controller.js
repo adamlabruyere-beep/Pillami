@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "text", "expandIcon", "collapseIcon"]
+  static targets = ["sidebar", "text", "expandIcon", "collapseIcon", "avatar"]
 
   connect() {
     if (this.isMobile()) {
@@ -31,7 +31,15 @@ export default class extends Controller {
     this.sidebarTarget.classList.add("w-16")
 
     // Hide text elements
-    this.textTargets.forEach(el => el.classList.add("hidden"))
+    this.textTargets.forEach(el => {
+      el.classList.add("hidden")
+      el.classList.add("invisible")
+    })
+
+    // Hide avatar
+    if (this.hasAvatarTarget) {
+      this.avatarTarget.classList.add("hidden")
+    }
 
     // Toggle button icons
     this.collapseIconTargets.forEach(el => el.classList.add("hidden"))
@@ -46,7 +54,15 @@ export default class extends Controller {
     this.sidebarTarget.classList.add("w-64")
 
     // Show text elements
-    this.textTargets.forEach(el => el.classList.remove("hidden"))
+    this.textTargets.forEach(el => {
+      el.classList.remove("hidden")
+      el.classList.remove("invisible")
+    })
+
+    // Show avatar
+    if (this.hasAvatarTarget) {
+      this.avatarTarget.classList.remove("hidden")
+    }
 
     // Toggle button icons
     this.collapseIconTargets.forEach(el => el.classList.remove("hidden"))

@@ -45,6 +45,7 @@
           <% elsif devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <p class="mt-1 text-xs text-amber-600">En attente de confirmation pour : <%= resource.unconfirmed_email %></p>
           <% end %>
+          <%= f.input :photo, as: :file %>
         </div>
 
         <hr class="border-gray-200">
