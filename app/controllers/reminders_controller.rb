@@ -19,7 +19,6 @@ class RemindersController < ApplicationController
   end
 
   def create
-    raise
     @reminder = @user.reminders.new(reminder_params)
 
     if @reminder.save
