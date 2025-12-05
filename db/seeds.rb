@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "omeprazole"
+REPRENDRE_DEPUIS = "imodium"
 
 MAX_RETRIES_429 = 5
 
@@ -137,7 +137,7 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
   rescue OpenURI::HTTPError => e
     if e.message.include?("429")
       retries_429 += 1
-      puts "Rate limited (#{retries_429}/#{MAX_RETRIES_429}), pause 10s..."
+      puts "Rate limited (#{retries_429}/#{MAX_RETRIES_429}), pause 2s..."
 
       if retries_429 >= MAX_RETRIES_429
         puts ""
@@ -154,7 +154,7 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
         exit
       end
 
-      sleep(10)
+      sleep(2)
       retry
     else
       puts "Erreur pour #{terme}: #{e.message}"
