@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "levothyrox"
+REPRENDRE_DEPUIS = "zolpidem"
 
 MAX_RETRIES_429 = 5
 
