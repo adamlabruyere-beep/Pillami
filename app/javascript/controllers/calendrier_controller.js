@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["day", "panel", "track"]
+  static targets = ["day", "panel", "track", "template"]
   static values = { index: { type: Number, default: 0 } }
 
 connect() {
@@ -81,7 +81,7 @@ connect() {
     if (!panel) return
 
     this.#markActiveDay(day)
-    this.#renderPanel(panel, day)
+    this.#renderPanel(panel, index)
     this.openIndex = index
   }
 
@@ -95,14 +95,10 @@ connect() {
     selectedDay.classList.add("selected-day")
   }
 
-  #renderPanel(panel) {
-
-    panel.innerHTML = `
-      <div class="rounded-2xl shadow p-3 bg-white">
-        <p class="text-xs text-gray-600">
-          Ici tu pourras afficher les éléments de cette journée.
-        </p>
-      </div>
-    `
+   #renderPanel(panel, index) {
+    const template = this.templateTargets[index]
+    if (template) {
+      panel.innerHTML = template.innerHTML
+    }
   }
 }
