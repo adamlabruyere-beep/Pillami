@@ -13,8 +13,7 @@
           <h2 class="card-title"><%= reminder.medicament.nom %></h2>
           <p class="text-gray-500">
             Heure : <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
-            Quantité : <%= reminder.quantity || "Non définie" %> |
-            Mesure : <%= reminder.measure || "Non définie" %> |
+           <%= pluralize(reminder.quantity.to_i, "comprimé", "comprimés") %> |
             Jours : <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
           </p>
 

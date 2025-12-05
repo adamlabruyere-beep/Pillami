@@ -27,12 +27,14 @@
       </div>
 
 
-      <!-- Jours de la semaine -->
+          <% days = Date::DAYNAMES.rotate(1) %> 
+
       <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4 mb-4">
         <legend class="fieldset-legend font-medium">Choisissez les jours</legend>
         <% selected_days = @reminder.days_of_week || [] %>
+
         <div class="grid grid-cols-2 gap-2">
-          <% Date::DAYNAMES.each do |day| %>
+          <% days.each do |day| %>
             <label class="flex items-center space-x-2">
               <%= check_box_tag "reminder[days_of_week][]", day, selected_days.include?(day), class: "checkbox" %>
               <span class="label-text">
@@ -42,6 +44,7 @@
           <% end %>
         </div>
       </fieldset>
+
 
       <!-- Affichage des jours choisis -->
       <p>
