@@ -7,29 +7,25 @@
           <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
         </h1>
       </div>
-
       <div class="flex items-center justify-between">
         <%= link_to "◀︎ Semaine précédente",
             calendriers_path(date: @week_start - 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
-
         <%= link_to "Semaine suivante ▶︎",
             calendriers_path(date: @week_start + 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
       </div>
-
-            <!-- CARROUSEL -->
+      <!-- CARROUSEL -->
       <div class="relative w-full max-w-sm mx-auto">
         <!-- bouton précédent -->
         <button
           type="button"
           data-action="click->calendrier#prev"
           class="absolute left-2 top-1/2 -translate-y-1/2
-                md:-translate-x-full px-3 py-2 border rounded-full text-sm"
-        >
+          md:-translate-x-full px-3 py-2 border rounded-full text-sm"
+          >
           ◀
         </button>
-
         <!-- fenêtre du carrousel -->
         <div class="overflow-hidden">
           <!-- piste qui bouge + swipe -->
@@ -37,10 +33,10 @@
             data-calendrier-target="track"
             data-action="
               touchstart->calendrier#touchStart
-              touchend->calendrier#touchEnd
+            touchend->calendrier#touchEnd
             "
             class="flex transition-transform duration-300 ease-out"
-          >
+            >
             <% @week_days.each do |date| %>
               <div
                 data-calendrier-target="day"
@@ -49,7 +45,7 @@
                 data-weekday="<%= l(date, format: '%A') %>"
                 data-month="<%= l(date, format: '%B') %>"
                 class="min-w-full flex justify-center"
-              >
+                >
                 <div class="w-40 aspect-square rounded-full border border-black
                             flex items-center justify-center cursor-pointer">
                   <div class="flex flex-col items-center text-center px-4 py-6 space-y-1">
@@ -72,14 +68,13 @@
             <% end %>
           </div>
         </div>
-
         <!-- bouton suivant -->
         <button
           type="button"
           data-action="click->calendrier#next"
           class="absolute right-2 top-1/2 -translate-y-1/2
-                md:translate-x-full px-3 py-2 border rounded-full text-sm"
-        >
+          md:translate-x-full px-3 py-2 border rounded-full text-sm"
+          >
           ▶
         </button>
       </div>

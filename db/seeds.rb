@@ -32,7 +32,7 @@ MEDICAMENTS_COURANTS = [
   "metformine", "glucophage", "insuline", "glibenclamide",
   "gliclazide", "sitagliptine", "januvia",
   # Thyroïde
-  "levothyrox", "levothyroxine", "euthyrox",
+  "levothyrox", "euthyrox",
   # Anxiolytiques / Sommeil
   "alprazolam", "xanax", "bromazepam", "lexomil",
   "diazepam", "valium", "lorazepam", "temesta",
@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "glucophage"
+REPRENDRE_DEPUIS = "levothyroxine"
 
 MAX_RETRIES_429 = 5
 
@@ -114,6 +114,8 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
     url = "https://medicaments-api.giygas.dev/medicament/#{URI.encode_www_form_component(terme)}"
     response = URI.parse(url).read
     items = JSON.parse(response)
+
+    next if items.nil?
 
     items.each do |med|
       nom = med["elementPharmaceutique"]
@@ -153,7 +155,6 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
         puts "=" * 60
         exit
       end
-
       sleep(2)
       retry
     else
