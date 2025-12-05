@@ -51,6 +51,8 @@ gem "sassc-rails"
 gem 'simple_form-tailwind'
 gem 'simple_form'
 gem "solid_cable"
+gem 'devise-i18n'
+gem 'rails-i18n', '~> 7.0.0'
 
 group :development, :test do
   gem "dotenv-rails"
