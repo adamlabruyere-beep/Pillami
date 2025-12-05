@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = nil # ex: "amoxicilline"
+ REPRENDRE_DEPUIS = "diclofenac" 
 
 MAX_RETRIES_429 = 5
 
