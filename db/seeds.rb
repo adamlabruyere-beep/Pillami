@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "levothyroxine"
+REPRENDRE_DEPUIS = "levothyrox"
 
 MAX_RETRIES_429 = 5
 
@@ -114,54 +114,54 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
     url = "https://medicaments-api.giygas.dev/medicament/#{URI.encode_www_form_component(terme)}"
     response = URI.parse(url).read
     items = JSON.parse(response)
+      unless item.nil?
+      items.each do |med|
+        nom = med["elementPharmaceutique"]
+        next if nom.blank? || noms_existants.include?(nom)
 
-    next if items.nil?
+        # Sauvegarde immédiate en base
+        Medicament.create!(
+          nom: nom,
+          format: med["formePharmaceutique"],
+          prise: med["voiesAdministration"],
+          ordonnance: !med["conditions"].nil?
+        )
 
-    items.each do |med|
-      nom = med["elementPharmaceutique"]
-      next if nom.blank? || noms_existants.include?(nom)
-
-      # Sauvegarde immédiate en base
-      Medicament.create!(
-        nom: nom,
-        format: med["formePharmaceutique"],
-        prise: med["voiesAdministration"],
-        ordonnance: !med["conditions"].nil?
-      )
-
-      noms_existants.add(nom)
-      medicaments_crees += 1
-      puts "  -> Créé: #{nom}"
-    end
-
-    sleep(0.35) # Respecte le rate limit de 3/sec
-
-  rescue OpenURI::HTTPError => e
-    if e.message.include?("429")
-      retries_429 += 1
-      puts "Rate limited (#{retries_429}/#{MAX_RETRIES_429}), pause 2s..."
-
-      if retries_429 >= MAX_RETRIES_429
-        puts ""
-        puts "=" * 60
-        puts "ARRÊT: 5 erreurs 429 consécutives sur '#{terme}'"
-        puts "=" * 60
-        puts "Pour reprendre, modifiez la ligne suivante dans seeds.rb:"
-        puts ""
-        puts "  REPRENDRE_DEPUIS = \"#{terme}\""
-        puts ""
-        puts "Médicaments créés cette session: #{medicaments_crees}"
-        puts "Total en base: #{Medicament.count}"
-        puts "=" * 60
-        exit
+        noms_existants.add(nom)
+        medicaments_crees += 1
+        puts "  -> Créé: #{nom}"
       end
-      sleep(2)
-      retry
-    else
-      puts "Erreur pour #{terme}: #{e.message}"
+
+      sleep(0.35) # Respecte le rate limit de 3/sec
+
+    rescue OpenURI::HTTPError => e
+      if e.message.include?("429")
+        retries_429 += 1
+        puts "Rate limited (#{retries_429}/#{MAX_RETRIES_429}), pause 2s..."
+
+        if retries_429 >= MAX_RETRIES_429
+          puts ""
+          puts "=" * 60
+          puts "ARRÊT: 5 erreurs 429 consécutives sur '#{terme}'"
+          puts "=" * 60
+          puts "Pour reprendre, modifiez la ligne suivante dans seeds.rb:"
+          puts ""
+          puts "  REPRENDRE_DEPUIS = \"#{terme}\""
+          puts ""
+          puts "Médicaments créés cette session: #{medicaments_crees}"
+          puts "Total en base: #{Medicament.count}"
+          puts "=" * 60
+          exit
+        end
+
+        sleep(2)
+        retry
+      else
+        puts "Erreur pour #{terme}: #{e.message}"
+      end
+    rescue JSON::ParserError => e
+      puts "Erreur JSON pour #{terme}: #{e.message}"
     end
-  rescue JSON::ParserError => e
-    puts "Erreur JSON pour #{terme}: #{e.message}"
   end
 end
 
