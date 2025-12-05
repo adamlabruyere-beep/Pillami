@@ -15,6 +15,7 @@ class Reminder < ApplicationRecord
 
   def set_default_repeat_weeks
     self.repeat_for_weeks ||= 1
+  end
   # Planifie un rappel après création si le reminder est actif
   after_create :schedule_next_occurrence, if: :active?
 
@@ -40,7 +41,7 @@ class Reminder < ApplicationRecord
   # end
 
   def schedule_next_occurrence
-    
+
 
 
 
