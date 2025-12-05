@@ -1,6 +1,6 @@
 <div data-mobile-menu-target="nav" class="fixed top-14 md:top-16 bottom-0 left-0 z-40 -translate-x-full md:translate-x-0 transition-transform duration-300">
-  <div class="flex h-full flex-col border-e border-gray-100 bg-white" data-controller="sidebar" data-sidebar-target="sidebar">
-    <div class="px-4 py-6 flex-1 overflow-y-auto">
+  <div class="flex h-full flex-col border-e border-gray-100 bg-white overflow-hidden" data-controller="sidebar" data-sidebar-target="sidebar">
+    <div class="px-4 py-6 flex-1">
       <!-- Placeholder pour le logo PILLAMI (mobile uniquement) -->
       <div data-mobile-menu-target="logoPlaceholder" class="md:hidden mb-4 opacity-0 -translate-y-4 transition-all duration-300 ease-in-out">
         <%= link_to root_path(current_user), class: "block rounded-lg px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100 hover:text-gray-900" do %>
@@ -55,14 +55,18 @@
     <% if user_signed_in? %>
       <div data-sidebar-target="text" class="shrink-0 border-t border-gray-100 relative bg-white">
         <details class="group [&_summary::-webkit-details-marker]:hidden">
-          <summary class="flex cursor-pointer items-center gap-2 bg-white p-4 hover:bg-gray-50">
-            <div class="size-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium shrink-0">
-              <%= current_user.email[0].upcase %>
+          <summary class="flex cursor-pointer items-center gap-2 bg-white p-4 hover:bg-gray-50 whitespace-nowrap">
+            <div class="size-10 rounded-full flex items-center justify-center shrink-0 overflow-hidden bg-blue-600 text-white font-medium">
+              <% if current_user.photo.attached? %>
+                <%= cl_image_tag current_user.photo.key, crop: :fill, width: 40, height: 40, class: "size-10 object-cover", "data-sidebar-target": "avatar" %>
+              <% else %>
+                <%= current_user.email[0].upcase %>
+              <% end %>
             </div>
-            <div class="flex-1">
-              <p class="text-xs">
-                <strong class="block font-medium"><%= current_user.email.split('@').first %></strong>
-                <span><%= current_user.email %></span>
+            <div class="flex-1 min-w-0">
+              <p class="text-xs truncate">
+                <strong class="block font-medium truncate"><%= current_user.email.split('@').first %></strong>
+                <span class="truncate"><%= current_user.email %></span>
               </p>
             </div>
             <span class="shrink-0 transition duration-300 group-open:rotate-180 text-gray-500">
