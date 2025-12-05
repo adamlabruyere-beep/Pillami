@@ -9,6 +9,12 @@ class Reminder < ApplicationRecord
   # Validation pour s'assurer que l'heure est présente
   validates :time, presence: { message: "L'heure du rappel est obligatoire" }
 
+  before_validation :set_default_repeat_weeks
+
+  private
+
+  def set_default_repeat_weeks
+    self.repeat_for_weeks ||= 1
   # Planifie un rappel après création si le reminder est actif
   after_create :schedule_next_occurrence, if: :active?
 
