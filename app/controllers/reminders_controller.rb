@@ -37,20 +37,28 @@ class RemindersController < ApplicationController
 
   def by_date
     date = Date.parse(params[:date])
-
-    weekday_name = date.strftime("%A")
+    weekday_name = Date::DAYNAMES[date.wday]
 
     reminders = current_user.reminders.select do |r|
-      next false unless r.days_of_week.include?(weekday_name)
+      days = r.days_of_week || []
+      next false unless days.include?(weekday_name)
 
-      end_date = r.created_at.to_date + r.repeat_for_weeks.to_i.weeks
-      (r.created_at.to_date..end_date).cover?(date)
+      weeks = (r.repeat_for_weeks || 1).to_i
+      weeks = 1 if weeks <= 0
+
+      created = r.created_at.to_date
+      days_diff = (date - created).to_i
+      next false if days_diff < 0
+
+      weeks_diff = days_diff / 7
+      weeks_diff < weeks
     end
 
-    render json: reminders.as_json(only: [:id, :time, :quantity, :measure], include: {
-      medicament: { only: [:nom] }
-    })
-  end
+    render json: reminders.as_json(
+      only: [:id, :time, :quantity, :measure],
+      include: { medicament: { only: [:nom] } }
+    )
+end
 
   private
 
@@ -63,8 +71,16 @@ class RemindersController < ApplicationController
   end
 
   def reminder_params
-    params.require(:reminder).permit(:medicament_id, :quantity, :measure, :time, :active, days_of_week: [])
-  end
+  params.require(:reminder).permit(
+    :medicament_id,
+    :quantity,
+    :measure,
+    :time,
+    :active,
+    :repeat_for_weeks,   # 👈 AJOUT ICI
+    days_of_week: []
+  )
+end
 
   def switch_to_french_locale(&)
     I18n.with_locale(:fr, &)
