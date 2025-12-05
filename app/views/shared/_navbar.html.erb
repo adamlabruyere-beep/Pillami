@@ -38,30 +38,6 @@
               Mes rappels
             <% end %>
           </li>
-          <li>
-            <li data-sidebar-target="text">
-              <details class="group [&_summary::-webkit-details-marker]:hidden">
-                <summary class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                  <span class="text-sm font-medium">Mon compte</span>
-                  <span class="shrink-0 transition duration-300 group-open:-rotate-180">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                  </span>
-                </summary>
-                <ul class="mt-2 space-y-1 px-4">
-                  <li>
-                    <%= link_to edit_user_registration_path, class: "block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
-                      Mon profil
-                    <% end %>
-                  </li>
-                  <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
-                    Déconnexion
-                  <% end %>
-                </li>
-              </ul>
-            </details>
-          </li>
         <% else %>
           <li data-sidebar-target="text">
             <%= link_to new_user_session_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
@@ -78,17 +54,36 @@
     </div>
     <% if user_signed_in? %>
       <div data-sidebar-target="text" class="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <%= link_to edit_user_registration_path, class: "flex items-center gap-2 bg-white p-4 hover:bg-gray-50" do %>
-          <div class="size-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium shrink-0">
-            <%= current_user.email[0].upcase %>
-          </div>
-          <div>
-            <p class="text-xs">
-              <strong class="block font-medium"><%= current_user.email.split('@').first %></strong>
-              <span><%= current_user.email %></span>
-            </p>
-          </div>
-        <% end %>
+        <details class="group [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex cursor-pointer items-center gap-2 bg-white p-4 hover:bg-gray-50">
+            <div class="size-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-medium shrink-0">
+              <%= current_user.email[0].upcase %>
+            </div>
+            <div class="flex-1">
+              <p class="text-xs">
+                <strong class="block font-medium"><%= current_user.email.split('@').first %></strong>
+                <span><%= current_user.email %></span>
+              </p>
+            </div>
+            <span class="shrink-0 transition duration-300 group-open:rotate-180 text-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          </summary>
+          <ul class="absolute bottom-full left-0 right-0 bg-white py-2 space-y-1 border-t border-gray-100 shadow-lg">
+            <li>
+              <%= link_to edit_user_registration_path, class: "block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+                Mon profil
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+                Déconnexion
+              <% end %>
+            </li>
+          </ul>
+        </details>
       </div>
     <% end %>
   </div>
