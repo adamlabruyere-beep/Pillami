@@ -71,14 +71,44 @@ MEDICAMENTS_COURANTS = [
   "fervex", "rhinadvil", "strepsil", "lysopaïne"
 ]
 
-Medicament.destroy_all
-puts "Base nettoyée"
+# ============================================================
+# CONFIGURATION: Pour reprendre après un arrêt, modifier cette valeur
+# avec le nom du médicament affiché lors de l'arrêt
+# Mettre nil pour commencer depuis le début
+# ============================================================
+REPRENDRE_DEPUIS = nil # ex: "amoxicilline"
 
-noms_existants = Set.new
-medicaments = []
+MAX_RETRIES_429 = 5
 
-MEDICAMENTS_COURANTS.each_with_index do |terme, index|
+# Ne pas détruire les médicaments existants si on reprend
+if REPRENDRE_DEPUIS.nil?
+  Medicament.destroy_all
+  puts "Base nettoyée"
+else
+  puts "Reprise depuis: #{REPRENDRE_DEPUIS}"
+end
+
+# Charger les noms existants pour éviter les doublons
+noms_existants = Set.new(Medicament.pluck(:nom))
+puts "#{noms_existants.size} médicaments déjà en base"
+
+# Trouver l'index de départ
+start_index = 0
+if REPRENDRE_DEPUIS
+  start_index = MEDICAMENTS_COURANTS.index(REPRENDRE_DEPUIS)
+  if start_index.nil?
+    puts "ERREUR: '#{REPRENDRE_DEPUIS}' non trouvé dans la liste!"
+    exit
+  end
+end
+
+medicaments_crees = 0
+
+MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
+  index = start_index + idx
   puts "Recherche #{index + 1}/#{MEDICAMENTS_COURANTS.size}: #{terme}..."
+
+  retries_429 = 0
 
   begin
     url = "https://medicaments-api.giygas.dev/medicament/#{URI.encode_www_form_component(terme)}"
@@ -89,21 +119,42 @@ MEDICAMENTS_COURANTS.each_with_index do |terme, index|
       nom = med["elementPharmaceutique"]
       next if nom.blank? || noms_existants.include?(nom)
 
-      noms_existants.add(nom)
-      medicaments << {
+      # Sauvegarde immédiate en base
+      Medicament.create!(
         nom: nom,
         format: med["formePharmaceutique"],
         prise: med["voiesAdministration"],
         ordonnance: !med["conditions"].nil?
-      }
+      )
+
+      noms_existants.add(nom)
+      medicaments_crees += 1
+      puts "  -> Créé: #{nom}"
     end
 
     sleep(0.35) # Respecte le rate limit de 3/sec
 
   rescue OpenURI::HTTPError => e
     if e.message.include?("429")
-      puts "Rate limited, pause 5s..."
-      sleep(5)
+      retries_429 += 1
+      puts "Rate limited (#{retries_429}/#{MAX_RETRIES_429}), pause 10s..."
+
+      if retries_429 >= MAX_RETRIES_429
+        puts ""
+        puts "=" * 60
+        puts "ARRÊT: 5 erreurs 429 consécutives sur '#{terme}'"
+        puts "=" * 60
+        puts "Pour reprendre, modifiez la ligne suivante dans seeds.rb:"
+        puts ""
+        puts "  REPRENDRE_DEPUIS = \"#{terme}\""
+        puts ""
+        puts "Médicaments créés cette session: #{medicaments_crees}"
+        puts "Total en base: #{Medicament.count}"
+        puts "=" * 60
+        exit
+      end
+
+      sleep(10)
       retry
     else
       puts "Erreur pour #{terme}: #{e.message}"
@@ -113,10 +164,12 @@ MEDICAMENTS_COURANTS.each_with_index do |terme, index|
   end
 end
 
-# Insert en bulk
-Medicament.insert_all(medicaments) if medicaments.any?
-
-puts "Terminé ! #{Medicament.count} médicaments créés (#{noms_existants.size} uniques)"
+puts ""
+puts "=" * 60
+puts "Terminé avec succès!"
+puts "Médicaments créés cette session: #{medicaments_crees}"
+puts "Total en base: #{Medicament.count} médicaments"
+puts "=" * 60
 
 #////////:/regex pour enlever le format aux noms des medicaments//////
 
