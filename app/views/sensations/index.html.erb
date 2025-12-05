@@ -31,7 +31,7 @@
     <li class="p-3 bg-gray-100 rounded">
       <%= sensation.content %>
       <span class="text-xs text-gray-500">
-        • <%= time_ago_in_words(sensation.created_at) %> ago
+        • <%= time_ago_in_words(sensation.created_at) %>
 
         <%= link_to "Supprimer",
           user_sensation_path(@user, sensation),

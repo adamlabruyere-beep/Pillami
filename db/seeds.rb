@@ -71,33 +71,12 @@ MEDICAMENTS_COURANTS = [
   "fervex", "rhinadvil", "strepsil", "lysopaïne"
 ]
 
-Medicament.create!([
-  {
-    nom: "Doliprane",
-    format: "Comprimé 500mg",
-    ordonnance: false,
-    prise: ["matin", "soir"]
-  },
-  {
-    nom: "Ibuprofène",
-    format: "Comprimé 200mg",
-    ordonnance: false,
-    prise: ["midi"]
-  },
-  {
-    nom: "Amoxicilline",
-    format: "Gélule 500mg",
-    ordonnance: true,
-    prise: ["matin", "midi", "soir"]
-  }
-])
-
 # ============================================================
 # CONFIGURATION: Pour reprendre après un arrêt, modifier cette valeur
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "zolpidem"
+REPRENDRE_DEPUIS = "flixotide"
 
 MAX_RETRIES_429 = 5
 

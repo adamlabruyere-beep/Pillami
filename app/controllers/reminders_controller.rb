@@ -4,7 +4,7 @@ class RemindersController < ApplicationController
   before_action :set_reminder, only: %i[show destroy]
 
   def index
-    @reminders = @user.reminders
+    @reminders = @user.reminders # trier en fonction du jour et de l'heure et si ils ont été validées ou pas ajouter un status actif/inactif
   end
 
   def show
@@ -19,6 +19,7 @@ class RemindersController < ApplicationController
   end
 
   def create
+    raise
     @reminder = @user.reminders.new(reminder_params)
 
     if @reminder.save
