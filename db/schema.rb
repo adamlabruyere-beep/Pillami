@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_04_155522) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_05_093236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_04_155522) do
     t.datetime "updated_at", null: false
     t.integer "quantity"
     t.string "measure"
+    t.integer "repeat_for_weeks"
     t.index ["medicament_id"], name: "index_reminders_on_medicament_id"
     t.index ["user_id"], name: "index_reminders_on_user_id"
   end

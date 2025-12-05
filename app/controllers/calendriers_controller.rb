@@ -2,6 +2,8 @@ class CalendriersController < ApplicationController
   around_action :switch_to_french_locale, only: :index
 
   def index
+    today = Date.current
+
     @current_date = params[:date]&.to_date || Date.today
     @week_start = @current_date.beginning_of_week(:monday)
     @week_days = (@week_start..@week_start + 6).to_a
@@ -11,6 +13,8 @@ class CalendriersController < ApplicationController
                      else
                        @week_days.first
                      end
+
+    @initial_index = @week_days.index(today) || 0
 
     @reminders = current_user.reminders.includes(:medicament)
 
