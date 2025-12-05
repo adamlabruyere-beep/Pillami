@@ -38,6 +38,8 @@
             class="flex transition-transform duration-300 ease-out"
             >
             <% @week_days.each do |date| %>
+              <% reminders_for_day = @reminders_by_day[date] || [] %>
+
               <div
                 data-calendrier-target="day"
                 data-action="click->calendrier#select"
@@ -58,6 +60,10 @@
                     <p class="text-sm leading-tight">
                       <%= l(date, format: "%B") %>
                     </p>
+                    <!-- HTML des rappels pour ce jour, caché dans un template -->
+                    <template data-calendrier-target="template">
+                      <%= render partial: "reminder_panel", locals: { reminders: reminders_for_day } %>
+                    </template>
                     <div
                       data-calendrier-target="panel"
                       class="mt-2 text-sm"
