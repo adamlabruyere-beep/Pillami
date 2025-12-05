@@ -1,7 +1,7 @@
 require "json"
 require "open-uri"
 
-#//////////// SEED POUR MEDICAMENTS COURANTS EN FRANCE /////////////
+# //////////// SEED POUR MEDICAMENTS COURANTS EN FRANCE /////////////
 
 # Médicaments les plus couramment utilisés en France
 MEDICAMENTS_COURANTS = [
@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "flixotide"
+REPRENDRE_DEPUIS = "cortancyl"
 
 MAX_RETRIES_429 = 5
 
@@ -135,7 +135,6 @@ MEDICAMENTS_COURANTS[start_index..].each_with_index do |terme, idx|
     end
 
     sleep(0.35) # Respecte le rate limit de 3/sec
-
   rescue OpenURI::HTTPError => e
     if e.message.include?("429")
       retries_429 += 1
@@ -173,38 +172,9 @@ puts "Médicaments créés cette session: #{medicaments_crees}"
 puts "Total en base: #{Medicament.count} médicaments"
 puts "=" * 60
 
-#////////:/regex pour enlever le format aux noms des medicaments//////
+# ////////:/regex pour enlever le format aux noms des medicaments//////
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#////////////seed pour medicament/////////////
+# ////////////seed pour medicament/////////////
 
 # categories =["cetirizine", "loratadine", "desloratadine",
 #   "omeprazole", "pantoprazole", "esomeprazole"
@@ -214,13 +184,10 @@ puts "=" * 60
 # [
 #   "paracetamol", "ibuprofene", "aspirine", "codeine",
 #   "diclofenac", "ketoprofene", "naproxene"]["amoxicilline", "azithromycine", "ciprofloxacine",
-  # "metformine", "insuline", "glibenclamide",
-  # "amlodipine", "ramipril", "losartan"] done["methotrexate", "fluorouracile", "cyclophosphamide",
-  # "alprazolam", "bromazepam", "diazepam",
-  # "sertraline", "fluoxetine", "paroxetine"]
-
-
-
+# "metformine", "insuline", "glibenclamide",
+# "amlodipine", "ramipril", "losartan"] done["methotrexate", "fluorouracile", "cyclophosphamide",
+# "alprazolam", "bromazepam", "diazepam",
+# "sertraline", "fluoxetine", "paroxetine"]
 
 # categories.each do |category|
 #   p "Fetching medicaments for category: #{category}"
@@ -266,8 +233,6 @@ puts "=" * 60
 # end
 
 # p "Seed completed! #{Medicament.count} medicaments created."
-
-
 
 # derniere creation en recuperant depuis l'api a continuer demain
 # "Medicament 3 (naproxene): creation"

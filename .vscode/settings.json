@@ -1,0 +1,7 @@
+{
+  "solargraph.externalServer": {
+    
+    "host": "localhost",
+    "port": 7658
+  }
+}
