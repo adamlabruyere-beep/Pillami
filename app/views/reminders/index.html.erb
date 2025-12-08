@@ -17,9 +17,9 @@
               <p class="reminder-text">
                 Heure :
                 <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
-                <%= reminder.quantity %>
-                <%= reminder.measure.pluralize %>
-                Jours :
+                <%= pluralize_fr(reminder.quantity, reminder.measure) %>
+                |
+                <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
                 <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
               </p>
 
