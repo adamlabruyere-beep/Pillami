@@ -49,6 +49,7 @@
           >
             <% @week_days.each do |date| %>
               <% reminders_for_day = @reminders_by_day[date] || [] %>
+              <% sensations_for_day = @sensations_by_day[date] || [] %>
 
               <!-- 1 SLIDE = 1 JOUR -->
               <div
@@ -77,7 +78,7 @@
                 <!-- TEMPLATE HTML DES RAPPELS POUR CE JOUR -->
                 <template data-calendrier-target="template">
                   <%= render partial: "reminder_panel",
-                             locals: { reminders: reminders_for_day } %>
+                             locals: { reminders: reminders_for_day, sensations: sensations_for_day } %>
                 </template>
               </div>
             <% end %>

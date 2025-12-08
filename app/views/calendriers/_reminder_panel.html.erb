@@ -1,20 +1,43 @@
-<% if reminders.present? %>
-  <div class="rounded-2xl shadow p-3 bg-white space-y-1">
-    <% reminders.each do |reminder| %>
-      <p class="text-lg text-gray-700">
-        <span class="font-semibold"><%= reminder.medicament.nom %></span>
-        —
-        <%= reminder.time&.strftime("%H:%M") || "Heure non définie" %>
-        <% if reminder.quantity.present? && reminder.measure.present? %>
-          (<%= reminder.quantity %> <%= reminder.measure %>)
+<% has_reminders  = reminders.present? %>
+<% has_sensations = defined?(sensations) && sensations.present? %>
+
+<% if has_reminders || has_sensations %>
+  <div class="rounded-2xl shadow p-3 bg-white space-y-3">
+
+    <% if has_reminders %>
+      <div class="space-y-1">
+        <% reminders.each do |reminder| %>
+          <p class="text-lg text-gray-700">
+            <span class="font-semibold"><%= reminder.medicament.nom %></span>
+            —
+            <%= reminder.time&.strftime("%H:%M") || "Heure non définie" %>
+            <% if reminder.quantity.present? && reminder.measure.present? %>
+              (<%= reminder.quantity %> <%= reminder.measure %>)
+            <% end %>
+          </p>
         <% end %>
-      </p>
+      </div>
     <% end %>
+
+    <% if has_sensations %>
+      <div class="border-t pt-2 space-y-1">
+        <p class="text-sm font-semibold text-gray-800">Sensations</p>
+        <% sensations.each do |sensation| %>
+          <p class="text-sm text-gray-700">
+            <%= sensation.content %>
+            <span class="text-xs text-gray-400">
+              — <%= l(sensation.created_at, format: "%H:%M") %>
+            </span>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+
   </div>
 <% else %>
   <div class="rounded-2xl shadow p-3 bg-white">
     <p class="text-lg text-gray-400">
-      Aucun rappel pour ce jour.
+      Aucun rappel ni sensation pour ce jour.
     </p>
   </div>
 <% end %>
