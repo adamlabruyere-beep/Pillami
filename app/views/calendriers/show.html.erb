@@ -1,37 +1,41 @@
 <div
   data-controller="calendrier"
   data-calendrier-index-value="<%= @initial_index %>"
-  class="pillami-calendar-container min-h-screen flex flex-col items-center justify-start pt-15"
+  class="pillami-calendar-container min-h-screen flex flex-col items-center justify-start pt-4 md:pt-8 px-4"
 >
-  <div class="pillami-calendar-main container mx-auto">
-    <div class="pillami-calendar-header justify-items-center items-center text-center space-y-8">
+  <div class="pillami-calendar-main container mx-auto max-w-lg">
+    <div class="pillami-calendar-header justify-items-center items-center text-center space-y-4 md:space-y-8">
       <!-- Titre semaine -->
       <div>
-        <p class="pillami-calendar-week-title-label">Semaine du</p>
-        <h1 class="pillami-calendar-week-range">
+        <p class="pillami-calendar-week-title-label text-sm text-gray-500">Semaine du</p>
+        <h1 class="pillami-calendar-week-range text-lg md:text-2xl font-semibold">
           <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
         </h1>
       </div>
 
       <!-- Nav semaines -->
-      <div class="pillami-calendar-nav flex items-center justify-between">
-        <%= link_to "◀︎ Semaine précédente",
-            user_calendrier_path(@user, date: @week_start - 7),
-            class: "pillami-calendar-nav-btn px-4 py-2 border rounded-lg" %>
+      <div class="pillami-calendar-nav flex items-center justify-between gap-2 w-full">
+        <%= link_to user_calendrier_path(@user, date: @week_start - 7),
+            class: "pillami-calendar-nav-btn px-2 py-2 md:px-4 border rounded-lg text-xs md:text-sm hover:bg-gray-100 transition" do %>
+          <span class="hidden sm:inline">◀︎ Semaine précédente</span>
+          <span class="sm:hidden">◀︎ Préc.</span>
+        <% end %>
 
-        <%= link_to "Semaine suivante ▶︎",
-            user_calendrier_path(@user, date: @week_start + 7),
-            class: "pillami-calendar-nav-btn px-4 py-2 border rounded-lg" %>
+        <%= link_to user_calendrier_path(@user, date: @week_start + 7),
+            class: "pillami-calendar-nav-btn px-2 py-2 md:px-4 border rounded-lg text-xs md:text-sm hover:bg-gray-100 transition" do %>
+          <span class="hidden sm:inline">Semaine suivante ▶︎</span>
+          <span class="sm:hidden">Suiv. ▶︎</span>
+        <% end %>
       </div>
 
       <!-- CARROUSEL -->
-      <div class="pillami-calendar-carousel relative w-full max-w-sm mx-auto mt-4">
+      <div class="pillami-calendar-carousel relative w-full max-w-xs sm:max-w-sm mx-auto mt-4">
         <!-- bouton précédent -->
         <button
           type="button"
           data-action="click->calendrier#prev"
-          class="pillami-calendar-carousel-btn pillami-calendar-carousel-btn-prev absolute left-2 top-1/2 -translate-y-1/2
-                 md:-translate-x-full px-3 py-2 border rounded-full text-sm"
+          class="pillami-calendar-carousel-btn pillami-calendar-carousel-btn-prev absolute -left-2 sm:left-0 top-1/2 -translate-y-1/2
+                 md:-translate-x-full px-2 py-1 sm:px-3 sm:py-2 border rounded-full text-xs sm:text-sm bg-white shadow-sm hover:bg-gray-100 transition z-10"
         >
           ◀
         </button>
@@ -60,16 +64,16 @@
                 data-month="<%= l(date, format: '%B') %>"
                 class="pillami-calendar-day-slide min-w-full flex justify-center"
               >
-                <div class="pillami-calendar-day-circle w-40 aspect-square rounded-full border border-black
-                            flex items-center justify-center cursor-pointer">
-                  <div class="pillami-calendar-day-content flex flex-col items-center text-center px-4 py-6 space-y-1">
-                    <p class="pillami-calendar-day-name text-sm leading-tight">
+                <div class="pillami-calendar-day-circle w-32 sm:w-40 aspect-square rounded-full border border-black
+                            flex items-center justify-center cursor-pointer hover:bg-gray-50 transition">
+                  <div class="pillami-calendar-day-content flex flex-col items-center text-center px-3 py-4 sm:px-4 sm:py-6 space-y-1">
+                    <p class="pillami-calendar-day-name text-xs sm:text-sm leading-tight text-gray-600">
                       <%= l(date, format: "%A") %>
                     </p>
-                    <p class="pillami-calendar-day-number text-3xl font-semibold leading-none" data-role="day-number">
+                    <p class="pillami-calendar-day-number text-2xl sm:text-3xl font-semibold leading-none" data-role="day-number">
                       <%= date.day %>
                     </p>
-                    <p class="pillami-calendar-day-month text-sm leading-tight">
+                    <p class="pillami-calendar-day-month text-xs sm:text-sm leading-tight text-gray-600">
                       <%= l(date, format: "%B") %>
                     </p>
                   </div>
@@ -89,8 +93,8 @@
         <button
           type="button"
           data-action="click->calendrier#next"
-          class="pillami-calendar-carousel-btn pillami-calendar-carousel-btn-next absolute right-2 top-1/2 -translate-y-1/2
-                 md:translate-x-full px-3 py-2 border rounded-full text-sm"
+          class="pillami-calendar-carousel-btn pillami-calendar-carousel-btn-next absolute -right-2 sm:right-0 top-1/2 -translate-y-1/2
+                 md:translate-x-full px-2 py-1 sm:px-3 sm:py-2 border rounded-full text-xs sm:text-sm bg-white shadow-sm hover:bg-gray-100 transition z-10"
         >
           ▶
         </button>
@@ -99,7 +103,7 @@
       <!-- PANEL GLOBAL SOUS LE CARROUSEL -->
       <div
         data-calendrier-target="panel"
-        class="pillami-calendar-panel mt-6 max-w-sm mx-auto"
+        class="pillami-calendar-panel mt-4 sm:mt-6 w-full max-w-xs sm:max-w-sm mx-auto px-2"
       ></div>
     </div>
   </div>

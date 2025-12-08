@@ -29,20 +29,20 @@
 %>
 
 <% if has_content %>
-  <div class="space-y-4">
+  <div class="space-y-3 sm:space-y-4">
 
     <!-- Rappels passés -->
     <% if has_past %>
-      <div class="rounded-2xl shadow p-4 bg-gray-50 border border-gray-200">
-        <div class="flex items-center gap-2 mb-3">
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-gray-50 border border-gray-200">
+        <div class="flex items-center gap-2 mb-2 sm:mb-3">
           <span class="text-gray-400">✓</span>
-          <p class="text-sm font-semibold text-gray-500">Rappels passés</p>
+          <p class="text-xs sm:text-sm font-semibold text-gray-500">Rappels passés</p>
         </div>
         <div class="space-y-2">
           <% past_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
-            <div class="flex items-center justify-between text-gray-400 line-through">
-              <span class="font-medium"><%= reminder.medicament.nom %></span>
-              <span class="text-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-gray-400 line-through gap-1">
+              <span class="font-medium text-sm truncate"><%= reminder.medicament.nom %></span>
+              <span class="text-xs sm:text-sm shrink-0">
                 <%= reminder.time&.strftime("%H:%M") %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
                   · <%= reminder.quantity %> <%= reminder.measure %>
@@ -56,15 +56,15 @@
 
     <!-- Rappels à venir -->
     <% if has_upcoming %>
-      <div class="rounded-2xl shadow p-4 bg-blue-50 border border-blue-200">
-        <div class="flex items-center gap-2 mb-3">
-          <p class="text-sm font-semibold text-blue-700">Rappels à venir</p>
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-blue-50 border border-blue-200">
+        <div class="flex items-center gap-2 mb-2 sm:mb-3">
+          <p class="text-xs sm:text-sm font-semibold text-blue-700">Rappels à venir</p>
         </div>
         <div class="space-y-2">
           <% upcoming_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
-            <div class="flex items-center justify-between text-gray-700">
-              <span class="font-medium"><%= reminder.medicament.nom %></span>
-              <span class="text-sm text-blue-600">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-gray-700 gap-1">
+              <span class="font-medium text-sm truncate"><%= reminder.medicament.nom %></span>
+              <span class="text-xs sm:text-sm text-blue-600 shrink-0">
                 <%= reminder.time&.strftime("%H:%M") || "Heure non définie" %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
                   · <%= reminder.quantity %> <%= reminder.measure %>
@@ -78,14 +78,14 @@
 
     <!-- Sensations du jour -->
     <% if has_sensations %>
-      <div class="rounded-2xl shadow p-4 bg-green-50 border border-green-200">
-        <div class="flex items-center gap-2 mb-3">
-          <p class="text-sm font-semibold text-green-700">Sensations du jour</p>
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-green-50 border border-green-200">
+        <div class="flex items-center gap-2 mb-2 sm:mb-3">
+          <p class="text-xs sm:text-sm font-semibold text-green-700">Sensations du jour</p>
         </div>
         <div class="space-y-2">
           <% sensations.sort_by(&:created_at).each do |sensation| %>
             <div class="text-gray-700">
-              <p class="text-sm"><%= sensation.content %></p>
+              <p class="text-xs sm:text-sm"><%= sensation.content %></p>
               <p class="text-xs text-green-600 mt-1">
                 <%= l(sensation.created_at, format: "%H:%M") %>
               </p>
@@ -97,8 +97,8 @@
 
   </div>
 <% else %>
-  <div class="rounded-2xl shadow p-4 bg-white border border-gray-100">
-    <p class="text-center text-gray-400">
+  <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-white border border-gray-100">
+    <p class="text-center text-xs sm:text-sm text-gray-400">
       Aucun rappel ni sensation pour ce jour.
     </p>
   </div>
