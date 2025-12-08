@@ -1,330 +1,165 @@
-// ===== Variables de couleurs (même palette que home) =====
-$primary-dark: #0A1128;
-$primary-blue: #001F54;
-$medium-blue: #034078;
-$light-blue: #1282A2;
-$background: #FEFCFB;
+$blue: #05668D;
+$dark-blue: #001F54;
+$light-blue: #84A9C0;
+$green: #16a34a;
+$background: #F7FAFB;
 
-// ===== Container principal =====
-.pillatheque-container {
+/* --- PAGE WRAPPER --- */
+.pillami-page-wrapper {
+  background: $background;
   min-height: 100vh;
-  background-color: $background;
-  padding: 32px 20px;
-
-  @media (min-width: 768px) {
-    padding: 56px 40px;
-  }
+  padding-top: 80px;
+  padding-bottom: 40px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
-.pillatheque-content {
-  max-width: 900px;
-  margin: 0 auto;
-  width: 100%;
+.pillami-page-container {
+  max-width: 1024px;
+  margin: auto;
 }
 
-// ===== Header =====
-.pillatheque-header {
-  margin-bottom: 40px;
-  padding-bottom: 24px;
-  border-bottom: 4px solid $medium-blue;
-
-  @media (min-width: 768px) {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 48px;
-    padding-bottom: 32px;
-  }
-}
-
-.pillatheque-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: $primary-dark;
-  margin: 0 0 8px 0;
-  line-height: 1.2;
-
-  @media (min-width: 768px) {
-    font-size: 40px;
-  }
-}
-
-.pillatheque-count {
-  font-size: 18px;
-  color: $medium-blue;
-  font-weight: 500;
-  margin-bottom: 20px;
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-  }
-}
-
-// ===== Bouton ajouter =====
-.pillatheque-btn-add {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: $medium-blue;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 16px 28px;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-  min-height: 56px;
-  border: 3px solid transparent;
-
-  &:hover {
-    background-color: $primary-blue;
-  }
-
-  &:focus-visible {
-    outline: 5px solid $light-blue;
-    outline-offset: 4px;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 20px;
-    padding: 18px 32px;
-  }
-}
-
-.pillatheque-btn-icon {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-// ===== Liste des médicaments =====
-.pillatheque-list {
+/* --- HEADER --- */
+.pillami-page-header {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  @media (min-width: 768px) {
-    gap: 20px;
-  }
-}
-
-// ===== En-tête de la liste (colonnes) =====
-.pillatheque-list-header {
-  display: none;
-
-  @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 24px;
-    padding: 16px 24px;
-    background-color: $primary-dark;
-    color: white;
-    font-weight: 600;
-    font-size: 16px;
-    border-radius: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-}
-
-// ===== Carte médicament =====
-.pillatheque-card {
-  background-color: white;
-  border-left: 6px solid $light-blue;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(3, 64, 120, 0.12);
-  transition: all 0.2s ease;
-
-  @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 24px;
-    padding: 24px;
-  }
-
-  &:hover {
-    box-shadow: 0 4px 16px rgba(3, 64, 120, 0.18);
-  }
-
-  &:focus-within {
-    outline: 3px solid $light-blue;
-    outline-offset: 2px;
-  }
-}
-
-.pillatheque-card-info {
-  margin-bottom: 16px;
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-  }
-}
-
-.pillatheque-card-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: $primary-dark;
-  margin: 0 0 6px 0;
-  line-height: 1.3;
-  word-wrap: break-word;
-
-  @media (min-width: 768px) {
-    font-size: 22px;
-  }
-}
-
-.pillatheque-card-format {
-  font-size: 16px;
-  color: $medium-blue;
-  margin: 0;
-
-  @media (min-width: 768px) {
-    font-size: 18px;
-  }
-}
-
-// ===== Badge ordonnance =====
-.pillatheque-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  min-width: 80px;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    font-size: 18px;
-    padding: 10px 20px;
-  }
-}
-
-.pillatheque-badge--yes {
-  background-color: #FEE2E2;
-  color: #991B1B;
-  border: 2px solid #FECACA;
-}
-
-.pillatheque-badge--no {
-  background-color: #D1FAE5;
-  color: #065F46;
-  border: 2px solid #A7F3D0;
-}
-
-// ===== Bouton retirer =====
-.pillatheque-btn-remove {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  color: #DC2626;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 12px 20px;
-  border: 2px solid #DC2626;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  min-height: 48px;
-
-  &:hover {
-    background-color: #DC2626;
-    color: white;
-  }
-
-  &:focus-visible {
-    outline: 5px solid $light-blue;
-    outline-offset: 4px;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 18px;
-    padding: 12px 24px;
-  }
-}
-
-// ===== État vide =====
-.pillatheque-empty {
-  background-color: white;
-  border: 3px dashed $light-blue;
-  border-radius: 12px;
-  padding: 48px 24px;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    padding: 64px 40px;
-  }
-}
-
-.pillatheque-empty-text {
-  font-size: 20px;
-  color: $medium-blue;
-  margin: 0 0 24px 0;
-  font-weight: 500;
-
-  @media (min-width: 768px) {
-    font-size: 24px;
-  }
-}
-
-.pillatheque-empty-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
-  color: $medium-blue;
-  font-size: 18px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 0.25s ease;
+  margin-bottom: 32px;
 
-  &:hover {
-    color: $light-blue;
-  }
-
-  &:focus-visible {
-    outline: 5px solid $light-blue;
-    outline-offset: 4px;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 20px;
+  @media (min-width: 640px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
   }
 }
 
-// ===== Labels mobile =====
-.pillatheque-mobile-label {
-  display: block;
+.pillami-page-title {
+  font-size: 26px;
+  color: $dark-blue;
+  font-weight: bold;
+}
+
+.pillami-page-subtitle {
+  font-size: 14px;
+  color: $blue;
+}
+
+/* --- BOUTONS --- */
+.pillami-btn-primary {
+  display: inline-block;
+  background: $blue;
+  color: white;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: auto;
+  }
+}
+
+.pillami-btn-action {
+  background-color: #fee2e2;  /* rouge clair */
+  color: #b91c1c;             /* rouge foncé */
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 4px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.pillami-btn-link {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* --- LISTE DE MÉDICAMENTS --- */
+.pillami-medicaments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* CARD MÉDICAMENT */
+.pillami-medicament-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  padding: 16px;
+}
+
+.pillami-medicament-card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pillami-medicament-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pillami-medicament-name {
   font-size: 14px;
   font-weight: 600;
-  color: $medium-blue;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
+  color: $dark-blue;
 }
 
-// ===== Actions mobile =====
-.pillatheque-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(3, 64, 120, 0.1);
+.pillami-medicament-format {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 4px;
+}
 
-  @media (min-width: 768px) {
-    display: contents;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
+/* --- PASTILLES ORDONNANCE --- */
+.pillami-pill-tag {
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pillami-pill-ordonnance-oui {
+  background-color: #dbeafe;  /* bleu clair */
+  color: #1e3a8a;             /* bleu foncé */
+}
+
+.pillami-pill-ordonnance-non {
+  background-color: #d1fae5;  /* vert clair */
+  color: #065f46;             /* vert foncé */
+}
+
+/* CARD VIDE */
+.pillami-empty-card {
+  text-align: center;
+  color: #6b7280;
+  padding: 32px;
+}
+
+/* RESPONSIVE MOBILE-FIRST */
+@media (max-width: 480px) {
+  .pillami-page-title {
+    font-size: 22px;
+  }
+
+  .pillami-page-subtitle {
+    font-size: 13px;
+  }
+
+  .pillami-medicament-card-body {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pillami-pill-tag {
+    font-size: 11px;
+    padding: 2px 4px;
   }
 }
