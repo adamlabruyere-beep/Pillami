@@ -1,7 +1,9 @@
 class CalendriersController < ApplicationController
-  around_action :switch_to_french_locale, only: :index
+  around_action :switch_to_french_locale, only: :show
+  before_action :set_user
+  before_action :authorize_user
 
-  def index
+  def show
     today = Date.current
 
     @current_date = params[:date]&.to_date || Date.today
@@ -16,21 +18,11 @@ class CalendriersController < ApplicationController
 
     @initial_index = @week_days.index(today) || 0
 
-    @reminders = current_user.reminders.includes(:medicament)
+    @reminders = @user.reminders.includes(:medicament)
 
     @reminders_by_day = @week_days.index_with do |date|
       english_day_name = Date::DAYNAMES[date.wday]
       @reminders.select { |r| (r.days_of_week || []).include?(english_day_name) }
-    end
-  end
-
-  def create
-    @calendrier = current_user.calendriers.new(calendrier_params)
-
-    if @calendrier.save
-      redirect_to @calendrier
-    else
-      render :new
     end
   end
 
@@ -44,6 +36,14 @@ class CalendriersController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
+  def authorize_user
+    authorize @user, :show?, policy_class: CalendrierPolicy
+  end
 
   def switch_to_french_locale
     I18n.with_locale(:fr) { yield }
