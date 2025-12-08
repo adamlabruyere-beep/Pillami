@@ -24,7 +24,7 @@
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to calendriers_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to user_calendrier_path(current_user), class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Calendrier
             <% end %>
           </li>
@@ -36,6 +36,11 @@
           <li data-sidebar-target="text">
             <%= link_to user_reminders_path(current_user), class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Mes rappels
+            <% end %>
+          </li>
+          <li data-sidebar-target="text">
+            <%= link_to entourage_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+              Mon entourage
             <% end %>
           </li>
         <% else %>

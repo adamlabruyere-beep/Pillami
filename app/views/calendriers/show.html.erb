@@ -16,11 +16,11 @@
       <!-- Nav semaines -->
       <div class="flex items-center justify-between">
         <%= link_to "◀︎ Semaine précédente",
-            calendriers_path(date: @week_start - 7),
+            user_calendrier_path(@user, date: @week_start - 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
 
         <%= link_to "Semaine suivante ▶︎",
-            calendriers_path(date: @week_start + 7),
+            user_calendrier_path(@user, date: @week_start + 7),
             class: "px-4 py-2 border rounded-lg hover:bg-gray-100" %>
       </div>
 

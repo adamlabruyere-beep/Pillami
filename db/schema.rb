@@ -50,6 +50,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
     t.index ["user_id"], name: "index_calendriers_on_user_id"
   end
 
+  create_table "entourage_members", force: :cascade do |t|
+    t.bigint "entourage_id", null: false
+    t.bigint "user_id", null: false
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entourage_id"], name: "index_entourage_members_on_entourage_id"
+    t.index ["user_id"], name: "index_entourage_members_on_user_id"
+  end
+
+  create_table "entourages", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_entourages_on_user_id"
+  end
+
   create_table "medicaments", force: :cascade do |t|
     t.string "nom"
     t.string "format"
@@ -134,6 +152,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "calendriers", "users"
+  add_foreign_key "entourage_members", "entourages"
+  add_foreign_key "entourage_members", "users"
+  add_foreign_key "entourages", "users"
   add_foreign_key "pillatheque_medicaments", "medicaments"
   add_foreign_key "pillatheque_medicaments", "pillatheques"
   add_foreign_key "pillatheques", "users"
