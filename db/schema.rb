@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_08_140131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
     t.index ["user_id"], name: "index_calendriers_on_user_id"
   end
 
+  create_table "device_tokens", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "token"
+    t.string "platform"
+    t.datetime "last_seen_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_device_tokens_on_user_id"
+  end
+
+  create_table "devices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "platform"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_devices_on_user_id"
+  end
+
   create_table "medicaments", force: :cascade do |t|
     t.string "nom"
     t.string "format"
@@ -61,9 +80,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
 
   create_table "notifications", force: :cascade do |t|
     t.time "time"
-    t.boolean "status"
+    t.boolean "status", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "reminder_id", null: false
+    t.datetime "scheduled_for"
+    t.index ["reminder_id"], name: "index_notifications_on_reminder_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "pillatheque_medicaments", force: :cascade do |t|
@@ -134,6 +158,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_05_145639) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "calendriers", "users"
+  add_foreign_key "device_tokens", "users"
+  add_foreign_key "devices", "users"
+  add_foreign_key "notifications", "reminders"
+  add_foreign_key "notifications", "users"
   add_foreign_key "pillatheque_medicaments", "medicaments"
   add_foreign_key "pillatheque_medicaments", "pillatheques"
   add_foreign_key "pillatheques", "users"

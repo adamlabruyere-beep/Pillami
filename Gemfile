@@ -84,3 +84,5 @@ gem "tailwindcss-rails", "~> 4.4"
 gem "noticed", "~> 2.9"
 
 gem "cloudinary"
+
+gem "googleauth"

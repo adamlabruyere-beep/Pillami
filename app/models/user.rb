@@ -15,6 +15,9 @@ class User < ApplicationRecord
 
   has_many :reminders, dependent: :destroy
   has_many :sensations, dependent: :destroy
+  has_many :devices, dependent: :destroy
+  has_many :device_tokens, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   has_one_attached :photo
 

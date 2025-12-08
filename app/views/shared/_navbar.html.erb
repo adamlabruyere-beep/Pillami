@@ -6,6 +6,71 @@
         <%= link_to root_path(current_user), class: "block rounded-lg px-4 py-2 text-lg font-bold text-gray-700 hover:bg-gray-100 hover:text-gray-900" do %>
           PILLAMI
         <% end %>
+
+        <!-- cloche de notification -->
+        <% if current_user %>
+          <% unread_count = current_user.notifications.unread.due.count %>
+
+          <div class="relative" data-controller="dropdown">
+            <button
+              type="button"
+              data-action="click->dropdown#toggle"
+              class="relative inline-flex items-center justify-center w-8 h-8 rounded-full hover:bg-gray-100"
+            >
+              🔔
+              <% if unread_count.positive? %>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs
+                            rounded-full px-1">
+                  <%= unread_count %>
+                </span>
+              <% end %>
+            </button>
+
+            <!-- menu déroulant -->
+            <div
+              data-dropdown-target="menu"
+              class="hidden absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg z-50 text-left"
+            >
+              <div class="px-3 py-2 border-b font-semibold text-sm">
+                Notifications
+              </div>
+
+              <div class="max-h-80 overflow-y-auto">
+                <% current_user.notifications.order(created_at: :desc).limit(20).each do |notification| %>
+
+                  <div
+                    id="notification_<%= notification.id %>"
+                    class="px-3 py-2 border-b text-sm <%= 'bg-gray-50' unless notification.status %>"
+                  >
+                    <p>
+                      <strong><%= notification.reminder.medicament.nom %></strong>
+                      — <%= notification.reminder.time&.strftime("%H:%M") %>
+                    </p>
+
+                    <p class="text-xs text-gray-500">
+                      <%= time_ago_in_words(notification.created_at) %> ago
+                    </p>
+
+                    <% unless notification.status %>
+                      <%= link_to "Marquer comme lue",
+                            user_notification_path(current_user, notification),
+                            data: { turbo_method: :patch },
+                            class: "text-xs text-blue-600 hover:underline" %>
+                    <% end %>
+                  </div>
+
+                <% end %>
+              </div>
+
+
+              <div class="px-3 py-2 text-center text-xs text-gray-500">
+                <%= link_to "Voir tout", user_notifications_path(current_user) %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <!-- fin de la cloche de notification -->
+
       </div>
       <!-- Toggle button -->
       <button data-action="click->sidebar#toggle" class="hidden md:block mb-4 p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors">

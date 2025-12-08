@@ -1,0 +1,84 @@
+class ReminderNotificationJob < ApplicationJob
+  queue_as :default
+
+  def perform
+    now          = Time.current
+    today        = now.to_date
+    weekday_name = Date::DAYNAMES[today.wday]
+
+    current_minutes = now.hour * 60 + now.min
+
+    Reminder.includes(:user, :medicament).find_each do |reminder|
+      # 1. doit être actif
+      next unless reminder.active?
+
+      # 2. Bon jour de la semaine
+      days = reminder.days_of_week || []
+      next unless days.include?(weekday_name)
+
+      # 3. Gestion de repeat_for_weeks
+      created   = reminder.created_at.to_date
+      days_diff = (today - created).to_i
+      next if days_diff < 0 # pas de rappel avant la création
+
+      weeks = (reminder.repeat_for_weeks || 1).to_i
+      weeks = 1 if weeks <= 0
+
+      weeks_diff = days_diff / 7
+      next if weeks_diff >= weeks # on a dépassé la durée
+
+      # 4. Heure du rappel ≈ heure actuelle
+      next unless reminder.time
+
+      reminder_minutes = reminder.time.hour * 60 + reminder.time.min
+      # job toutes les heures → même heure
+      next unless (current_minutes - reminder_minutes).between?(0, 59)
+
+      # 5. éviter plusieurs notifs dans la même heure
+      already_sent = Notification.exists?(
+        user:     reminder.user,
+        reminder: reminder,
+        created_at: now.beginning_of_hour..now.end_of_hour
+      )
+      next if already_sent
+
+      # 6. créer la notification + push
+      notification = Notification.create!(
+        user:     reminder.user,
+        reminder: reminder,
+        time:     now,
+        status:   false,
+        message:  build_message(reminder, now)
+      )
+
+      send_push_for(notification)
+    end
+  end
+
+  private
+
+  def build_message(reminder, now)
+    time_str = reminder.time&.strftime("%H:%M") || now.strftime("%H:%M")
+    med_name = reminder.medicament&.nom || "Votre médicament"
+    "#{med_name} — c'est l'heure de le prendre (#{time_str})"
+  end
+
+  def send_push_for(notification)
+    user     = notification.user
+    reminder = notification.reminder
+
+    title    = "Pillami"
+    time_str = reminder.time&.strftime("%H:%M") || Time.current.strftime("%H:%M")
+    body     = "#{reminder.medicament&.nom || 'Votre médicament'} — c'est l'heure (#{time_str})"
+
+    sender = Firebase::PushSender.new
+
+    user.device_tokens.find_each do |device|
+      sender.send_to_token(
+        token: device.token,
+        title: title,
+        body:  body
+      )
+    end
+  end
+end

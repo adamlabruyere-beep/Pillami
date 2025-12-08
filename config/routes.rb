@@ -5,11 +5,15 @@ Rails.application.routes.draw do
   resources :calendriers, only: [:index]
   resources :users do
     resources :reminders
+    resources :notifications, only: %i[index update]
   end
   get "reminders/by_date", to: "reminders#by_date"
   resources :users do
     resources :sensations
   end
+
+  resources :devices, only: :create
+  resources :device_tokens, only: :create
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
