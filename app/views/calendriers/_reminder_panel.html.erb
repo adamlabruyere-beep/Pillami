@@ -45,7 +45,7 @@
               <span class="text-xs sm:text-sm shrink-0">
                 <%= reminder.time&.strftime("%H:%M") %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
-                  · <%= reminder.quantity %> <%= reminder.measure %>
+                  · <%= pluralize_fr(reminder.quantity, reminder.measure) %>
                 <% end %>
               </span>
             </div>
@@ -67,7 +67,7 @@
               <span class="text-xs sm:text-sm text-blue-600 shrink-0">
                 <%= reminder.time&.strftime("%H:%M") || "Heure non définie" %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
-                  · <%= reminder.quantity %> <%= reminder.measure %>
+                  · <%= pluralize_fr(reminder.quantity, reminder.measure) %>
                 <% end %>
               </span>
             </div>
