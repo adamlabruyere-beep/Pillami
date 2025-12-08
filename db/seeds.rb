@@ -76,7 +76,7 @@ MEDICAMENTS_COURANTS = [
 # avec le nom du médicament affiché lors de l'arrêt
 # Mettre nil pour commencer depuis le début
 # ============================================================
-REPRENDRE_DEPUIS = "triptan"
+REPRENDRE_DEPUIS = "collyre"
 
 MAX_RETRIES_429 = 5
 
