@@ -1,10 +1,8 @@
-<h1 class="text-2xl font-bold mb-6">Mes Rappels</h1>
-
+<h1 class="text-2xl font-bold mb-6 pt-16">Mes Rappels</h1>
 <div class="flex justify-between items-center mb-6">
   <h2 class="text-xl font-semibold">Liste des rappels</h2>
   <%= link_to 'Ajouter', new_user_reminder_path(@user), class: "btn btn-primary" %>
 </div>
-
 <% if @reminders.any? %>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @reminders.each do |reminder| %>
@@ -14,7 +12,7 @@
           <p class="text-gray-500">
             Heure : <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
             <%= reminder.quantity %>
-           <%= reminder.measure.pluralize %>
+            <%= reminder.measure.pluralize %>
             Jours : <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
           </p>
           <div class="card-actions justify-end">
