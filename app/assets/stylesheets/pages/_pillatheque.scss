@@ -2,11 +2,11 @@ $blue: #05668D;
 $dark-blue: #001F54;
 $light-blue: #84A9C0;
 $green: #16a34a;
-$background: #F7FAFB;
+$background:#F7FAFB;
+
 
 /* --- PAGE WRAPPER --- */
 .pillami-page-wrapper {
-  background: $background;
   min-height: 100vh;
   padding-top: 80px;
   padding-bottom: 40px;
@@ -17,6 +17,7 @@ $background: #F7FAFB;
 .pillami-page-container {
   max-width: 1024px;
   margin: auto;
+
 }
 
 /* --- HEADER --- */
