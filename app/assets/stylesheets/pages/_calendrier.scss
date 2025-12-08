@@ -29,8 +29,10 @@ body {
 .pillami-calendar-container {
   min-height: 100vh;
   background-color: $background;
-  padding-top: 70px;
-  padding-bottom: 80px;
+  padding-top: 60px;
+  padding-bottom: 100px;
+  padding-left: 8px;
+  padding-right: 8px;
 
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -38,9 +40,17 @@ body {
   hyphens: auto;
   white-space: normal;
 
+  @media (min-width: 480px) {
+    padding-top: 70px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   @media (min-width: 768px) {
     padding-top: 80px;
     padding-bottom: 0;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -48,7 +58,7 @@ body {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 12px 8px;
 
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -56,79 +66,136 @@ body {
   hyphens: auto;
   white-space: normal;
 
-  @media (min-width: 480px) { padding: 24px; }
-  @media (min-width: 768px) { padding: 32px; }
-  @media (min-width: 1024px) { padding: 40px; }
+  @media (min-width: 480px) { padding: 16px 12px; }
+  @media (min-width: 768px) { padding: 24px 20px; }
+  @media (min-width: 1024px) { padding: 32px; }
 }
 
 // ===== Header =====
 .pillami-calendar-header {
   background: $white;
-  border-left: 6px solid $medium-blue;
-  padding: 20px;
-  margin-bottom: 24px;
+  border-left: 4px solid $medium-blue;
+  padding: 12px;
+  margin-bottom: 16px;
   box-shadow: 0 2px 8px rgba(3,64,120,0.08);
   border-radius: 0;
 
+  @media (min-width: 480px) {
+    border-left: 5px solid $medium-blue;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
   @media (min-width: 768px) {
+    border-left: 6px solid $medium-blue;
+    padding: 24px 32px;
+    margin-bottom: 28px;
+    border-radius: 8px;
+  }
+
+  @media (min-width: 1024px) {
     padding: 32px 40px;
     margin-bottom: 32px;
-    border-radius: 8px;
   }
 }
 
 .pillami-calendar-week-title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: $primary-dark;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   text-align: center;
 
-  @media (min-width: 768px) { font-size: 32px; margin-bottom: 24px; }
+  @media (min-width: 480px) { font-size: 22px; margin-bottom: 16px; }
+  @media (min-width: 768px) { font-size: 28px; margin-bottom: 20px; }
+  @media (min-width: 1024px) { font-size: 32px; margin-bottom: 24px; }
+}
+
+.pillami-calendar-week-title-label {
+  font-size: 11px;
+  color: $gray-dark;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+
+  @media (min-width: 480px) { font-size: 12px; }
+  @media (min-width: 768px) { font-size: 13px; margin-bottom: 6px; }
 }
 
 .pillami-calendar-week-range {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   color: $medium-blue;
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  line-height: 1.3;
 
-  @media (min-width: 768px) { font-size: 20px; }
+  @media (min-width: 480px) { font-size: 16px; margin-bottom: 20px; }
+  @media (min-width: 768px) { font-size: 18px; margin-bottom: 24px; }
+  @media (min-width: 1024px) { font-size: 20px; }
 }
 
 // ===== Navigation semaine =====
 .pillami-calendar-nav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 
-  @media (min-width: 480px) { gap: 16px; }
-  @media (min-width: 768px) { gap: 24px; }
+  @media (min-width: 480px) { gap: 12px; justify-content: center; }
+  @media (min-width: 768px) { gap: 20px; }
 }
 
 .pillami-calendar-nav-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 600;
   color: $medium-blue;
   background: $white;
-  border: 3px solid $medium-blue;
-  border-radius: 8px;
-  padding: 12px 16px;
+  border: 2px solid $medium-blue;
+  border-radius: 6px;
+  padding: 8px 10px;
   cursor: pointer;
+  flex: 1;
+  max-width: 160px;
+  text-align: center;
+  white-space: nowrap;
 
   /* remove animation */
   transition: none !important;
 
   &:active { background: $medium-blue; color: $white; }
 
-  @media (min-width: 480px) { font-size: 15px; padding: 12px 20px; }
-  @media (min-width: 768px) { font-size: 16px; padding: 14px 24px; }
-  @media (min-width: 1024px) { font-size: 18px; padding: 16px 32px; }
+  @media (min-width: 480px) {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-width: 2px;
+    flex: 0 0 auto;
+    max-width: none;
+  }
+  @media (min-width: 768px) {
+    font-size: 15px;
+    padding: 12px 20px;
+    border-width: 3px;
+    border-radius: 8px;
+  }
+  @media (min-width: 1024px) { font-size: 16px; padding: 14px 28px; }
+}
+
+.pillami-calendar-nav-text-full {
+  display: none;
+
+  @media (min-width: 480px) { display: inline; }
+}
+
+.pillami-calendar-nav-text-short {
+  display: inline;
+
+  @media (min-width: 480px) { display: none; }
 }
 
 // ===== Grille & scroll mobile =====
@@ -247,23 +314,189 @@ body {
 .pillami-calendar-mobile-nav {
   display: flex;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 12px 16px;
   background: $white;
   border-top: 2px solid $gray-medium;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(3,64,120,0.08);
 
+  @media (min-width: 480px) { padding: 14px 18px; }
   @media (min-width: 768px) { display: none; }
 }
 
 .pillami-calendar-mobile-arrow {
-  font-size: 28px;
+  font-size: 24px;
   color: $medium-blue;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 6px 12px;
 
   /* remove animation */
   transition: none !important;
+
+  @media (min-width: 480px) { font-size: 28px; padding: 8px 16px; }
+}
+
+// ===== Carrousel =====
+.pillami-calendar-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  margin: 12px auto 0;
+
+  @media (min-width: 480px) { max-width: 320px; margin-top: 16px; }
+  @media (min-width: 768px) { max-width: 380px; margin-top: 20px; }
+}
+
+.pillami-calendar-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 14px;
+  background: $white;
+  border: 2px solid $gray-medium;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  z-index: 10;
+
+  &:active { background: $gray-light; }
+
+  @media (min-width: 480px) {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+.pillami-calendar-carousel-btn-prev {
+  left: -8px;
+
+  @media (min-width: 480px) { left: -12px; }
+  @media (min-width: 768px) { left: -20px; }
+}
+
+.pillami-calendar-carousel-btn-next {
+  right: -8px;
+
+  @media (min-width: 480px) { right: -12px; }
+  @media (min-width: 768px) { right: -20px; }
+}
+
+.pillami-calendar-carousel-window {
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.pillami-calendar-carousel-track {
+  display: flex;
+  transition: transform 0.3s ease-out;
+}
+
+.pillami-calendar-day-slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pillami-calendar-day-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid $primary-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: $white;
+
+  &:active { background: $gray-light; }
+
+  @media (min-width: 480px) {
+    width: 130px;
+    height: 130px;
+  }
+
+  @media (min-width: 768px) {
+    width: 160px;
+    height: 160px;
+    border-width: 2px;
+  }
+}
+
+.pillami-calendar-day-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+
+  @media (min-width: 480px) { padding: 12px; }
+  @media (min-width: 768px) { padding: 16px; }
+}
+
+.pillami-calendar-day-name {
+  font-size: 10px;
+  color: $gray-dark;
+  text-transform: capitalize;
+  margin-bottom: 2px;
+
+  @media (min-width: 480px) { font-size: 12px; margin-bottom: 4px; }
+  @media (min-width: 768px) { font-size: 14px; margin-bottom: 6px; }
+}
+
+.pillami-calendar-day-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: $primary-dark;
+  line-height: 1;
+  margin-bottom: 2px;
+
+  @media (min-width: 480px) { font-size: 32px; margin-bottom: 4px; }
+  @media (min-width: 768px) { font-size: 40px; margin-bottom: 6px; }
+}
+
+.pillami-calendar-day-month {
+  font-size: 10px;
+  color: $gray-dark;
+  text-transform: capitalize;
+
+  @media (min-width: 480px) { font-size: 12px; }
+  @media (min-width: 768px) { font-size: 14px; }
+}
+
+// ===== Panel des rappels =====
+.pillami-calendar-panel {
+  margin-top: 16px;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 4px;
+
+  @media (min-width: 480px) {
+    max-width: 340px;
+    margin-top: 20px;
+    padding: 0 8px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 400px;
+    margin-top: 24px;
+    padding: 0;
+  }
 }
 
 // ===== Print =====
