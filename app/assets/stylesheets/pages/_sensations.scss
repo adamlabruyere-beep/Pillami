@@ -1,0 +1,156 @@
+
+body {
+  font-family: 'Luciole', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #FEFCFB; /* même que $background */
+  color: #001F54;
+}
+
+/* ===== Container principal ===== */
+.sensations-container {
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .sensations-container {
+    padding-top: 80px; /* espace pour sidebar */
+  }
+}
+
+@media (max-width: 767px) {
+  .sensations-container {
+    padding-top: 70px; /* top bar mobile */
+    padding-bottom: 80px; /* si bottom nav */
+  }
+}
+
+/* ===== Formulaire ===== */
+textarea#sensation_content {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1; /* gris clair */
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 1rem;
+  color: #001F54;
+  resize: none;
+}
+
+textarea#sensation_content::placeholder {
+  color: #94a3b8; /* gris placeholder */
+}
+
+textarea#sensation_content:focus {
+  outline: none;
+  border-color: #034078; /* medium blue */
+  box-shadow: 0 0 0 3px rgba(3,64,120,0.2);
+}
+
+/* ===== Boutons ===== */
+button, input[type="submit"] {
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/* Bouton Clear */
+button[type="button"] {
+  background-color: transparent;
+  border: 1px solid #cbd5e1;
+  color: #374151;
+}
+
+/* Bouton Save */
+input[type="submit"] {
+  background-color: #034078;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(3,64,120,0.2);
+}
+
+input[type="submit"]:hover {
+  background-color: #1282A2;
+}
+
+/* ===== Liste des sensations spécifique à cette page ===== */
+.sensations-container ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+}
+
+.sensations-container ul li {
+  background-color: #fff;
+  border-left: 4px solid #1282A2;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease;
+
+  /* ===== Nouveau pour le wrapping ===== */
+  max-width: 100%;       /* s’adapte à la largeur du container */
+  word-break: break-word; /* force le retour à la ligne sur les mots longs */
+  white-space: pre-wrap;  /* conserve les retours à la ligne */
+}
+
+.sensations-container ul li:hover {
+  transform: translateY(-2px);
+}
+
+.sensations-container ul li span {
+  font-size: 0.75rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  white-space: normal; /* permet au texte de revenir à la ligne */
+}
+
+.sensations-container ul li a {
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.sensations-container ul li a:hover {
+  background-color: #f0f9ff;
+  border-color: #1282A2;
+  color: #034078;
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 768px) {
+  .sensations-container ul li {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sensations-container ul li span {
+    gap: 12px;
+  }
+}
+
+/* Assurer que le texte se wrap correctement */
+.sensations-container ul li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
