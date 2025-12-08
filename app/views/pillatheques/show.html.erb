@@ -21,17 +21,16 @@
               </div>
               <div class="pillami-medicament-ordonnance">
                 <% if medicament.ordonnance %>
-                  <span class="pillami-pill-tag bg-red-100 text-red-800 px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Oui</span>
+                  <span class="pillami-pill-tag pillami-pill-ordonnance-oui">Oui</span>
                 <% else %>
-                  <span class="pillami-pill-tag bg-green-100 text-green-800 px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Non</span>
+                  <span class="pillami-pill-tag pillami-pill-ordonnance-non">Non</span>
                 <% end %>
               </div>
               <div class="pillami-medicament-action">
                 <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
                 <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
                       method: :delete,
-                      class: "pillami-btn-action text-red-600 cursor-pointer",
-                      data: { turbo_confirm: "Retirer ce médicament de votre pillathèque ?" } do %>
+                      class: "pillami-btn-action" do %>
                   Retirer
                 <% end %>
               </div>

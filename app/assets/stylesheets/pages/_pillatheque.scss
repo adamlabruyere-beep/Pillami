@@ -1,6 +1,7 @@
 $blue: #05668D;
 $dark-blue: #001F54;
 $light-blue: #84A9C0;
+$green: #16a34a;
 $background: #F7FAFB;
 
 /* --- PAGE WRAPPER --- */
@@ -61,10 +62,14 @@ $background: #F7FAFB;
 }
 
 .pillami-btn-action {
-  background: none;
+  background-color: #fee2e2;  /* rouge clair */
+  color: #b91c1c;             /* rouge foncé */
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 4px 10px;
   border: none;
-  font-size: 14px;
-  padding: 0;
+  cursor: pointer;
 }
 
 .pillami-btn-link {
@@ -111,13 +116,24 @@ $background: #F7FAFB;
   margin-top: 4px;
 }
 
+/* --- PASTILLES ORDONNANCE --- */
 .pillami-pill-tag {
-  padding: 2px 6px;
+  padding: 2px 8px;
   font-size: 12px;
   font-weight: 600;
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
+}
+
+.pillami-pill-ordonnance-oui {
+  background-color: #dbeafe;  /* bleu clair */
+  color: #1e3a8a;             /* bleu foncé */
+}
+
+.pillami-pill-ordonnance-non {
+  background-color: #d1fae5;  /* vert clair */
+  color: #065f46;             /* vert foncé */
 }
 
 /* CARD VIDE */
