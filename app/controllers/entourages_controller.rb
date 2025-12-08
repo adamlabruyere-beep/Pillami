@@ -4,6 +4,7 @@ class EntouragesController < ApplicationController
   def show
     @entourage = current_user.entourage || current_user.create_entourage(name: "Mon entourage")
     @members = @entourage.members
+    @following = current_user.member_of_entourages.includes(:user)
   end
 
   def create
