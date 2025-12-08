@@ -5,16 +5,18 @@
       <p class="mt-2 text-sm text-gray-600">Recherchez et ajoutez des médicaments à votre pillathèque</p>
     </div>
     <!-- Search bar -->
-    <div class="mb-8">
-      <%= form_with url: medicaments_path, method: :get, class: "flex gap-2" do |f| %>
+    <div class="mb-8" data-controller="search">
+      <%= form_with url: medicaments_path, method: :get, data: { turbo_frame: "medicaments_list", search_target: "form" }, class: "flex gap-2" do |f| %>
         <%= f.text_field :query,
               value: params[:query],
               placeholder: "Rechercher un médicament...",
+              data: { search_target: "input", action: "input->search#search" },
               class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         <%= f.submit "Rechercher", class: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
       <% end %>
     </div>
     <!-- Medicaments list -->
+    <%= turbo_frame_tag "medicaments_list" do %>
     <div class="space-y-3">
       <% if @empty_query %>
         <!-- Recherche vide -->
@@ -53,35 +55,9 @@
           </div>
         </div>
         <!-- Liste des médicaments -->
-        <% @medicaments.each do |medicament| %>
-          <div class="bg-white rounded-lg shadow p-4">
-            <div class="flex justify-between items-start gap-3">
-              <div class="flex-1 min-w-0">
-                <h3 class="text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
-                <p class="text-sm text-gray-500 mt-1"><%= medicament.format %></p>
-              </div>
-              <div>
-                <% if medicament.ordonnance %>
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Oui</span>
-                <% else %>
-                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
-                <% end %>
-              </div>
-              <div>
-                <% if @pillatheque.medicaments.include?(medicament) %>
-                  <span class="text-gray-400">Déjà ajouté</span>
-                <% else %>
-                  <%= button_to pillatheque_pillatheque_medicaments_path(@pillatheque, medicament_id: medicament.id),
-                        method: :post,
-                        class: "text-blue-600 hover:text-blue-900 cursor-pointer" do %>
-                    Ajouter
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
+        <%= render "medicaments/list", medicaments: @medicaments, pillatheque: @pillatheque  %>
       <% end %>
     </div>
+    <% end %>
   </div>
 </div>
