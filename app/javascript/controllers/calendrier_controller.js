@@ -1,25 +1,30 @@
+// app/javascript/controllers/calendrier_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["day", "panel", "track", "template"]
-  static values = { index: { type: Number, default: 0 } }
+  static values  = { index: { type: Number, default: 0 } }
 
-connect() {
+  connect() {
+    // Positionne le carrousel et affiche les rappels du jour courant
     this.showCurrentSlide()
+    this.renderCurrentPanel()
   }
 
-  // --- Carrousel ---
+  // ---------- Carrousel ----------
 
   next() {
     if (this.dayTargets.length === 0) return
     this.indexValue = (this.indexValue + 1) % this.dayTargets.length
     this.showCurrentSlide()
+    this.renderCurrentPanel()
   }
 
   prev() {
     if (this.dayTargets.length === 0) return
     this.indexValue = (this.indexValue - 1 + this.dayTargets.length) % this.dayTargets.length
     this.showCurrentSlide()
+    this.renderCurrentPanel()
   }
 
   showCurrentSlide() {
@@ -28,7 +33,7 @@ connect() {
     this.trackTarget.style.transform = `translateX(${offset}%)`
   }
 
-  // --- Swipe tactile ---
+  // ---------- Swipe tactile ----------
 
   touchStart(event) {
     if (!event.changedTouches || event.changedTouches.length === 0) return
@@ -36,69 +41,55 @@ connect() {
   }
 
   touchEnd(event) {
-    if (this.startX === null || !event.changedTouches || event.changedTouches.length === 0) return
+    if (this.startX == null || !event.changedTouches || event.changedTouches.length === 0) return
 
     const endX = event.changedTouches[0].clientX
     const deltaX = endX - this.startX
-    const threshold = 40 // px à dépasser pour déclencher
+    const threshold = 40
 
     if (Math.abs(deltaX) > threshold) {
       if (deltaX < 0) {
-        this.next()  // swipe gauche => jour suivant
+        this.next()   // swipe vers la gauche → jour suivant
       } else {
-        this.prev()  // swipe droite => jour précédent
+        this.prev()   // swipe vers la droite → jour précédent
       }
     }
 
     this.startX = null
   }
 
-  // --- Click sur un jour ---
+  // ---------- Clic sur un jour ----------
 
   select(event) {
-    const day = event.currentTarget
-
-    // régler l’index du carrousel sur ce jour
+    const day   = event.currentTarget
     const index = this.dayTargets.indexOf(day)
-    if (index !== -1) {
-      this.indexValue = index
-      this.showCurrentSlide()
-    }
+    if (index === -1) return
 
-    if (this.openIndex === index) {
-      // → On ferme le panel si on reclique sur le même jour
-      this.#closeAllPanels()
-      this.openIndex = null
+    this.indexValue = index
+    this.showCurrentSlide()
+    this.renderCurrentPanel()
+    this.markActiveDay(day)
+  }
+
+  // ---------- Helpers ----------
+
+  renderCurrentPanel() {
+    if (!this.hasPanelTarget || this.templateTargets.length === 0) return
+
+    const index    = this.indexValue
+    const template = this.templateTargets[index]
+
+    if (!template) {
+      // aucun template pour ce jour → on vide le panel
+      this.panelTarget.innerHTML = ""
       return
     }
 
-    // vider tous les panels
-    this.panelTargets.forEach((panel) => { panel.innerHTML = "" })
-
-    // panel associé au jour cliqué (même index)
-    this.#closeAllPanels()
-    const panel = this.panelTargets[index]
-    if (!panel) return
-
-    this.#markActiveDay(day)
-    this.#renderPanel(panel, index)
-    this.openIndex = index
+    this.panelTarget.innerHTML = template.innerHTML
   }
 
-  #closeAllPanels() {
-    this.panelTargets.forEach(p => p.innerHTML = "")
-    this.dayTargets.forEach(d => d.classList.remove("selected-day"))
-  }
-
-  #markActiveDay(selectedDay) {
+  markActiveDay(selectedDay) {
     this.dayTargets.forEach((day) => day.classList.remove("selected-day"))
     selectedDay.classList.add("selected-day")
-  }
-
-   #renderPanel(panel, index) {
-    const template = this.templateTargets[index]
-    if (template) {
-      panel.innerHTML = template.innerHTML
-    }
   }
 }
