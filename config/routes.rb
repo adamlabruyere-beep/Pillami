@@ -1,26 +1,23 @@
 Rails.application.routes.draw do
-  resources :sensations
-  devise_for :users
+
   root to: "pages#home"
-  resources :calendriers, only: [:index]
+  get "reminders/by_date", to: "reminders#by_date"
+
+  devise_for :users
   resources :users do
     resources :reminders
-  end
-  get "reminders/by_date", to: "reminders#by_date"
-  resources :users do
     resources :sensations
+    resource :calendrier, only: [:show]
   end
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  resources :sensations
 
   resources :medicaments, only: [:create, :index]
+
   resources :pillatheques, only: :show do
     resources :pillatheque_medicaments, only: [:create, :destroy]
   end
-  # Defines the root path route ("/")
-  # root "posts#index"
+
+  resource :entourage, only: [:show, :create, :destroy] do
+    resources :entourage_members, only: [:create, :destroy]
+  end
 end

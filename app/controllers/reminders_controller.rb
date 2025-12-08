@@ -1,6 +1,7 @@
 class RemindersController < ApplicationController
   around_action :switch_to_french_locale, only: %i[index new]
   before_action :set_user
+  before_action :authorize_user, only: [:index]
   before_action :set_reminder, only: %i[show destroy]
 
   def index
@@ -13,6 +14,7 @@ class RemindersController < ApplicationController
 
   def new
     @reminder = @user.reminders.new
+    authorize @reminder
     @reminder.days_of_week ||= []
     @pillatheque = @user.pillatheque
     @medicaments = @pillatheque.medicaments
@@ -20,7 +22,7 @@ class RemindersController < ApplicationController
 
   def create
     @reminder = @user.reminders.new(reminder_params)
-
+    authorize @reminder
     if @reminder.save
       redirect_to user_reminders_path(@user), notice: 'Rappel créé avec succès.'
     else
@@ -68,6 +70,11 @@ end
 
   def set_reminder
     @reminder = @user.reminders.find(params[:id])
+    authorize @reminder
+  end
+
+  def authorize_user
+    authorize @user, :index?, policy_class: ReminderPolicy
   end
 
   def reminder_params

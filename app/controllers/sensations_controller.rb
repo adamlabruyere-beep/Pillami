@@ -1,16 +1,18 @@
 class SensationsController < ApplicationController
   before_action :set_user
+  before_action :authorize_user, only: [:index]
+  before_action :set_sensation, only: [:show, :destroy]
 
   def index
     @sensations = @user.sensations.order(created_at: :desc)
   end
 
   def show
-    @sensation = @user.sensations.find(params[:id])
   end
 
   def create
     @sensation = @user.sensations.new(sensation_params)
+    authorize @sensation
     if @sensation.save
       redirect_to user_sensations_path(@user), notice: "Votre note a été enregistrée avec succès."
     else
@@ -19,7 +21,6 @@ class SensationsController < ApplicationController
   end
 
   def destroy
-    @sensation = @user.sensations.find(params[:id])
     @sensation.destroy
     redirect_to user_sensations_path(@user), notice: "La note a été supprimée avec succès."
   end
@@ -32,5 +33,14 @@ class SensationsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def set_sensation
+    @sensation = @user.sensations.find(params[:id])
+    authorize @sensation
+  end
+
+  def authorize_user
+    authorize @user, :index?, policy_class: SensationPolicy
   end
 end
