@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: "pages#home"
   resources :calendriers, only: [:index]
-  
+  get "/dashboard", to: "dashboard#index"
   get "reminders/by_date", to: "reminders#by_date"
 
   devise_for :users
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get "reminders/by_date", to: "reminders#by_date"
 
 
-  resources :sensations, only: [:cretae, :destroy]
+  resources :sensations, only: [:create, :destroy]
 
   resources :medicaments, only: [:create, :index]
 
