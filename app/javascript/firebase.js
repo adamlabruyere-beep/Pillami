@@ -17,30 +17,34 @@ const app = initializeApp(firebaseConfig)
 const messaging = getMessaging(app)
 
 export async function registerPushToken() {
+  console.log("🔔 registerPushToken() appelé")
   try {
-
+    console.log("1. Enregistrement du Service Worker...")
     const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    console.log("2. Service Worker OK")
 
+    console.log("3. Demande de permission...")
     const permission = await Notification.requestPermission()
+    console.log("4. Permission:", permission)
     if (permission !== "granted") return
 
-    const token = await getToken(messaging, { vapidKey })
+    console.log("5. Récupération du token FCM...")
+    const token = await getToken(messaging, { vapidKey, serviceWorkerRegistration: registration })
+    console.log("6. Token:", token ? "OK" : "null")
     if (!token) return
 
-    // Envoie du token à Rails
-    await fetch("/device_tokens", {
+    console.log("7. Envoi au serveur...")
+    const response = await fetch("/device_tokens", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
       },
-      body: JSON.stringify({
-        token: token,
-        platform: "web"
-      })
+      body: JSON.stringify({ token: token, platform: "web" })
     })
+    console.log("8. Réponse:", response.status)
   } catch (e) {
-    console.error("Erreur FCM", e)
+    console.error("❌ Erreur FCM:", e)
   }
 }
 
