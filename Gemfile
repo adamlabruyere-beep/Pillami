@@ -85,4 +85,5 @@ gem "noticed", "~> 2.9"
 
 gem "cloudinary"
 
+gem "googleauth"
 gem "pundit"

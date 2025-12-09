@@ -3,6 +3,8 @@ class Reminder < ApplicationRecord
   belongs_to :user
   belongs_to :medicament
 
+  has_many :notifications, dependent: :destroy
+
   # Sérialisation des jours de la semaine pour stocker un array YAML
   serialize :days_of_week, Array, coder: YAML
 
@@ -16,8 +18,6 @@ class Reminder < ApplicationRecord
   def set_default_repeat_weeks
     self.repeat_for_weeks ||= 1
   end
-  # Planifie un rappel après création si le reminder est actif
-  after_create :schedule_next_occurrence, if: :active?
 
   private
 
