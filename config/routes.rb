@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
 
   root to: "pages#home"
   resources :calendriers, only: [:index]
@@ -8,7 +9,6 @@ Rails.application.routes.draw do
   end
   get "reminders/by_date", to: "reminders#by_date"
 
-  devise_for :users
   resources :users do
     resources :reminders
     resources :sensations

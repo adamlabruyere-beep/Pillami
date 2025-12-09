@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_140131) do
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
+
   create_table "entourage_members", force: :cascade do |t|
     t.bigint "entourage_id", null: false
     t.bigint "user_id", null: false
@@ -177,11 +178,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_140131) do
   add_foreign_key "calendriers", "users"
   add_foreign_key "device_tokens", "users"
   add_foreign_key "devices", "users"
-  add_foreign_key "notifications", "reminders"
-  add_foreign_key "notifications", "users"
   add_foreign_key "entourage_members", "entourages"
   add_foreign_key "entourage_members", "users"
   add_foreign_key "entourages", "users"
+  add_foreign_key "notifications", "reminders"
+  add_foreign_key "notifications", "users"
   add_foreign_key "pillatheque_medicaments", "medicaments"
   add_foreign_key "pillatheque_medicaments", "pillatheques"
   add_foreign_key "pillatheques", "users"
