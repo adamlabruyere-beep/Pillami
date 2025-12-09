@@ -2,18 +2,15 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
   resources :calendriers, only: [:index]
-  resources :users do
-    resources :reminders
-    resources :notifications, only: %i[index update]
-  end
-  get "reminders/by_date", to: "reminders#by_date"
-
   devise_for :users
   resources :users do
     resources :reminders
     resources :sensations
+    resources :notifications, only: %i[index update]
     resource :calendrier, only: [:show]
   end
+  get "reminders/by_date", to: "reminders#by_date"
+
 
   resources :devices, only: :create
   resources :device_tokens, only: :create
