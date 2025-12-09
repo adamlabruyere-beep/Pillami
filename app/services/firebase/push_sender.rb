@@ -13,21 +13,21 @@ module Firebase
 
       @authorizer =
         if ENV["FIREBASE_SERVICE_ACCOUNT_JSON"].present?
-          # Heroku : JSON dans une variable d'env
           Google::Auth::ServiceAccountCredentials.make_creds(
             json_key_io: StringIO.new(ENV["FIREBASE_SERVICE_ACCOUNT_JSON"]),
             scope: SCOPE
           )
         else
-          # Local : chemin dans GOOGLE_APPLICATION_CREDENTIALS
           Google::Auth.get_application_default(SCOPE)
         end
     end
 
+    # Envoie une notification push
+    # Retourne :success, :unregistered, ou :error
     def send_to_token(token:, title:, body:)
-      return if token.blank?
+      return :error if token.blank?
 
-      @authorizer.fetch_access_token! # rafraîchit si besoin
+      @authorizer.fetch_access_token!
       access_token = @authorizer.access_token
 
       uri = URI("https://fcm.googleapis.com/v1/projects/#{@project_id}/messages:send")
@@ -43,25 +43,21 @@ module Firebase
       request.body = {
         message: {
           token: token,
-          notification: {
-            title: title,
-            body:  body
-          },
-          data: {
-            click_action: "FLUTTER_NOTIFICATION_CLICK"
-          }
+          notification: { title: title, body: body }
         }
       }.to_json
 
       response = http.request(request)
 
-      unless response.is_a?(Net::HTTPSuccess)
-        Rails.logger.error(
-          "FCM error: #{response.code} #{response.body}"
-        )
+      if response.is_a?(Net::HTTPSuccess)
+        :success
+      elsif response.body.include?("UNREGISTERED")
+        Rails.logger.warn("FCM: Token unregistered, should be deleted")
+        :unregistered
+      else
+        Rails.logger.error("FCM error: #{response.code} #{response.body}")
+        :error
       end
-
-      response
     end
   end
 end

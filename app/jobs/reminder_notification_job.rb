@@ -32,14 +32,14 @@ class ReminderNotificationJob < ApplicationJob
       next unless reminder.time
 
       reminder_minutes = reminder.time.hour * 60 + reminder.time.min
-      # job toutes les heures → même heure
-      next unless (current_minutes - reminder_minutes).between?(0, 59)
+      # job toutes les 10 min → fenêtre de 10 minutes
+      next unless (current_minutes - reminder_minutes).between?(0, 9)
 
-      # 5. éviter plusieurs notifs dans la même heure
+      # 5. éviter plusieurs notifs pour le même rappel aujourd'hui
       already_sent = Notification.exists?(
         user:     reminder.user,
         reminder: reminder,
-        created_at: now.beginning_of_hour..now.end_of_hour
+        created_at: now.beginning_of_day..now.end_of_day
       )
       next if already_sent
 
@@ -69,18 +69,24 @@ class ReminderNotificationJob < ApplicationJob
     user     = notification.user
     reminder = notification.reminder
 
-    title    = "Pillami"
+    title    = "💊 Pillami"
     time_str = reminder.time&.strftime("%H:%M") || Time.current.strftime("%H:%M")
     body     = "#{reminder.medicament&.nom || 'Votre médicament'} — c'est l'heure (#{time_str})"
 
     sender = Firebase::PushSender.new
 
     user.device_tokens.find_each do |device|
-      sender.send_to_token(
+      result = sender.send_to_token(
         token: device.token,
         title: title,
         body:  body
       )
+
+      # Supprimer les tokens invalides
+      if result == :unregistered
+        Rails.logger.info("Deleting unregistered token #{device.id}")
+        device.destroy
+      end
     end
   end
 
