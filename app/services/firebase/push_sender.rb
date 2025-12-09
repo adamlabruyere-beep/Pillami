@@ -43,7 +43,7 @@ module Firebase
       request.body = {
         message: {
           token: token,
-          notification: { title: title, body: body }
+          data: { title: title, body: body }
         }
       }.to_json
 
