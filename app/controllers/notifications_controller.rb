@@ -21,6 +21,13 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def list
+    @notifications = @user.notifications.order(created_at: :desc)
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def set_user

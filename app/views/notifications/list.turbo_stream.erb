@@ -1,0 +1,11 @@
+<%= turbo_stream.update "notifications_list" do %>
+  <% if @notifications.any? %>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <%= render @notifications %>
+    </div>
+  <% else %>
+    <div class="bg-white rounded-lg shadow p-8 text-center">
+      <p class="text-gray-500">Aucune notification pour le moment.</p>
+    </div>
+  <% end %>
+<% end %>

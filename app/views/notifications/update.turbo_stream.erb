@@ -1,1 +1,6 @@
-<turbo-stream action="remove" target="notification_<%= @notification.id %>"></turbo-stream>
+<%= turbo_stream.replace "notification_#{@notification.id}" do %>
+  <%= render @notification %>
+<% end %>
+<%= turbo_stream.update "notification_bell" do %>
+  <%= render "shared/notification_bell" %>
+<% end %>
