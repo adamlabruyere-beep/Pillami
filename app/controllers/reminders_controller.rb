@@ -57,10 +57,10 @@ class RemindersController < ApplicationController
     end
 
     render json: reminders.as_json(
-      only: [:id, :time, :quantity, :measure],
+      only: %i[id time quantity measure],
       include: { medicament: { only: [:nom] } }
     )
-end
+  end
 
   private
 
@@ -78,16 +78,16 @@ end
   end
 
   def reminder_params
-  params.require(:reminder).permit(
-    :medicament_id,
-    :quantity,
-    :measure,
-    :time,
-    :active,
-    :repeat_for_weeks,
-    days_of_week: []
-  )
-end
+    params.require(:reminder).permit(
+      :medicament_id,
+      :quantity,
+      :measure,
+      :time,
+      :active,
+      :repeat_for_weeks,
+      days_of_week: []
+    )
+  end
 
   def switch_to_french_locale(&)
     I18n.with_locale(:fr, &)
