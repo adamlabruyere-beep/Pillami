@@ -9,12 +9,9 @@ const firebaseConfig = {
   messagingSenderId: "583918755836",
   appId: "1:583918755836:web:30cf6f69ebfe7f715b1c79",
   measurementId: "G-6FKSN2SZ8F"
-};
+}
 
 const vapidKey = "BF-owBQuuFDvTxRRls1teK5qAt-03exK5hWgYy2xMekEuW-zSBN940Nx762EgZL2Kxjzi2NjKoHm9N5jLCJpxiY"
-
-const app = initializeApp(firebaseConfig)
-const messaging = getMessaging(app)
 
 export async function registerPushToken() {
   console.log("🔔 registerPushToken() appelé")
@@ -35,12 +32,23 @@ export async function registerPushToken() {
     console.log("4. Permission:", permission)
     if (permission !== "granted") return
 
-    console.log("5. Récupération du token FCM...")
-    const token = await getToken(messaging, { vapidKey, serviceWorkerRegistration: registration })
-    console.log("6. Token:", token ? "OK" : "null")
+    console.log("5. Initialisation Firebase Messaging...")
+    const app = initializeApp(firebaseConfig)
+    const messaging = getMessaging(app)
+
+    console.log("6. Récupération du token FCM (timeout 15s)...")
+    const tokenPromise = getToken(messaging, {
+      vapidKey,
+      serviceWorkerRegistration: registration
+    })
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Timeout après 15s")), 15000)
+    )
+    const token = await Promise.race([tokenPromise, timeoutPromise])
+    console.log("7. Token:", token ? token.substring(0, 30) + "..." : "null")
     if (!token) return
 
-    console.log("7. Envoi au serveur...")
+    console.log("8. Envoi au serveur...")
     const response = await fetch("/device_tokens", {
       method: "POST",
       headers: {
@@ -49,9 +57,9 @@ export async function registerPushToken() {
       },
       body: JSON.stringify({ token: token, platform: "web" })
     })
-    console.log("8. Réponse:", response.status)
+    console.log("9. Réponse:", response.status)
   } catch (e) {
-    console.error("❌ Erreur FCM:", e)
+    console.error("❌ Erreur FCM:", e.message || e)
   }
 }
 
