@@ -36,10 +36,11 @@ export default class extends Controller {
       })
       if (response.ok) {
         const html = await response.text()
+        console.log("Polling:", this.urlValue, "Target found:", !!document.getElementById(html.match(/target="([^"]+)"/)?.[1]))
         Turbo.renderStreamMessage(html)
       }
     } catch (e) {
-      // Silently fail on polling errors
+      console.error("Polling error:", e)
     }
   }
 }
