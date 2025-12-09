@@ -1,7 +1,6 @@
 // --- Colors ---
 $dark-blue: #001F54;
 $blue: #05668D;
-$background: #F7FAFB;
 $card: #FFFFFF;
 
 // --- Container ---
@@ -36,7 +35,6 @@ $card: #FFFFFF;
 // Section Title
 .section-title {
   font-size: 20px;
-  font-weight: 600;
   color: $blue;
 }
 
@@ -59,7 +57,6 @@ $card: #FFFFFF;
 // --- Text ---
 .reminder-title {
   font-size: 18px;
-  font-weight: 600;
   color: $dark-blue;
   margin-bottom: 6px;
 }
@@ -81,7 +78,6 @@ $card: #FFFFFF;
 .pillami-btn-sm {
   padding: 14px 18px;
   border-radius: 8px;
-  font-weight: 600;
   text-decoration: none;
   border: none;
   width: 100%;
