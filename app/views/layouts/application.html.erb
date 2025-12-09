@@ -10,6 +10,9 @@
     <%= javascript_importmap_tags %>
   </head>
   <body>
+    <script>
+      window.currentUserLoggedIn = <%= user_signed_in?.to_json %>
+    </script>
     <div data-controller="mobile-menu" class="min-h-screen">
       <!-- Header fixe avec logo PILLAMI -->
       <header id="ici" class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-sm">
