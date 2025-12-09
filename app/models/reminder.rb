@@ -1,4 +1,3 @@
-# app/models/reminder.rb
 class Reminder < ApplicationRecord
   belongs_to :user
   belongs_to :medicament
@@ -8,7 +7,6 @@ class Reminder < ApplicationRecord
   # Sérialisation des jours de la semaine pour stocker un array YAML
   serialize :days_of_week, Array, coder: YAML
 
-  # Validation pour s'assurer que l'heure est présente
   validates :time, presence: { message: "L'heure du rappel est obligatoire" }
 
   before_validation :set_default_repeat_weeks

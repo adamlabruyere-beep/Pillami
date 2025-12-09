@@ -60,15 +60,6 @@ class CalendriersController < ApplicationController
     end
   end
 
-  def by_day
-    @date  = params[:date]&.to_date || Date.today
-
-    @entries = Calendrier.where(date: @date).order(:created_at)
-
-    render partial: "panneau du jour",
-           locals: { date: @date, entries: @entries }
-  end
-
   private
 
   def set_user

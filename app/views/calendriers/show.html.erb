@@ -81,7 +81,7 @@
                 <!-- TEMPLATE HTML DES RAPPELS POUR CE JOUR -->
                 <template data-calendrier-target="template">
                   <%= render partial: "reminder_panel",
-                             locals: { reminders: reminders_for_day, sensations: sensations_for_day } %>
+                             locals: { reminders: reminders_for_day, sensations: sensations_for_day, day: date.day} %>
                 </template>
               </div>
             <% end %>
