@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   get "notifications/bell", to: "notifications#bell"
+  get "notifications/list", to: "notifications#list"
 
 
   resources :sensations, only: [:create, :destroy]
