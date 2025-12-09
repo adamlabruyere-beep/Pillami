@@ -27,28 +27,14 @@ class CalendriersController < ApplicationController
         days = r.days_of_week || []
         next false unless days.include?(weekday_name)
 
-        start_date = [r.created_at.to_date, Date.current].max
+        created = r.created_at.to_date
+        next false if date < created
 
-        # nombre de semaines de répétition (min 1)
         weeks = (r.repeat_for_weeks || 1).to_i
         weeks = 1 if weeks <= 0
-        end_date   = start_date + (weeks - 1).weeks
 
-        created = r.created_at.to_date
-
-        # si la date du calendrier est avant la création du rappel → on ignore
-        days_diff = (date - created).to_i
-        next false if days_diff < 0
-
-        # nombre de semaines écoulées entre la création et la date du calendrier
-        weeks_diff = days_diff / 7
-
-        # on affiche le rappel seulement si on est encore dans la fenêtre de répétition
+        weeks_diff = (date - created).to_i / 7
         weeks_diff < weeks
-
-
-
-        (start_date..end_date).cover?(date)
       end
     end
     # Toutes les sensations de l'utilisateur (on n'a besoin que de la date)
@@ -58,15 +44,6 @@ class CalendriersController < ApplicationController
     @sensations_by_day = @week_days.index_with do |date|
       @sensations.select { |s| s.created_at.to_date == date }
     end
-  end
-
-  def by_day
-    @date  = params[:date]&.to_date || Date.today
-
-    @entries = Calendrier.where(date: @date).order(:created_at)
-
-    render partial: "panneau du jour",
-           locals: { date: @date, entries: @entries }
   end
 
   private

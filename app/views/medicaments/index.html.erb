@@ -1,56 +1,58 @@
-<div class="py-8 px-4">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-900">Ajouter un médicament</h1>
-      <p class="mt-2 text-sm text-gray-600">Recherchez et ajoutez des médicaments à votre pillathèque</p>
+<div class="medicaments-container">
+  <div class="medicaments-wrapper">
+    <div class="medicaments-header">
+      <h1 class="medicaments-title">Ajouter un médicament</h1>
+      <p class="medicaments-subtitle">Recherchez et ajoutez des médicaments à votre pillathèque</p>
     </div>
+
     <!-- Search bar -->
-    <div class="mb-8" data-controller="search">
-      <%= form_with url: medicaments_path, method: :get, data: { turbo_frame: "medicaments_list", search_target: "form" }, class: "flex gap-2" do |f| %>
+    <div class="medicaments-search" data-controller="search">
+      <%= form_with url: medicaments_path, method: :get, data: { turbo_frame: "medicaments_list", search_target: "form" }, class: "medicaments-search-form" do |f| %>
         <%= f.text_field :query,
               value: params[:query],
               placeholder: "Rechercher un médicament...",
               data: { search_target: "input", action: "input->search#search" },
-              class: "flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
-        <%= f.submit "Rechercher", class: "px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+              class: "medicaments-search-input" %>
+        <%= f.submit "Rechercher", class: "medicaments-search-button" %>
       <% end %>
     </div>
+
     <!-- Medicaments list -->
     <%= turbo_frame_tag "medicaments_list" do %>
-    <div class="space-y-3">
+    <div class="medicaments-list">
       <% if @empty_query %>
         <!-- Recherche vide -->
-        <div class="bg-white rounded-lg shadow p-8 text-center">
-          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="medicaments-empty-state">
+          <svg class="medicaments-empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <h3 class="mt-4 text-lg font-medium text-gray-900">Recherche vide</h3>
-          <p class="mt-2 text-sm text-gray-500">Veuillez entrer un terme de recherche pour trouver un médicament.</p>
+          <h3 class="medicaments-empty-title">Recherche vide</h3>
+          <p class="medicaments-empty-text">Veuillez entrer un terme de recherche pour trouver un médicament.</p>
         </div>
       <% elsif @medicaments.nil? %>
         <!-- État initial : pas encore de recherche -->
       <% elsif @medicaments.empty? %>
         <!-- Aucun résultat trouvé -->
-        <div class="bg-white rounded-lg shadow p-8 text-center">
-          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="medicaments-empty-state">
+          <svg class="medicaments-empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <h3 class="mt-4 text-lg font-medium text-gray-900">Aucun médicament trouvé</h3>
-          <p class="mt-2 text-sm text-gray-500">Aucun résultat pour "<%= params[:query] %>".<br>Essayez avec un autre terme de recherche.</p>
+          <h3 class="medicaments-empty-title">Aucun médicament trouvé</h3>
+          <p class="medicaments-empty-text">Aucun résultat pour "<span class="medicaments-empty-query"><%= params[:query] %></span>".<br>Essayez avec un autre terme de recherche.</p>
         </div>
       <% else %>
         <!-- En-tête du tableau -->
-        <div class="bg-white rounded-lg shadow p-4">
-          <div class="flex justify-between items-start gap-3">
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-medium text-gray-900 wrap-break-word"> Nom du medicament</h3>
-              <p class="text-sm text-gray-500 mt-1">Format</p>
+        <div class="medicaments-table-header">
+          <div class="medicaments-table-row">
+            <div class="medicaments-table-cell-name">
+              <h3 class="medicaments-table-label">Nom du medicament</h3>
+              <p class="medicaments-table-sublabel">Format</p>
             </div>
             <div>
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ">Sous ordonance</span>
+              <span class="medicaments-table-badge">Sous ordonance</span>
             </div>
             <div>
-              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">Action</span>
+              <span class="medicaments-table-badge">Action</span>
             </div>
           </div>
         </div>

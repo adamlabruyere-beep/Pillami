@@ -1,13 +1,11 @@
 $blue: #05668D;
 $dark-blue: #001F54;
 $light-blue: #84A9C0; // fond du tick
-$background: #F7FAFB;
 
 /* --- PAGE WRAPPER --- */
 .pillami-page-form-wrapper {
   padding-top: 80px;
   padding-bottom: 40px;
-  background: $background;
   min-height: 100vh;
 }
 
@@ -95,7 +93,6 @@ $background: #F7FAFB;
 }
 
 .pillami-day-all {
-  font-weight: 600;
   margin-bottom: 12px;
   display: block;
 }
@@ -180,7 +177,6 @@ $background: #F7FAFB;
   background: $blue;
   padding: 16px;
   color: white;
-  font-weight: 600;
   border: none;
   border-radius: 10px;
   font-size: 17px;
@@ -194,7 +190,6 @@ $background: #F7FAFB;
 
 .pillami-back-link {
   color: $dark-blue;
-  font-weight: 600;
   text-decoration: none;
   font-size: 15px;
 }

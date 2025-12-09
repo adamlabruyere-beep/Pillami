@@ -1,9 +1,10 @@
-<div class="min-h-screen py-12 px-4">
+<div class="entourage-container min-h-screen py-12 px-4">
   <div class="max-w-2xl mx-auto space-y-8">
     <div class="text-center">
       <h2 class="text-3xl font-bold text-gray-900">Mon entourage</h2>
       <p class="mt-2 text-sm text-gray-600">Gérez les personnes qui peuvent suivre vos traitements</p>
     </div>
+
     <!-- Ajouter un membre -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h3 class="text-lg font-medium text-gray-900 mb-4">Ajouter un membre</h3>
@@ -13,7 +14,7 @@
               required: true,
               class: "flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         <%= f.submit "Ajouter",
-              class: "px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+              class: "entourage-submit-btn px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
       <% end %>
     </div>
 
@@ -42,7 +43,6 @@
               </div>
               <%= button_to entourage_entourage_member_path(membership),
                     method: :delete,
-                    data: { turbo_confirm: "Êtes-vous sûr de vouloir retirer #{membership.user.prenom} de votre entourage ?" },
                     class: "text-red-600 hover:text-red-800 text-sm font-medium" do %>
                 Retirer
               <% end %>
@@ -67,20 +67,22 @@
       <% if @following.any? %>
         <ul class="divide-y divide-gray-200">
           <% @following.each do |entourage| %>
-            <li class="px-6 py-4 flex items-center gap-3">
-              <div class="size-10 rounded-full overflow-hidden bg-green-600 flex items-center justify-center text-white font-medium shrink-0">
-                <% if entourage.user.photo.attached? %>
-                  <%= cl_image_tag entourage.user.photo.key, crop: :fill, width: 40, height: 40, class: "size-10 object-cover" %>
-                <% else %>
-                  <%= entourage.user.email[0].upcase %>
-                <% end %>
+            <li class="px-6 py-4 flex items-center gap-3 justify-between">
+              <div class="flex items-center gap-3">
+                <div class="size-10 rounded-full overflow-hidden bg-green-600 flex items-center justify-center text-white font-medium shrink-0">
+                  <% if entourage.user.photo.attached? %>
+                    <%= cl_image_tag entourage.user.photo.key, crop: :fill, width: 40, height: 40, class: "size-10 object-cover" %>
+                  <% else %>
+                    <%= entourage.user.email[0].upcase %>
+                  <% end %>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900"><%= entourage.user.prenom %> <%= entourage.user.nom %></p>
+                  <p class="text-sm text-gray-500"><%= entourage.user.email %></p>
+                </div>
               </div>
               <div>
-                <p class="font-medium text-gray-900"><%= entourage.user.prenom %> <%= entourage.user.nom %></p>
-                <p class="text-sm text-gray-500"><%= entourage.user.email %></p>
-              </div>
-              <div>
-                <%= link_to "calendrier de #{entourage.user.prenom}", user_calendrier_path(entourage.user), class: "px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
+                <%= link_to "calendrier de #{entourage.user.prenom}", user_calendrier_path(entourage.user), class: "entourage-calendrier-btn px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
               </div>
             </li>
           <% end %>

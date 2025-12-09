@@ -33,6 +33,7 @@ textarea#sensation_content {
   width: 100%;
   border-radius: 12px;
   border: 1px solid #cbd5e1; /* gris clair */
+  background-color: #ffffff;
   padding: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   font-size: 1rem;
@@ -54,14 +55,9 @@ textarea#sensation_content:focus {
 button, input[type="submit"] {
   border-radius: 12px;
   padding: 8px 16px;
-  font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.2s ease;
   cursor: pointer;
-}
-
-button:hover, input[type="submit"]:hover {
-  opacity: 0.9;
 }
 
 /* Bouton Clear */
@@ -78,11 +74,6 @@ input[type="submit"] {
   border: none;
   box-shadow: 0 2px 6px rgba(3,64,120,0.2);
 }
-
-input[type="submit"]:hover {
-  background-color: #1282A2;
-}
-
 /* ===== Liste des sensations spécifique à cette page ===== */
 .sensations-container ul {
   list-style: none;
@@ -107,10 +98,6 @@ input[type="submit"]:hover {
   white-space: pre-wrap;  /* conserve les retours à la ligne */
 }
 
-.sensations-container ul li:hover {
-  transform: translateY(-2px);
-}
-
 .sensations-container ul li span {
   font-size: 0.75rem;
   color: #6b7280;
@@ -128,12 +115,6 @@ input[type="submit"]:hover {
   text-decoration: none;
   color: #374151;
   transition: all 0.2s ease;
-}
-
-.sensations-container ul li a:hover {
-  background-color: #f0f9ff;
-  border-color: #1282A2;
-  color: #034078;
 }
 
 /* ===== Responsive ===== */

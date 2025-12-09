@@ -1,0 +1,166 @@
+/* Container principal avec espace pour navbar sticky */
+.medicaments-container {
+  padding-top: 80px; /* Ajustez selon la hauteur de votre navbar */
+  background-color: #FEFCFB;
+  min-height: 100vh;
+}
+
+.medicaments-wrapper {
+  max-width: 64rem;
+  padding: 2rem 1rem;
+  margin:auto;
+}
+
+/* En-tête de la page */
+.medicaments-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.medicaments-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #0A1128;
+  margin-bottom: 0.5rem;
+}
+
+.medicaments-subtitle {
+  font-size: 0.875rem;
+  color: #034078;
+}
+
+/* Barre de recherche */
+.medicaments-search {
+  margin-bottom: 2rem;
+}
+
+.medicaments-search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.medicaments-search-input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid #1282A2;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  color: #0A1128;
+}
+
+.medicaments-search-input:focus {
+  outline: none;
+  border-color: #001F54;
+  box-shadow: 0 0 0 3px rgba(18, 130, 162, 0.1);
+}
+
+.medicaments-search-input::placeholder {
+  color: #034078;
+  opacity: 0.6;
+}
+
+.medicaments-search-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #001F54;
+  color: #FEFCFB;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+/* Liste des médicaments */
+.medicaments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Messages d'état (vide, aucun résultat) */
+.medicaments-empty-state {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(10, 17, 40, 0.1);
+  padding: 2rem;
+  text-align: center;
+}
+
+.medicaments-empty-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto;
+  color: #1282A2;
+}
+
+.medicaments-empty-title {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #0A1128;
+}
+
+.medicaments-empty-text {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #034078;
+}
+
+.medicaments-empty-query {
+  color: #001F54;
+  font-weight: 500;
+}
+
+/* En-tête du tableau */
+.medicaments-table-header {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(10, 17, 40, 0.1);
+  padding: 1rem;
+}
+
+.medicaments-table-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.75rem;
+}
+
+.medicaments-table-cell-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.medicaments-table-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0A1128;
+  word-wrap: break-word;
+}
+
+.medicaments-table-sublabel {
+  font-size: 0.875rem;
+  color: #034078;
+  margin-top: 0.25rem;
+}
+
+.medicaments-table-badge {
+  padding: 0 0.5rem;
+  display: inline-flex;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  color: #001F54;
+}
+
+button[data-turbo-frame="_top"][type="submit"] {
+  color: #2e8042 !important;
+  border-radius: 6px;
+  padding: 8px 14px;
+}
+
+span.text-blue-800 {
+  margin-top: 10px;
+  display: inline-block;
+}
