@@ -21,7 +21,14 @@ export async function registerPushToken() {
   try {
     console.log("1. Enregistrement du Service Worker...")
     const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js")
-    console.log("2. Service Worker OK")
+    console.log("2. Service Worker enregistré")
+
+    // Attendre que le SW soit actif
+    if (!registration.active) {
+      console.log("2b. Attente activation du SW...")
+      await navigator.serviceWorker.ready
+      console.log("2c. SW activé")
+    }
 
     console.log("3. Demande de permission...")
     const permission = await Notification.requestPermission()
