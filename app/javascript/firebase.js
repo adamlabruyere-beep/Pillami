@@ -42,8 +42,16 @@ export async function registerPushToken() {
     const app = initializeApp(firebaseConfig)
     const messaging = getMessaging(app)
 
-    // 5. Obtenir le token
-    console.log("6. Demande du token FCM...")
+    // 5. Supprimer l'ancienne subscription si elle existe
+    console.log("6. Nettoyage des anciennes subscriptions...")
+    const existingSub = await registration.pushManager.getSubscription()
+    if (existingSub) {
+      console.log("6b. Suppression ancienne subscription...")
+      await existingSub.unsubscribe()
+    }
+
+    // 6. Obtenir le token
+    console.log("7. Demande du token FCM...")
     const token = await getToken(messaging, {
       vapidKey,
       serviceWorkerRegistration: registration
@@ -53,10 +61,10 @@ export async function registerPushToken() {
       console.log("❌ Pas de token reçu")
       return
     }
-    console.log("7. Token reçu:", token.substring(0, 30) + "...")
+    console.log("8. Token reçu:", token.substring(0, 30) + "...")
 
-    // 6. Envoyer au serveur
-    console.log("8. Envoi au serveur...")
+    // 7. Envoyer au serveur
+    console.log("9. Envoi au serveur...")
     const response = await fetch("/device_tokens", {
       method: "POST",
       headers: {
@@ -65,7 +73,7 @@ export async function registerPushToken() {
       },
       body: JSON.stringify({ token, platform: "web" })
     })
-    console.log("9. Réponse:", response.status, response.ok ? "✅" : "❌")
+    console.log("10. Réponse:", response.status, response.ok ? "✅" : "❌")
 
   } catch (e) {
     console.error("❌ Erreur FCM:", e)
