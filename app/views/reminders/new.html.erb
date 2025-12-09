@@ -78,7 +78,7 @@
         <!-- HEURE -->
         <div class="pillami-input-block">
           <%= f.label :time, "Heure du rappel", class: "pillami-label" %>
-          <%= f.time_field :time, class: "pillami-input" %>
+          <%= f.time_select :time, { minute_step: 10 }, { class: "pillami-input" } %>
         </div>
 
         <!-- QUANTITE + MESURE -->

@@ -13,8 +13,9 @@ Rails.application.routes.draw do
     resources :sensations
     resources :notifications, only: %i[index update]
     resource :calendrier, only: [:show]
-    resources :notifications, only: %i[index update]
   end
+
+  get "notifications/bell", to: "notifications#bell"
 
 
   resources :sensations, only: [:create, :destroy]
