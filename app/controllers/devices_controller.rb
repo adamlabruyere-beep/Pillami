@@ -2,10 +2,11 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    current_user.devices.find_or_create_by!(
-      token: params[:token],
-      platform: params[:platform]
-    )
+    device = Device.find_or_initialize_by(token: params[:token])
+    device.user = current_user
+    device.platform = params[:platform]
+    device.save!
+
     head :ok
   end
 end
