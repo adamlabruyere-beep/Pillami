@@ -1,32 +1,40 @@
-<h1 class="text-2xl font-bold mb-6">Mes Rappels</h1>
+<div class="pillami-container">
+  <div class="pillami-main">
 
-<div class="flex justify-between items-center mb-6">
-  <h2 class="text-xl font-semibold">Liste des rappels</h2>
-  <%= link_to 'Ajouter', new_user_reminder_path(@user), class: "btn btn-primary" %>
-</div>
+    <h1 class="page-title">Mes Rappels</h1>
 
-<% if @reminders.any? %>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @reminders.each do |reminder| %>
-      <div class="card bg-base-100 w-96 shadow-sm cursor-pointer">
-        <div class="card-body">
-          <h2 class="card-title"><%= reminder.medicament.nom %></h2>
-          <p class="text-gray-500">
-            Heure : <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
-            <%= reminder.quantity %>
-           <%= reminder.measure.pluralize %>
-            Jours : <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
-          </p>
-          <div class="card-actions justify-end">
-            <%= link_to "Supprimer",
+    <div class="reminder-header">
+      <h2 class="section-title">Liste des rappels</h2>
+      <%= link_to 'Ajouter', new_user_reminder_path(@user), class: "pillami-btn pillami-btn-primary" %>
+    </div>
+
+    <% if @reminders.any? %>
+      <div class="reminders-grid">
+        <% @reminders.each do |reminder| %>
+          <div class="reminder-card">
+            <div class="reminder-body">
+              <h2 class="reminder-title"><%= reminder.medicament.nom %></h2>
+              <p class="reminder-text">
+                Heure :
+                <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
+                <%= pluralize_fr(reminder.quantity, reminder.measure) %>
+                |
+                <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
+                <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
+              </p>
+
+              <div class="reminder-actions">
+                <%= link_to "Supprimer",
                   user_reminder_path(@user, reminder),
-                  class: "btn btn-neutral btn-outline",
+                  class: "pillami-btn-sm pillami-btn-secondary",
                   data: {turbo_method: :delete}%>
+              </div>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
+    <% else %>
+      <p class="no-reminders">Vous n'avez pas encore de rappels.</p>
     <% end %>
   </div>
-<% else %>
-  <p class="text-gray-500 text-center mt-10">Vous n'avez pas encore de rappels.</p>
-<% end %>
+</div>

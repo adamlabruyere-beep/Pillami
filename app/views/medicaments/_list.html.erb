@@ -1,0 +1,29 @@
+<% medicaments.each do |medicament| %>
+  <div class="bg-white rounded-lg shadow p-4">
+    <div class="flex justify-between items-start gap-3">
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
+        <p class="text-sm text-gray-500 mt-1"><%= medicament.format %></p>
+      </div>
+      <div>
+        <% if medicament.ordonnance %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Oui</span>
+        <% else %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Non</span>
+        <% end %>
+      </div>
+      <div>
+        <% if @pillatheque.medicaments.include?(medicament) %>
+          <span class="text-gray-400">Déjà ajouté</span>
+        <% else %>
+          <%= button_to pillatheque_pillatheque_medicaments_path(pillatheque, medicament_id: medicament.id),
+                        method: :post,
+                        data: { turbo_frame: "_top" },
+                        class: "text-blue-600 hover:text-blue-900 cursor-pointer" do %>
+            Ajouter
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

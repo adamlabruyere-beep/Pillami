@@ -1,1 +1,57 @@
-<h1>Home page</h1>
+<html lang="fr">
+  <div class="pillami-container">
+    <main class="pillami-main">
+      <div class="pillami-content">
+        <!-- En-tête principal -->
+        <header class="pillami-header">
+          <h1 class="pillami-title">Bienvenue sur Pillami</h1>
+          <div class="pillami-subtitle">Application de suivi médical</div>
+        </header>
+
+        <!-- Section caractéristiques principales -->
+        <section class="pillami-features">
+          <div class="pillami-feature-card">
+            <h2 class="pillami-feature-title">Suivi personnalisé</h2>
+            <p class="pillami-feature-text">
+              Elle fournit des rappels précis pour chaque prise de médicament,
+              permet de suivre le traitement et les médicaments disponibles,
+              et offre un accompagnement sur le long terme grâce au suivi des
+              sensations après chaque prise.
+            </p>
+          </div>
+
+          <div class="pillami-feature-card">
+            <h2 class="pillami-feature-title">Pilathèque médicale</h2>
+            <p class="pillami-feature-text">
+              La Pilathèque centralise les informations sur les médicaments :
+              photos, posologies et interactions pour un suivi sécurisé et complet.
+            </p>
+          </div>
+
+          <div class="pillami-feature-card">
+            <h2 class="pillami-feature-title">Alertes et surveillance</h2>
+            <p class="pillami-feature-text">
+              Rappels et notifications assurent la régularité des prises.
+              Le suivi des sensations permet de détecter rapidement toute
+              variation dans l'état du patient.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section conclusion -->
+        <section class="pillami-mission">
+          <p class="pillami-mission-text">
+            un suivi médical fiable et bienveillant,
+            pour que personne ne soit jamais seul face à son traitement.
+          </p>
+        </section>
+
+        <!-- Boutons d'action -->
+        <section class="pillami-actions">
+          <%= link_to "Se connecter", new_user_session_path, class: "pillami-btn pillami-btn-primary" %>
+          <%= link_to "Créer un compte", new_user_registration_path, class: "pillami-btn pillami-btn-secondary" %>
+        </section>
+      </div>
+    </main>
+  </div>
+</html>

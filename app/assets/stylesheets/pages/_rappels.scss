@@ -1,0 +1,111 @@
+// --- Colors ---
+$dark-blue: #001F54;
+$blue: #05668D;
+$background: #F7FAFB;
+$card: #FFFFFF;
+
+// --- Container ---
+.pillami-container {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+// --- Main ---
+.pillami-main {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
+// --- Title ---
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: $dark-blue;
+  margin-bottom: 20px;
+}
+
+// --- Section ---
+.reminder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+// Section Title
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $blue;
+}
+
+// --- GRID ---
+.reminders-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+// --- Card ---
+.reminder-card {
+  background: $card;
+  padding: 18px;
+  border-left: 5px solid $blue;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.08);
+}
+
+// --- Text ---
+.reminder-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: $dark-blue;
+  margin-bottom: 6px;
+}
+
+.reminder-text {
+  font-size: 15px;
+  color: $blue;
+  line-height: 1.5;
+}
+
+// --- Button Area ---
+.reminder-actions {
+  margin-top: 14px;
+  text-align: right;
+}
+
+// Buttons
+.pillami-btn,
+.pillami-btn-sm {
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+// Primary
+.pillami-btn-primary {
+  background: $blue;
+  color: white;
+}
+
+// Secondary
+.pillami-btn-secondary {
+  background: transparent;
+  border: 2px solid $blue;
+  color: $blue;
+}
+
+// No reminders
+.no-reminders {
+  text-align: center;
+  color: $blue;
+  padding-top: 40px;
+  font-size: 16px;
+}

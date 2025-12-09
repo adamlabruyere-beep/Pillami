@@ -19,6 +19,10 @@ class User < ApplicationRecord
   has_many :device_tokens, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
+  has_one :entourage, dependent: :destroy
+  has_many :entourage_memberships, class_name: "EntourageMember", dependent: :destroy
+  has_many :member_of_entourages, through: :entourage_memberships, source: :entourage
+
   has_one_attached :photo
 
   def initialize_pillatheque
