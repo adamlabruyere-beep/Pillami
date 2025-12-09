@@ -46,7 +46,7 @@ class RemindersController < ApplicationController
     end
 
     render json: reminders.as_json(
-      only: [:id, :time, :quantity, :measure],
+      only: %i[id time quantity measure],
       include: { medicament: { only: [:nom] } }
     )
   end
