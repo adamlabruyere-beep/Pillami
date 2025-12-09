@@ -15,39 +15,47 @@ const vapidKey = "BF-owBQuuFDvTxRRls1teK5qAt-03exK5hWgYy2xMekEuW-zSBN940Nx762EgZ
 
 export async function registerPushToken() {
   console.log("🔔 registerPushToken() appelé")
-  try {
-    console.log("1. Enregistrement du Service Worker...")
-    const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js")
-    console.log("2. Service Worker enregistré")
 
-    // Attendre que le SW soit actif
-    if (!registration.active) {
-      console.log("2b. Attente activation du SW...")
-      await navigator.serviceWorker.ready
-      console.log("2c. SW activé")
+  try {
+    // 1. Vérifier le support
+    if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+      console.log("❌ Push non supporté par ce navigateur")
+      return
     }
 
-    console.log("3. Demande de permission...")
+    // 2. Demander la permission d'abord
+    console.log("1. Demande de permission...")
     const permission = await Notification.requestPermission()
-    console.log("4. Permission:", permission)
-    if (permission !== "granted") return
+    console.log("2. Permission:", permission)
+    if (permission !== "granted") {
+      console.log("❌ Permission refusée")
+      return
+    }
 
-    console.log("5. Initialisation Firebase Messaging...")
+    // 3. Attendre que le SW soit prêt
+    console.log("3. Attente du Service Worker...")
+    const registration = await navigator.serviceWorker.ready
+    console.log("4. SW prêt:", registration.active?.state)
+
+    // 4. Initialiser Firebase
+    console.log("5. Init Firebase...")
     const app = initializeApp(firebaseConfig)
     const messaging = getMessaging(app)
 
-    console.log("6. Récupération du token FCM (timeout 15s)...")
-    const tokenPromise = getToken(messaging, {
+    // 5. Obtenir le token
+    console.log("6. Demande du token FCM...")
+    const token = await getToken(messaging, {
       vapidKey,
       serviceWorkerRegistration: registration
     })
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Timeout après 15s")), 15000)
-    )
-    const token = await Promise.race([tokenPromise, timeoutPromise])
-    console.log("7. Token:", token ? token.substring(0, 30) + "..." : "null")
-    if (!token) return
 
+    if (!token) {
+      console.log("❌ Pas de token reçu")
+      return
+    }
+    console.log("7. Token reçu:", token.substring(0, 30) + "...")
+
+    // 6. Envoyer au serveur
     console.log("8. Envoi au serveur...")
     const response = await fetch("/device_tokens", {
       method: "POST",
@@ -55,21 +63,18 @@ export async function registerPushToken() {
         "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
       },
-      body: JSON.stringify({ token: token, platform: "web" })
+      body: JSON.stringify({ token, platform: "web" })
     })
-    console.log("9. Réponse:", response.status)
+    console.log("9. Réponse:", response.status, response.ok ? "✅" : "❌")
+
   } catch (e) {
-    console.error("❌ Erreur FCM:", e.message || e)
+    console.error("❌ Erreur FCM:", e)
   }
 }
 
+// Enregistrer le SW une seule fois au chargement
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/firebase-messaging-sw.js")
-    .then((registration) => {
-      console.log("✅ Service Worker enregistré :", registration)
-    })
-    .catch((err) => {
-      console.error("❌ Erreur Service Worker :", err)
-    })
+  navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    .then(reg => console.log("✅ SW enregistré:", reg.scope))
+    .catch(err => console.error("❌ SW erreur:", err))
 }
