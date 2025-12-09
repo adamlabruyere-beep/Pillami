@@ -49,7 +49,7 @@
                <% if user_signed_in? %>
                  data-controller="polling"
                  data-polling-url-value="/notifications/bell"
-                 data-polling-interval-value="30000"
+                 data-polling-interval-value="1000"
                <% end %>>
             <%= render "shared/notification_bell" %>
           </div>
@@ -60,7 +60,7 @@
            <% if user_signed_in? %>
              data-controller="polling"
              data-polling-url-value="/notifications/bell"
-             data-polling-interval-value="30000"
+             data-polling-interval-value="1000"
            <% end %>>
         <%= render "shared/notification_bell" %>
         <button data-action="click->mobile-menu#toggle" class="p-2 bg-white rounded-lg shadow-lg text-gray-600 hover:text-gray-900" aria-label="Ouvrir le menu">
