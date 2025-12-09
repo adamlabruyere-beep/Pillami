@@ -1,6 +1,5 @@
-<html lang="fr">
-  <div class="sensations-container">
-    <h1>Comment vous sentez-vous aujourd’hui ?<h1>
+<div class="sensations-container">
+  <h1>Comment vous sentez-vous aujourd'hui ?</h1>
     <%= form_with model: Sensation.new, url: user_sensations_path(@user) do |f| %>
       <label for="sensation_content">
         <span class="text-sm font-medium text-gray-700">
@@ -44,5 +43,4 @@
         </li>
       <% end %>
     </ul>
-  </div>
-</html>
+</div>

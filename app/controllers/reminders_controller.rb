@@ -5,7 +5,7 @@ class RemindersController < ApplicationController
   before_action :set_reminder, only: %i[show destroy]
 
   def index
-    @reminders = @user.reminders # trier en fonction du jour et de l'heure et si ils ont été validées ou pas ajouter un status actif/inactif
+    @reminders = @user.reminders
   end
 
   def show
@@ -23,6 +23,9 @@ class RemindersController < ApplicationController
   def create
     @reminder = @user.reminders.new(reminder_params)
     authorize @reminder
+    now = Time.now
+    reminderTime = Time.new(now.year, now.month, now.day, @reminder.time.hour, @reminder.time.min)
+    @reminder.time = reminderTime
     if @reminder.save
       redirect_to user_reminders_path(@user), notice: 'Rappel créé avec succès.'
     else
@@ -84,7 +87,7 @@ end
     :measure,
     :time,
     :active,
-    :repeat_for_weeks,   # 👈 AJOUT ICI
+    :repeat_for_weeks,
     days_of_week: []
   )
 end

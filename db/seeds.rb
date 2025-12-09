@@ -173,6 +173,6 @@ require "open-uri"
 # puts "Total en base: #{Medicament.count} médicaments"
 # puts "=" * 60
 
-#////////:/regex pour enlever le format aux noms des medicaments//////
+# ////////:/regex pour enlever le format aux noms des medicaments//////
 
 # Medicament.find_each { |m| m.update(nom: m.nom.gsub(/,\s*[^,]+$/, '')) }
