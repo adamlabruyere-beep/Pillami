@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: "pages#home"
-
+  
   get "reminders/by_date", to: "reminders#by_date"
 
   devise_for :users
