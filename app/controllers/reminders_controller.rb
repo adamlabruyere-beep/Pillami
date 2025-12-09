@@ -23,9 +23,6 @@ class RemindersController < ApplicationController
   def create
     @reminder = @user.reminders.new(reminder_params)
     authorize @reminder
-    now = Time.now
-    reminderTime = Time.new(now.year, now.month, now.day, @reminder.time.hour, @reminder.time.min)
-    @reminder.time = reminderTime
     if @reminder.save
       redirect_to user_reminders_path(@user), notice: 'Rappel créé avec succès.'
     else
