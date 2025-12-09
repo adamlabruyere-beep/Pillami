@@ -1,15 +1,17 @@
 self.addEventListener("push", function(event) {
-  console.log("📩 Push reçu:", event)
+  console.log("📩 Push reçu:", event.data?.text())
 
-  let data = {}
+  let title = "Pillami"
+  let body = ""
+
   try {
-    data = event.data?.json() || {}
+    const payload = event.data?.json()
+    // FCM envoie les data dans payload.data directement
+    title = payload?.data?.title || payload?.notification?.title || "Pillami"
+    body = payload?.data?.body || payload?.notification?.body || ""
   } catch (e) {
     console.error("Erreur parsing push data:", e)
   }
-
-  const title = data.data?.title || "Pillami"
-  const body = data.data?.body || ""
 
   event.waitUntil(
     self.registration.showNotification(title, {
