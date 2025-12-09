@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_09_113523) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_09_151324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -137,6 +137,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_113523) do
     t.integer "quantity"
     t.string "measure"
     t.integer "repeat_for_weeks"
+    t.bigint "calendrier_id"
+    t.index ["calendrier_id"], name: "index_reminders_on_calendrier_id"
     t.index ["medicament_id"], name: "index_reminders_on_medicament_id"
     t.index ["user_id"], name: "index_reminders_on_user_id"
   end
@@ -187,6 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_113523) do
   add_foreign_key "pillatheque_medicaments", "medicaments"
   add_foreign_key "pillatheque_medicaments", "pillatheques"
   add_foreign_key "pillatheques", "users"
+  add_foreign_key "reminders", "calendriers"
   add_foreign_key "reminders", "medicaments"
   add_foreign_key "reminders", "users"
   add_foreign_key "sensations", "users"
