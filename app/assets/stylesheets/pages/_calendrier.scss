@@ -412,7 +412,6 @@ body {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  border: 2px solid $primary-dark;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -429,7 +428,6 @@ body {
   @media (min-width: 768px) {
     width: 160px;
     height: 160px;
-    border-width: 2px;
   }
 }
 
