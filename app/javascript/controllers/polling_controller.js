@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import * as Turbo from "@hotwired/turbo"
 
 export default class extends Controller {
   static values = {
@@ -36,8 +35,8 @@ export default class extends Controller {
       })
       if (response.ok) {
         const html = await response.text()
-        console.log("Polling:", this.urlValue, "Target found:", !!document.getElementById(html.match(/target="([^"]+)"/)?.[1]))
-        Turbo.renderStreamMessage(html)
+        // Insert turbo stream into DOM - Turbo will automatically process it
+        document.body.insertAdjacentHTML("beforeend", html)
       }
     } catch (e) {
       console.error("Polling error:", e)
