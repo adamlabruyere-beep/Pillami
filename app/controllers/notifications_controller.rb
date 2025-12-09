@@ -22,12 +22,14 @@ class NotificationsController < ApplicationController
   end
 
   def bell_desktop
+    response.headers["Cache-Control"] = "no-cache, no-store"
     respond_to do |format|
       format.turbo_stream
     end
   end
 
   def bell_mobile
+    response.headers["Cache-Control"] = "no-cache, no-store"
     respond_to do |format|
       format.turbo_stream
     end
