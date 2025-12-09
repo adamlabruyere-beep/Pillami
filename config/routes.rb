@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: "pages#home"
+  resources :calendriers, only: [:index]
   
   get "reminders/by_date", to: "reminders#by_date"
 
@@ -12,9 +13,12 @@ Rails.application.routes.draw do
   resources :users do
     resources :reminders
     resources :sensations
+    resources :notifications, only: %i[index update]
     resource :calendrier, only: [:show]
     resources :notifications, only: %i[index update]
   end
+  get "reminders/by_date", to: "reminders#by_date"
+
 
   resources :sensations, only: [:cretae, :destroy]
 
