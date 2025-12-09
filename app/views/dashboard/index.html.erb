@@ -1,6 +1,6 @@
 <!-- app/views/dashboard/index.html.erb -->
 
-<div class="container mx-auto px-4 py-6 space-y-6">
+<div class="container mx-auto px-4 py-6 space-y-6 dash-container">
 
   <!-- Médicaments du dernier rappel -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -25,17 +25,18 @@
   </div>
 
 
-<!-- Personnes que je suis -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-      <div class="px-6 py-4 border-b border-gray-200">
-        <h3 class="text-lg font-medium text-gray-900">Personnes que je suis (<%= @following.count %>)</h3>
-        <p class="text-sm text-gray-500 mt-1">Ces personnes vous ont ajouté à leur entourage</p>
-      </div>
+  <!-- Personnes que je suis -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-medium text-gray-900">Personnes que je suis (<%= @following.count %>)</h3>
+      <p class="text-sm text-gray-500 mt-1">Ces personnes vous ont ajouté à leur entourage</p>
+    </div>
 
-      <% if @following.any? %>
-        <ul class="divide-y divide-gray-200">
-          <% @following.each do |entourage| %>
-            <li class="px-6 py-4 flex items-center gap-3">
+    <% if @following.any? %>
+      <ul class="divide-y divide-gray-200">
+        <% @following.each do |entourage| %>
+          <li class="px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
               <div class="size-10 rounded-full overflow-hidden bg-green-600 flex items-center justify-center text-white font-medium shrink-0">
                 <% if entourage.user.photo.attached? %>
                   <%= cl_image_tag entourage.user.photo.key, crop: :fill, width: 40, height: 40, class: "size-10 object-cover" %>
@@ -47,15 +48,20 @@
                 <p class="font-medium text-gray-900"><%= entourage.user.prenom %> <%= entourage.user.nom %></p>
                 <p class="text-sm text-gray-500"><%= entourage.user.email %></p>
               </div>
-              <div>
-                <%= link_to "calendrier de #{entourage.user.prenom}", user_calendrier_path(entourage.user), class: "px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <div class="px-6 py-8 text-center text-gray-500">
-          <p>Vous ne suivez personne pour le moment.</p>
-          <p class="text-sm mt-1">Quand quelqu'un vous ajoutera à son entourage, il apparaîtra ici.</p>
-        </div>
-      <% end %>
+            </div>
+
+            <%= link_to "calendrier de #{entourage.user.prenom}",
+                        user_calendrier_path(entourage.user),
+                        class: "entourage-calendrier-btn" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="px-6 py-8 text-center text-gray-500">
+        <p>Vous ne suivez personne pour le moment.</p>
+        <p class="text-sm mt-1">Quand quelqu'un vous ajoutera à son entourage, il apparaîtra ici.</p>
+      </div>
+    <% end %>
+  </div>
+
+</div>
