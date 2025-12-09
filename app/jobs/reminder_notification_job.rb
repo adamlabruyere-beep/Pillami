@@ -1,5 +1,6 @@
 class ReminderNotificationJob < ApplicationJob
   queue_as :default
+  after_perform :schedule_next_run_if_enabled
 
   def perform
     now          = Time.current
@@ -48,7 +49,8 @@ class ReminderNotificationJob < ApplicationJob
         reminder: reminder,
         time:     now,
         status:   false,
-        message:  build_message(reminder, now)
+        message:  build_message(reminder, now),
+        scheduled_for: scheduled_time_for(reminder, now)
       )
 
       send_push_for(notification)
@@ -80,5 +82,28 @@ class ReminderNotificationJob < ApplicationJob
         body:  body
       )
     end
+  end
+
+  def self.schedule_next_run
+    next_run = Time.current.beginning_of_hour + 1.hour
+    set(wait_until: next_run).perform_later
+  end
+
+  def self.scheduler_enabled?
+    ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch("REMINDER_NOTIFICATIONS_SCHEDULER", "true")
+    )
+  end
+
+  private
+
+  def scheduled_time_for(reminder, now)
+    return now unless reminder.time
+
+    now.change(hour: reminder.time.hour, min: reminder.time.min, sec: 0)
+  end
+
+  def schedule_next_run_if_enabled
+    self.class.schedule_next_run if self.class.scheduler_enabled?
   end
 end

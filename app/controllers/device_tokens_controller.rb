@@ -5,9 +5,11 @@ class DeviceTokensController < ApplicationController
     token = params[:token]
     return head :bad_request if token.blank?
 
-    current_user.device_tokens
-                .find_or_initialize_by(token: token)
-                .update!(platform: params[:platform], last_seen_at: Time.current)
+    device_token = DeviceToken.find_or_initialize_by(token: token)
+    device_token.user = current_user
+    device_token.platform = params[:platform]
+    device_token.last_seen_at = Time.current
+    device_token.save!
 
     head :ok
   end
