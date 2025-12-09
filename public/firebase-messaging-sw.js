@@ -15,6 +15,12 @@ const messaging = firebase.messaging()
 
 messaging.onBackgroundMessage(function(payload) {
   console.log("📩 Message reçu en background:", payload)
-  // FCM affiche automatiquement la notification quand le champ 'notification' est présent
-  // Pas besoin d'appeler showNotification manuellement
+  const notificationTitle = payload.notification?.title || "Pillami"
+  const notificationBody = payload.notification?.body || ""
+
+  self.registration.showNotification(notificationTitle, {
+    body: notificationBody,
+    icon: "/favicon-32x32.png",
+    tag: "pillami-notification" // Évite les doublons avec le même tag
+  })
 })
