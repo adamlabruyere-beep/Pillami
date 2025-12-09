@@ -1,4 +1,5 @@
-<div id="notification_bell">
+<% bell_id ||= "notification_bell" %>
+<div id="<%= bell_id %>">
 <% if user_signed_in? && current_user %>
   <% unread_count = current_user.notifications.unread.due.count %>
   <div class="relative" data-controller="dropdown">

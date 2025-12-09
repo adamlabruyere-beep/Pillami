@@ -21,6 +21,18 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def bell_desktop
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
+  def bell_mobile
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   def list
     @notifications = @user.notifications.order(created_at: :desc)
     respond_to do |format|
