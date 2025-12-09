@@ -1,5 +1,6 @@
 class Reminder < ApplicationRecord
   belongs_to :user
+  belongs_to :calendrier
   belongs_to :medicament
 
   has_many :notifications, dependent: :destroy
