@@ -15,10 +15,15 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def bell
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def set_user
-    @user = current_user # si tu as current_user
-    # sinon: @user = User.find(params[:user_id])
+    @user = current_user
   end
 end
