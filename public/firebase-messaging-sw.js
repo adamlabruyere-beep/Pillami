@@ -15,8 +15,6 @@ const messaging = firebase.messaging()
 
 messaging.onBackgroundMessage(function(payload) {
   console.log("📩 Message reçu en background:", payload)
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body,
-    icon: "/favicon-32x32.png"
-  })
+  // FCM affiche automatiquement la notification quand le champ 'notification' est présent
+  // Pas besoin d'appeler showNotification manuellement
 })
