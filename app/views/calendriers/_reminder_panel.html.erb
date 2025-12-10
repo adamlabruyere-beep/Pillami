@@ -44,8 +44,8 @@
         <div class="space-y-3">
           <% past_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
             <% is_taken = taken[reminder.id] %>
-            <div class="flex items-start gap-3 p-2 rounded-lg bg-white border border-gray-200">
-              <span class="<%= is_taken ? 'bg-blue-600 text-white' : 'bg-red-500 text-white' %> text-xs px-2 py-1 rounded-full font-medium shrink-0 mt-0.5">
+            <div class="flex items-center gap-3 p-2 rounded-lg bg-white border border-gray-200">
+              <span class="<%= is_taken ? 'bg-blue-600 text-white' : 'bg-red-500 text-white' %> text-xs px-2 py-1 rounded-full font-medium shrink-0">
                 <%= is_taken ? 'Pris' : 'Non pris' %>
               </span>
               <div class="flex-1 min-w-0">

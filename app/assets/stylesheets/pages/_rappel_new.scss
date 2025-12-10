@@ -93,7 +93,8 @@ $light-blue: #84A9C0; // fond du tick
   border: 1px solid #bbb;
   border-radius: 10px;
   font-size: 16px;
-  background: white;
+  background: white !important;
+  background-color: white !important;
 }
 
 /* --- FIELDSET JOURS --- */
@@ -129,9 +130,9 @@ $light-blue: #84A9C0; // fond du tick
   display: flex;
   align-items: center;
   padding: 8px 10px;
-  background: #f0f8ff;
+  background: white;
   border-radius: 8px;
-  border: none;
+  border: 1px solid #bbb;
   position: relative;
 }
 
