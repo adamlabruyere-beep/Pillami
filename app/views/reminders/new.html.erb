@@ -94,7 +94,7 @@
           <div>
             <%= f.label :measure, "Mesure", class: "pillami-label" %>
             <%= f.select :measure,
-                  ['Comprimé','Demi comprimé','Gélule','Capsule','Cuillère à café','Cuillère à soupe','Gouttes','Ampoule','Sachet','Patch','Injection','ml'],
+                  ['Comprimé','Demi comprimé','Gélule','Capsule','Cuillère à café','Cuillère à soupe','Gouttes','Ampoule','Sachet','Patch','Injection','ml','mg','Dose'],
                   {},
                   data: { medicament_format_target: "measure", action: "change->medicament-format#updateQuantityOptions" },
                   class: "pillami-input" %>
