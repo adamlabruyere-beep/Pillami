@@ -44,15 +44,15 @@
 
           <% selected_days = @reminder.days_of_week || [] %>
 
-          <!-- Tous les jours -->
-          <label class="pillami-day-all">
-            <input type="checkbox"
-                   data-select-all-days-target="selectAll"
-                   data-action="change->select-all-days#toggleAll">
-            <span>Tout les jours</span>
-          </label>
-
           <div class="pillami-days-grid">
+            <!-- Tous les jours -->
+            <label class="pillami-day-item">
+              <input type="checkbox"
+                     data-select-all-days-target="selectAll"
+                     data-action="change->select-all-days#toggleAll">
+              <span>Tous les jours</span>
+            </label>
+
             <% Date::DAYNAMES.rotate(1).each do |day| %>
               <label class="pillami-day-item">
                 <%= check_box_tag "reminder[days_of_week][]", day, selected_days.include?(day),
