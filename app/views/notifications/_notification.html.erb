@@ -21,10 +21,10 @@
         <%= link_to user_notification_path(notification.user, notification),
             data: { turbo_method: :patch },
             class: "text-sm text-blue-600 hover:text-blue-800 hover:underline" do %>
-          Marquer comme lue
+          Prise confirmée ?
         <% end %>
       <% else %>
-        <span class="text-xs text-gray-400">Lue</span>
+        <span class="text-xs text-gray-400">Validée</span>
       <% end %>
     </div>
   </div>
