@@ -87,15 +87,17 @@
         <div class="pillami-row">
           <div>
             <%= f.label :quantity, "Quantité", class: "pillami-label" %>
-            <%= f.select :quantity, [1,2,3,4,5], {}, class: "pillami-input" %>
+            <%= f.select :quantity, [1,2,3,4,5], {},
+                  data: { medicament_format_target: "quantity" },
+                  class: "pillami-input" %>
           </div>
           <div>
             <%= f.label :measure, "Mesure", class: "pillami-label" %>
             <%= f.select :measure,
                   ['Comprimé','Demi comprimé','Gélule','Capsule','Cuillère à café','Cuillère à soupe','Gouttes','Ampoule','Sachet','Patch','Injection','ml'],
                   {},
-                  data:{ medicament_format_target:"measure"},
-                  class:"pillami-input" %>
+                  data: { medicament_format_target: "measure", action: "change->medicament-format#updateQuantityOptions" },
+                  class: "pillami-input" %>
           </div>
         </div>
 

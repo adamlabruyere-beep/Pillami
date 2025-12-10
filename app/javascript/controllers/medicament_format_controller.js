@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["select", "measure"]
+  static targets = ["select", "measure", "quantity"]
 
   // Mapping des formats de médicaments vers les mesures
   // Ordre important : les plus spécifiques en premier
@@ -35,6 +35,13 @@ export default class extends Controller {
     { pattern: "ampoule", measure: "Ampoule" }
   ]
 
+  // Options de quantité par type de mesure
+  quantityOptions = {
+    default: [1, 2, 3, 4, 5],
+    ml: [5, 10, 15, 20, 25, 50, 100],
+    gouttes: [1, 2, 3, 4, 5, 10, 15, 20]
+  }
+
   updateMeasure() {
     const selectedOption = this.selectTarget.selectedOptions[0]
     if (!selectedOption) return
@@ -47,8 +54,44 @@ export default class extends Controller {
     for (const mapping of this.formatMappings) {
       if (formatLower.includes(mapping.pattern)) {
         this.measureTarget.value = mapping.measure
+        this.updateQuantityOptions()
         return
       }
     }
+  }
+
+  updateQuantityOptions() {
+    console.log("updateQuantityOptions appelé")
+
+    if (!this.hasQuantityTarget) {
+      console.log("Pas de quantityTarget")
+      return
+    }
+
+    const measure = this.measureTarget.value.toLowerCase()
+    console.log("Mesure sélectionnée:", measure)
+
+    let options = this.quantityOptions.default
+
+    if (measure === "ml") {
+      options = this.quantityOptions.ml
+    } else if (measure === "gouttes") {
+      options = this.quantityOptions.gouttes
+    }
+
+    console.log("Options:", options)
+
+    const currentValue = this.quantityTarget.value
+    this.quantityTarget.innerHTML = ""
+
+    options.forEach(opt => {
+      const option = document.createElement("option")
+      option.value = opt
+      option.textContent = opt
+      if (opt.toString() === currentValue) {
+        option.selected = true
+      }
+      this.quantityTarget.appendChild(option)
+    })
   }
 }
