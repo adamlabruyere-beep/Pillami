@@ -1,11 +1,16 @@
 .entourage-calendrier-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #034078;
   color: #fff;
   border: none;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: .875rem;
-  box-shadow: 0 2px 6px rgba(3, 64, 120, .2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: .813rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
 }
 
 /* container principal */

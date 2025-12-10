@@ -2,6 +2,33 @@
 
 <div class="dash-container mx-auto px-4 py-6 space-y-6">
 
+  <!-- Progression du jour -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-lg font-medium text-gray-900">Ma progression du jour</h3>
+      <span class="text-sm font-semibold text-blue-600"><%= @taken_today %>/<%= @total_reminders_today %> pris</span>
+    </div>
+
+    <% if @total_reminders_today > 0 %>
+      <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+        <div class="h-4 rounded-full transition-all duration-500 <%= @progress_percentage == 100 ? 'bg-green-500' : 'bg-blue-600' %>"
+             style="width: <%= @progress_percentage %>%;">
+        </div>
+      </div>
+      <p class="text-sm text-gray-500 mt-2">
+        <% if @progress_percentage == 100 %>
+          Bravo ! Tous vos médicaments ont été pris.
+        <% elsif @progress_percentage >= 50 %>
+          Continuez comme ça, vous y êtes presque !
+        <% else %>
+          N'oubliez pas de prendre vos médicaments.
+        <% end %>
+      </p>
+    <% else %>
+      <p class="text-sm text-gray-500">Aucun rappel prévu pour aujourd'hui.</p>
+    <% end %>
+  </div>
+
   <!-- Médicaments du dernier rappel -->
   <h2 class="text-xl font-semibold text-gray-900 mb-4">Dernier rappel</h2>
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
