@@ -1,1 +1,8 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+
+                 ____ ___ _     _        _    __  __ ___
+                |  _ \_ _| |   | |      / \  |  \/  |_ _|
+                | |_) | || |   | |     / _ \ | |\/| || |
+                |  __/| || |___| |___ / ___ \| |  | || |
+                |_|  |___|_____|_____/_/   \_\_|  |_|___|
