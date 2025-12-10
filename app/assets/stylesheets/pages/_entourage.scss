@@ -1,29 +1,72 @@
 .entourage-calendrier-btn {
-    background-color: #034078;
-    color: #fff;
-    border: none;
-    box-shadow: 0 2px 6px rgba(3, 64, 120, 0.2);
-    border-radius: 12px;
-    padding: 8px 16px;
-    font-size: 0.875rem;
+  background-color: #034078;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: .875rem;
+  box-shadow: 0 2px 6px rgba(3, 64, 120, .2);
 }
 
+/* container principal */
 .entourage-container {
-  padding-top: 80px !important;
+  padding-top: 80px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  padding-inline: none;
 }
 
-.dash-container,
+/* wrappers centrés */
 .notif-container {
-  @media (min-width: 480px) {
-    padding-top: 80px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  width:100%;
+  max-width: 65rem;
+  padding:1rem; /* mobile first */
+  margin:auto;
+  padding-top: 80px;
+}
 
-  @media (min-width: 700px) {
-    padding-top: 80px;
-    padding-bottom: 0;
-    padding-left: 80px;
-    padding-right: 80px;
-  }
+.dash-container {
+  width:100%;
+  max-width: 65rem;
+  padding-top: 80px;
+  margin:auto;
+}
+
+.card-med {
+  background:#fff;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  margin:15px;
+}
+
+.title-med {
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.table-med {
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+
+.table-med th {
+  background:#f4f6f9;
+  padding:10px;
+  font-size:14px;
+  font-weight:600;
+  border-bottom:2px solid #e0e0e0;
+}
+
+.table-med td {
+  padding:10px;
+  font-size:14px;
+  border-bottom:1px solid #eee;
+}
+
+.med-name {
+  font-weight:600;
 }

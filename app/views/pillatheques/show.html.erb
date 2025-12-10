@@ -10,6 +10,15 @@
       <% end %>
     </div>
 
+    <!-- CARTE D'EN-TÊTE DES MÉDICAMENTS -->
+    <div class="pillami-medicament-card bg-white rounded-lg shadow p-4 mb-2">
+      <div class="pillami-medicament-card-info flex justify-between items-center gap-3 font-semibold text-gray-700">
+        <div class="pillami-medicament-info flex-1 min-w-0">Nom du
+          médicament</div>
+        <div class="pillami-medicament-ordonnance" style="width: 120px; text-align: center;">Sous ordonnance</div>
+      </div>
+    </div>
+
     <div class="pillami-medicaments-list space-y-3">
       <% if @medicaments.any? %>
         <% @medicaments.each do |medicament| %>
@@ -19,14 +28,14 @@
                 <h3 class="pillami-medicament-name text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
                 <p class="pillami-medicament-format text-sm text-gray-500 mt-1"><%= medicament.format %></p>
               </div>
-              <div class="pillami-medicament-ordonnance">
+              <div class="pillami-medicament-ordonnance" style="width: 120px; text-align: center;">
                 <% if medicament.ordonnance %>
                   <span class="pillami-pill-tag pillami-pill-ordonnance-oui">Oui</span>
                 <% else %>
                   <span class="pillami-pill-tag pillami-pill-ordonnance-non">Non</span>
                 <% end %>
               </div>
-              <div class="pillami-medicament-action">
+              <div class="pillami-medicament-action" style="width: 120px; text-align: center;">
                 <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
                 <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
                       method: :delete,
@@ -40,9 +49,6 @@
       <% else %>
         <div class="pillami-empty-card bg-white rounded-lg shadow p-8 text-center text-gray-500">
           <p class="mb-4">Votre pillathèque est vide</p>
-          <%= link_to medicaments_path, class: "pillami-btn-link text-blue-600 font-medium" do %>
-            Ajouter votre premier médicament
-          <% end %>
         </div>
       <% end %>
     </div>

@@ -3,26 +3,21 @@
 <div class="dash-container mx-auto px-4 py-6 space-y-6">
 
   <!-- Médicaments du dernier rappel -->
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">dernier rappel</h2>
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">Dernier rappel</h2>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 
-    <% if @last_reminder && @last_reminder.medicament.present? %>
-      <ul class="divide-y divide-gray-200">
-        <li class="px-4 py-2 grid grid-cols-3 gap-4 font-medium text-gray-700 bg-gray-50 rounded-t-lg">
-          <span>Nom du médicament</span>
-          <span>Dose</span>
-          <span>Heure</span>
-        </li>
-        <li class="px-4 py-2 grid grid-cols-3 gap-4 items-center">
-          <span><%= @last_reminder.medicament.nom %></span>
-          <span><%= @last_reminder.quantity %> <%= @last_reminder.measure %></span>
-          <span><%= @last_reminder.time.strftime("%H:%M") %></span>
-        </li>
-      </ul>
-    <% else %>
-      <p class="text-gray-500">Aucun rappel récent pour le moment.</p>
-    <% end %>
-  </div>
+  <% if @last_reminder && @last_reminder.medicament.present? %>
+    <ul class="divide-y divide-gray-200">
+      <li class="px-4 py-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+        <span><%= @last_reminder.medicament.nom %></span>
+        <span><%= @last_reminder.quantity %> <%= @last_reminder.measure %></span>
+        <span><%= @last_reminder.time.strftime("%H:%M") %></span>
+      </li>
+    </ul>
+  <% else %>
+    <p class="text-gray-500">Aucun rappel récent pour le moment.</p>
+  <% end %>
+</div>
 
 
   <!-- Personnes que je suis -->

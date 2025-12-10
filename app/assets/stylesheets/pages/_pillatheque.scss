@@ -1,10 +1,3 @@
-$blue: #05668D;
-$dark-blue: #001F54;
-$light-blue: #84A9C0;
-$green: #16a34a;
-$background:#F7FAFB;
-
-
 /* --- PAGE WRAPPER --- */
 .pillami-page-wrapper {
   min-height: 100vh;
@@ -17,7 +10,6 @@ $background:#F7FAFB;
 .pillami-page-container {
   max-width: 1024px;
   margin: auto;
-
 }
 
 /* --- HEADER --- */
@@ -46,7 +38,13 @@ $background:#F7FAFB;
   color: $blue;
 }
 
-/* --- BOUTONS --- */
+.btn-container {
+  display: flex;
+  gap: 10px;       /* espace entre les boutons */
+  flex-wrap: wrap;  /* permet de passer à la ligne si trop petit */
+  align-items: center;
+}
+
 .pillami-btn-primary {
   display: inline-block;
   background: $blue;
@@ -54,21 +52,18 @@ $background:#F7FAFB;
   padding: 12px 16px;
   border-radius: 10px;
   text-align: center;
-  width: 100%;
-
-  @media (min-width: 640px) {
-    width: auto;
-  }
+  width: auto; /* ne prend pas toute la largeur */
+  white-space: nowrap; /* empêche le retour à la ligne du texte */
 }
 
 .pillami-btn-action {
-  background-color: #fee2e2;  /* rouge clair */
   color: #b91c1c;             /* rouge foncé */
-  font-size: 12px;
+  font-size: 15px !important;
   border-radius: 12px;
   padding: 4px 10px;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .pillami-btn-link {
@@ -94,8 +89,9 @@ $background:#F7FAFB;
 .pillami-medicament-card-body {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center; /* pour aligner verticalement les éléments */
   gap: 12px;
+  flex-wrap: wrap;     /* permet le passage à la ligne si trop petit */
 }
 
 .pillami-medicament-info {
@@ -140,23 +136,58 @@ $background:#F7FAFB;
   padding: 32px;
 }
 
-/* RESPONSIVE MOBILE-FIRST */
 @media (max-width: 480px) {
   .pillami-page-title {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .pillami-page-subtitle {
-    font-size: 13px;
+    font-size: 12px;
   }
 
+  /* Boutons en ligne et plus petits */
+  .btn-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pillami-btn-primary,
+  .pillami-btn-action {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  /* Carte médicaments et colonnes */
   .pillami-medicament-card-body {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap; /* autorise le passage à la ligne si trop petit */
     gap: 8px;
+    align-items: center;
+  }
+
+  .pillami-medicament-info {
+    flex: 2 1 50%;
+    min-width: 0;
+    font-size: 12px;
+    word-break: break-word; /* permet de casser les mots longs */
+  }
+
+  .pillami-medicament-ordonnance,
+  .pillami-medicament-action {
+    flex: 1 1 25%;
+    font-size: 11px;
+    text-align: center;
+    min-width: 0;
   }
 
   .pillami-pill-tag {
     font-size: 11px;
     padding: 2px 4px;
   }
+}
+
+.pillami-medicament-card-info {
+  flex-wrap: none;
+
 }
