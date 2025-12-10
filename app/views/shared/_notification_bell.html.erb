@@ -1,4 +1,5 @@
-<div id="notification_bell">
+<% bell_id ||= "notification_bell" %>
+<div id="<%= bell_id %>">
 <% if user_signed_in? && current_user %>
   <% unread_count = current_user.notifications.unread.due.count %>
   <div class="relative" data-controller="dropdown">
@@ -22,10 +23,7 @@
       <div class="px-3 py-2 border-b font-semibold text-sm">Notifications</div>
       <div class="max-h-80 overflow-y-auto">
         <% current_user.notifications.order(created_at: :desc).limit(20).each do |notification| %>
-          <div
-            id="notification_<%= notification.id %>"
-            class="px-3 py-2 border-b text-sm <%= 'bg-gray-50' unless notification.status %>"
-          >
+          <div class="px-3 py-2 border-b text-sm <%= 'bg-gray-50' unless notification.status %>">
             <p>
               <strong><%= notification.reminder&.medicament&.nom || "Médicament" %></strong>
               — <%= notification.reminder&.time&.strftime("%H:%M") %>

@@ -22,13 +22,14 @@ class RemindersController < ApplicationController
 
   def create
     @reminder = @user.reminders.new(reminder_params)
+    @reminder.calendrier = @user.calendrier
     authorize @reminder
     if @reminder.save
       redirect_to user_reminders_path(@user), notice: 'Rappel créé avec succès.'
     else
       @pillatheque = @user.pillatheque
       @medicaments = @pillatheque.medicaments
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

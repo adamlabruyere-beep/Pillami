@@ -1,22 +1,22 @@
-importScripts("https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js")
-importScripts("https://www.gstatic.com/firebasejs/10.13.0/firebase-messaging-compat.js")
+self.addEventListener("push", function(event) {
+  console.log("📩 Push reçu:", event.data?.text())
 
-firebase.initializeApp({
-  apiKey: "AIzaSyAwpB3lK5tNUgkqvnQWtOL91tP9IfRWDDE",
-  authDomain: "pillami-e98ac.firebaseapp.com",
-  projectId: "pillami-e98ac",
-  storageBucket: "pillami-e98ac.firebasestorage.app",
-  messagingSenderId: "583918755836",
-  appId: "1:583918755836:web:30cf6f69ebfe7f715b1c79",
-  measurementId: "G-6FKSN2SZ8F"
-})
+  let title = "Pillami"
+  let body = ""
 
-const messaging = firebase.messaging()
+  try {
+    const payload = event.data?.json()
+    // FCM envoie les data dans payload.data directement
+    title = payload?.data?.title || payload?.notification?.title || "Pillami"
+    body = payload?.data?.body || payload?.notification?.body || ""
+  } catch (e) {
+    console.error("Erreur parsing push data:", e)
+  }
 
-messaging.onBackgroundMessage(function(payload) {
-  console.log("📩 Message reçu en background:", payload)
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body,
-    icon: "/favicon-32x32.png"
-  })
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+      icon: "/favicon-32x32.png"
+    })
+  )
 })
