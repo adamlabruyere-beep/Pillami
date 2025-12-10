@@ -36,7 +36,7 @@
   <div class="space-y-3 sm:space-y-4">
     <!-- Rappels passés -->
     <% if has_past %>
-      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-gray-50 border border-gray-200">
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-gray-50 border border-gray-200 overflow-hidden">
         <div class="flex items-center gap-2 mb-2 sm:mb-3">
           <span class="text-gray-400">✓</span>
           <p class="text-xs sm:text-sm font-semibold text-gray-500">Rappels passés</p>
@@ -45,11 +45,11 @@
           <% past_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
             <% is_taken = taken[reminder.id] %>
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 <%= is_taken ? 'text-green-600' : 'text-red-500' %>">
-              <div class="flex items-center gap-2">
-                <span class="<%= is_taken ? 'bg-green-100' : 'bg-red-100' %> text-xs px-2 py-0.5 rounded-full font-medium">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="<%= is_taken ? 'bg-green-100' : 'bg-red-100' %> text-xs px-2 py-0.5 rounded-full font-medium shrink-0">
                   <%= is_taken ? 'Pris' : 'Non pris' %>
                 </span>
-                <span class="font-medium text-sm truncate text-gray-700"><%= reminder.medicament.nom %></span>
+                <span class="font-medium text-sm text-gray-700 break-words overflow-hidden"><%= reminder.medicament.nom %></span>
               </div>
               <span class="text-xs sm:text-sm shrink-0 text-gray-500">
                 <%= reminder.time&.strftime("%H:%M") %>
@@ -64,14 +64,14 @@
     <% end %>
     <!-- Rappels à venir -->
     <% if has_upcoming %>
-      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-blue-50 border border-blue-200">
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-blue-50 border border-blue-200 overflow-hidden">
         <div class="flex items-center gap-2 mb-2 sm:mb-3">
           <p class="text-xs sm:text-sm font-semibold text-blue-700">Rappels à venir</p>
         </div>
         <div class="space-y-2">
           <% upcoming_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-gray-700 gap-1">
-              <span class="font-medium text-sm truncate"><%= reminder.medicament.nom %></span>
+              <span class="font-medium text-sm break-words overflow-hidden min-w-0"><%= reminder.medicament.nom %></span>
               <span class="text-xs sm:text-sm text-blue-600 shrink-0">
                 <%= reminder.time&.strftime("%H:%M") || "Heure non définie" %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
@@ -85,14 +85,14 @@
     <% end %>
     <!-- Sensations du jour -->
     <% if has_sensations %>
-      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-green-50 border border-green-200">
+      <div class="rounded-xl sm:rounded-2xl shadow p-3 sm:p-4 bg-green-50 border border-green-200 overflow-hidden">
         <div class="flex items-center gap-2 mb-2 sm:mb-3">
           <p class="text-xs sm:text-sm font-semibold text-green-700">Sensations du jour</p>
         </div>
         <div class="space-y-2">
           <% sensations.sort_by(&:created_at).each do |sensation| %>
             <div class="text-gray-700">
-              <p class="text-xs sm:text-sm"><%= sensation.content %></p>
+              <p class="text-xs sm:text-sm break-words overflow-hidden"><%= sensation.content %></p>
               <p class="text-xs text-green-600 mt-1">
                 <%= l(sensation.created_at, format: "%H:%M") %>
               </p>
