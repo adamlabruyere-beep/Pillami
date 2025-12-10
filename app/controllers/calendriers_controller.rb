@@ -38,11 +38,22 @@ class CalendriersController < ApplicationController
       end
     end
     # Toutes les sensations de l'utilisateur (on n'a besoin que de la date)
-    @sensations = current_user.sensations
+    @sensations = @user.sensations
 
-  # Hash : date -> sensations de ce jour
+    # Hash : date -> sensations de ce jour
     @sensations_by_day = @week_days.index_with do |date|
       @sensations.select { |s| s.created_at.to_date == date }
+    end
+
+    # Notifications pour déterminer si un rappel a été pris (status: true = vu = pris)
+    @notifications = @user.notifications.where(scheduled_for: @week_start.beginning_of_day..@week_days.last.end_of_day)
+
+    # Hash : date -> { reminder_id => taken (true/false) }
+    @taken_by_day = @week_days.index_with do |date|
+      day_notifications = @notifications.select { |n| n.scheduled_for.to_date == date }
+      day_notifications.each_with_object({}) do |notification, hash|
+        hash[notification.reminder_id] = notification.status
+      end
     end
   end
 

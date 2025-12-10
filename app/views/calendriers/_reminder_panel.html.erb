@@ -1,5 +1,6 @@
 <%
   has_sensations = defined?(sensations) && sensations.present?
+  taken ||= {}
   now = Time.current
 
   # Séparer les rappels passés et à venir
@@ -42,9 +43,15 @@
         </div>
         <div class="space-y-2">
           <% past_reminders.sort_by { |r| r.time || Time.current }.each do |reminder| %>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-gray-400 line-through gap-1">
-              <span class="font-medium text-sm truncate"><%= reminder.medicament.nom %></span>
-              <span class="text-xs sm:text-sm shrink-0">
+            <% is_taken = taken[reminder.id] %>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 <%= is_taken ? 'text-green-600' : 'text-red-500' %>">
+              <div class="flex items-center gap-2">
+                <span class="<%= is_taken ? 'bg-green-100' : 'bg-red-100' %> text-xs px-2 py-0.5 rounded-full font-medium">
+                  <%= is_taken ? 'Pris' : 'Non pris' %>
+                </span>
+                <span class="font-medium text-sm truncate text-gray-700"><%= reminder.medicament.nom %></span>
+              </div>
+              <span class="text-xs sm:text-sm shrink-0 text-gray-500">
                 <%= reminder.time&.strftime("%H:%M") %>
                 <% if reminder.quantity.present? && reminder.measure.present? %>
                   · <%= pluralize_fr(reminder.quantity, reminder.measure) %>
