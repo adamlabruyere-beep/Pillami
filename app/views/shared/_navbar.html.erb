@@ -16,41 +16,41 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
         </svg>
       </button>
-      <ul class="mt-6 space-y-1">
+      <ul class="mt-6 space-y-3">
         <% if user_signed_in? %>
           <li data-sidebar-target="text">
-            <%= link_to pillatheque_path(current_user.pillatheque), class: "block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to pillatheque_path(current_user.pillatheque), class: "block rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Pillatheque
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to user_calendrier_path(current_user), class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to user_calendrier_path(current_user), class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Calendrier
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to user_sensations_path(current_user), class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to user_sensations_path(current_user), class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Mes sensations
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to user_reminders_path(current_user), class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to user_reminders_path(current_user), class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Mes rappels
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to entourage_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to entourage_path, class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Mon entourage
             <% end %>
           </li>
         <% else %>
           <li data-sidebar-target="text">
-            <%= link_to new_user_session_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to new_user_session_path, class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               Connexion
             <% end %>
           </li>
           <li data-sidebar-target="text">
-            <%= link_to new_user_registration_path, class: "flex items-center rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
+            <%= link_to new_user_registration_path, class: "flex items-center rounded-lg px-4 py-3 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" do %>
               S'inscrire
             <% end %>
           </li>
