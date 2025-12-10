@@ -73,7 +73,7 @@ export default class extends Controller {
 
     let options = this.quantityOptions.default
 
-    if (measure === "ml") {
+    if (measure === "ml" || measure === "mg") {
       options = this.quantityOptions.ml
     } else if (measure === "gouttes") {
       options = this.quantityOptions.gouttes

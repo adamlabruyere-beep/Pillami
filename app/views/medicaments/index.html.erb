@@ -10,10 +10,14 @@
       <%= form_with url: medicaments_path, method: :get, data: { turbo_frame: "medicaments_list", search_target: "form" }, class: "medicaments-search-form" do |f| %>
         <%= f.text_field :query,
               value: params[:query],
-              placeholder: "Rechercher un médicament...",
+              placeholder: "DOLIPRANECAPS 1000 mg",
               data: { search_target: "input", action: "input->search#search" },
               class: "medicaments-search-input" %>
-        <%= f.submit "Rechercher", class: "medicaments-search-button" %>
+        <button type="submit" class="medicaments-search-button">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
       <% end %>
     </div>
 
@@ -61,5 +65,7 @@
       <% end %>
     </div>
     <% end %>
+
+    <%= render "shared/back_button" %>
   </div>
 </div>

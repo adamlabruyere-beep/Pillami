@@ -7,10 +7,10 @@
 
     <!-- Ajouter un membre -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 class="text-lg font-medium text-gray-900 mb-4">Ajouter un membre</h3>
+      <h3 class="text-lg font-medium text-gray-900 mb-4">Autoriser à me suivre</h3>
       <%= form_with url: entourage_entourage_members_path, method: :post, class: "flex gap-3" do |f| %>
         <%= f.email_field :email,
-              placeholder: "Email de la personne à ajouter",
+              placeholder: "email@gmail.com",
               required: true,
               class: "flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
         <%= f.submit "Ajouter",
@@ -97,8 +97,6 @@
       <% end %>
     </div>
 
-    <div class="text-center">
-      <%= link_to "← Retour", root_path, class: "text-sm font-medium text-gray-600 hover:text-gray-500" %>
-    </div>
+    <%= render "shared/back_button" %>
   </div>
 </div>

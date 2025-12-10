@@ -1,13 +1,9 @@
 <div class="pillami-container">
   <div class="pillami-main">
-
-    <h1 class="page-title">Mes Rappels</h1>
-
     <div class="reminder-header">
-      <h2 class="section-title">Liste des rappels</h2>
+      <h1 class="section-title">Mes Rappels</h1>
       <%= link_to 'Ajouter', new_user_reminder_path(@user), class: "pillami-btn-primary-1" %>
     </div>
-
     <% if @reminders.any? %>
       <div class="reminders-grid">
         <% @reminders.each do |reminder| %>
@@ -22,7 +18,6 @@
                 <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
                 <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
               </p>
-
               <div class="reminder-actions">
                 <%= link_to "Supprimer",
                   user_reminder_path(@user, reminder),
@@ -36,5 +31,7 @@
     <% else %>
       <p class="no-reminders">Vous n'avez pas encore de rappels.</p>
     <% end %>
+
+    <%= render "shared/back_button" %>
   </div>
 </div>

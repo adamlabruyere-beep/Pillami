@@ -94,7 +94,7 @@
           <div>
             <%= f.label :measure, "Mesure", class: "pillami-label" %>
             <%= f.select :measure,
-                  ['Comprimé','Demi comprimé','Gélule','Capsule','Cuillère à café','Cuillère à soupe','Gouttes','Ampoule','Sachet','Patch','Injection','ml'],
+                  ['Comprimé','Demi comprimé','Gélule','Capsule','Cuillère à café','Cuillère à soupe','Gouttes','Ampoule','Sachet','Patch','Injection','ml','mg','Dose'],
                   {},
                   data: { medicament_format_target: "measure", action: "change->medicament-format#updateQuantityOptions" },
                   class: "pillami-input" %>
@@ -106,10 +106,7 @@
 
       <% end %>
 
-      <!-- LIEN RETOUR -->
-      <div class="pillami-back">
-        <%= link_to "← Retour", user_reminders_path(@user), class: "pillami-back-link" %>
-      </div>
+      <%= render "shared/back_button" %>
 
     </div>
   </div>
