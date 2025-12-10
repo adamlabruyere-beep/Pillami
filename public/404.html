@@ -20,6 +20,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      position: relative;
     }
 
     .error-container {
@@ -94,10 +95,23 @@
         font-size: 20px;
       }
     }
+
+    .pillacat {
+      position: absolute;
+      top: 5px;
+      right: 20px;
+    }
+
+    .pillacat img {
+      width: 100px;
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
 
 <body>
+  <div class="pillacat"><img src="/Pillacat.png" alt="Pillacat"></div>
   <div class="error-container">
     <div class="logo">PILLAMI</div>
     <div class="error-code">404</div>
