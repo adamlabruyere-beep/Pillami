@@ -7,6 +7,7 @@ $card: #FFFFFF;
 .pillami-container {
   min-height: 100vh;
   padding: 18px;
+  padding-top: 50px;
 }
 
 // --- Main ---
@@ -86,9 +87,16 @@ $card: #FFFFFF;
 }
 
 // Primary
-.pillami-btn-primary {
+.pillami-btn-primary-1 {
   background: $blue;
   color: white;
+  padding: 14px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  width: auto;
+  text-align: center;
+  display: inline-block;
 }
 
 // Secondary
