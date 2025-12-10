@@ -106,10 +106,7 @@
 
       <% end %>
 
-      <!-- LIEN RETOUR -->
-      <div class="pillami-back">
-        <%= link_to "← Retour", user_reminders_path(@user), class: "pillami-back-link" %>
-      </div>
+      <%= render "shared/back_button" %>
 
     </div>
   </div>
