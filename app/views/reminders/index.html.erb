@@ -14,10 +14,10 @@
                 Heure :
                 <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
                 <%= pluralize_fr(reminder.quantity, reminder.measure) %>
-                |
                 <% if reminder.days_of_week&.count == 7 %>
                   Quotidien
                 <% else %>
+                <br>
                   <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
                   <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
                 <% end %>

@@ -3,7 +3,9 @@
     <div class="pillami-page-header flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
       <div>
         <h1 class="pillami-page-title text-3xl font-bold text-gray-900">Ma Pillathèque</h1>
-        <p class="pillami-page-subtitle mt-2 text-sm text-gray-600"><%= @medicaments.count %> médicament(s)</p>
+       <p class="pillami-page-subtitle mt-2 text-sm text-gray-600">
+        <%= @medicaments.count %> <%= @medicaments.count > 1 ? "médicaments" : "médicament" %>
+      </p>
       </div>
       <%= link_to medicaments_path,class: "pillami-btn-primary inline-block px-4 py-2 text-center", id: "add_med" do %>
         + Ajouter un médicament
