@@ -1,8 +1,14 @@
 # See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
 
+User-agent: *
+Allow: /
+Disallow: /users/edit
+Disallow: /users/sign_out
 
-                 ____ ___ _     _        _    __  __ ___
-                |  _ \_ _| |   | |      / \  |  \/  |_ _|
-                | |_) | || |   | |     / _ \ | |\/| || |
-                |  __/| || |___| |___ / ___ \| |  | || |
-                |_|  |___|_____|_____/_/   \_\_|  |_|___|
+Sitemap: https://pillami.space/sitemap.xml
+
+#                ____ ___ _     _        _    __  __ ___
+#               |  _ \_ _| |   | |      / \  |  \/  |_ _|
+#               | |_) | || |   | |     / _ \ | |\/| || |
+#               |  __/| || |___| |___ / ___ \| |  | || |
+#               |_|  |___|_____|_____/_/   \_\_|  |_|___|
