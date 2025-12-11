@@ -32,7 +32,7 @@
               <%= time_ago_in_words(notification.created_at) %>
             </p>
             <% unless notification.status %>
-              <%= link_to "Prise confirmée ?",
+              <%= link_to "Marquer comme pris ?",
                   user_notification_path(current_user, notification),
                   data: { turbo_method: :patch },
                   class: "text-xs text-blue-600 hover:underline" %>
