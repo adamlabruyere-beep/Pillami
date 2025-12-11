@@ -12,27 +12,6 @@ User.destroy_all
 # On ne détruit pas les médicaments car ils viennent de l'API
 
 # ============================================================
-# RÉCUPÉRATION MÉDICAMENTS API
-# ============================================================
-puts "Récupération des médicaments depuis l'API..."
-
-url = "https://medicaments-api.giygas.dev/medicament/ozempic"
-response = URI.parse(url).read
-items = JSON.parse(response)
-
-items.each do |med|
-  nom = med["elementPharmaceutique"]
-  next if nom.blank?
-
-  Medicament.find_or_create_by!(nom: nom) do |m|
-    m.format = med["formePharmaceutique"]
-    m.prise = med["voiesAdministration"]
-    m.ordonnance = !med["conditions"].nil?
-  end
-  puts "  -> #{nom}"
-end
-
-# ============================================================
 # UTILISATEURS
 # ============================================================
 puts "Création des utilisateurs..."
@@ -74,7 +53,23 @@ PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medi
 PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "METFORMINE ACCORD 1000 mg"))
 PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "JANUVIA 100 mg"))
 PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "INSULINE ASPARTE SANOFI 100 unités/ml"))
-PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "OZEMPIC 1 mg"))
+PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "OZEMPIC 1 mg, solution injectable en stylo prérempli"))
+
+# ============================================================
+# ENTOURAGES
+# ============================================================
+puts "Configuration des entourages..."
+
+# Créer les entourages pour chaque utilisateur
+maxence_entourage = Entourage.create!(user: maxence, name: "Entourage de Maxence")
+mamie_entourage = Entourage.create!(user: mamie, name: "Entourage de Mamie")
+papa_entourage = Entourage.create!(user: papa, name: "Entourage de Papa")
+
+# Maxence suit Mamie (Maxence est membre de l'entourage de Mamie)
+mamie_entourage.add_member(maxence)
+
+# Papa est accompagnant de Maxence (Papa est membre de l'entourage de Maxence)
+maxence_entourage.add_member(papa)
 
 # ============================================================
 # REMINDERS
@@ -162,7 +157,7 @@ Reminder.create!(
 # Reminder.create!(
 #   user: mamie,
 #   calendrier: mamie.calendrier,
-#   medicament: Medicament.find_by(nom: "OZEMPIC 1 mg"),
+#   medicament: Medicament.find_by(nom: "OZEMPIC 1 mg, solution injectable en stylo prérempli"),
 #   time: Time.parse("09:00"),
 #   days_of_week: %w[Sunday],
 #   quantity: 1,
