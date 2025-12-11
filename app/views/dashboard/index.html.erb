@@ -27,19 +27,25 @@
   </div>
   <!-- Médicaments du dernier rappel -->
   <h2 class="text-xl font-semibold text-gray-900 mb-4">Dernier rappel</h2>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-    <% if @last_reminder && @last_reminder.medicament.present? %>
-      <ul class="divide-y divide-gray-200">
-        <li class="px-4 py-2 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-          <span><%= @last_reminder.medicament.nom %></span>
-          <span><%= @last_reminder.quantity %> <%= @last_reminder.measure %></span>
-          <span><%= @last_reminder.time.strftime("%H:%M") %></span>
-        </li>
-      </ul>
-    <% else %>
-      <p class="text-gray-500">Aucun rappel récent pour le moment.</p>
-    <% end %>
+<% if @last_reminder && @last_reminder.medicament.present? %>
+  <div class="reminders-grid">
+    <div class="reminder-card">
+      <div class="reminder-body">
+        <h2 class="reminder-title"><%= @last_reminder.medicament.nom %></h2>
+        <p class="reminder-text">
+          Heure :
+          <%= @last_reminder.time.present? ? @last_reminder.time.strftime("%H:%M") : "Non définie" %> |
+          <%= pluralize_fr(@last_reminder.quantity, @last_reminder.measure) %>
+        </p>
+      </div>
+    </div>
   </div>
+<% else %>
+  <p class="text-gray-500">Aucun rappel récent pour le moment.</p>
+<% end %>
+
+
+
   <!-- Personnes que je suis -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200">
     <div class="px-6 py-4 border-b border-gray-200">
