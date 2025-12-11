@@ -107,7 +107,6 @@
 .pillami-medicament-format {
   font-size: 13px;
   color: #6b7280;
-  margin-top: 4px;
 }
 
 /* --- PASTILLES ORDONNANCE --- */
@@ -139,7 +138,7 @@
 
 @media (max-width: 480px) {
   .pillami-page-title {
-    font-size: 20px;
+    font-size: px;
   }
 
   .pillami-page-subtitle {
@@ -191,4 +190,15 @@
 .pillami-medicament-card-info {
   flex-wrap: none;
 
+}
+
+#add_med {
+  font-size: 15px;
+  padding: 10px;
+}
+
+.pillami-medicament-action {
+  text-align: right !important;
+  padding-right: 10px;
+  margin-top: -10px
 }
