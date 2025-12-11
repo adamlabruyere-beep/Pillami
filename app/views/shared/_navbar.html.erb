@@ -74,7 +74,8 @@
             </div>
             <div class="flex-1 min-w-0">
               <p class="text-xs truncate">
-                <strong class="block font-medium truncate"><%= current_user.email.split('@').first %></strong>
+                <% display_name = current_user.try(:prenom).presence || current_user.email.split('@').first %>
+                <strong class="block font-medium truncate"><%= display_name %></strong>
                 <span class="truncate"><%= current_user.email %></span>
               </p>
             </div>
