@@ -197,6 +197,51 @@ Reminder.create!(
 )
 
 # ============================================================
+# NOTIFICATIONS (médicaments pris)
+# ============================================================
+puts "Création des notifications pour les médicaments déjà pris..."
+
+# Récupérer les reminders de Maxence (semaine passée)
+maxence_reminders_past = Reminder.where(user: maxence, active: false)
+
+# Créer des notifications "pris" pour chaque jour de la semaine passée
+maxence_reminders_past.each do |reminder|
+  7.times do |i|
+    day = (7 - i).days.ago.beginning_of_day + reminder.time.seconds_since_midnight.seconds
+    Notification.create!(
+      user: maxence,
+      reminder: reminder,
+      scheduled_for: day,
+      status: true,
+      created_at: day
+    )
+  end
+end
+
+# Récupérer les reminders de Mamie
+mamie_reminders = Reminder.where(user: mamie)
+
+# Créer des notifications "pris" pour les 14 derniers jours
+mamie_reminders.each do |reminder|
+  14.times do |i|
+    day_date = (14 - i).days.ago
+    day_name = day_date.strftime("%A")
+
+    # Vérifier si ce jour est dans les jours du reminder
+    if reminder.days_of_week.include?(day_name)
+      scheduled = day_date.beginning_of_day + reminder.time.seconds_since_midnight.seconds
+      Notification.create!(
+        user: mamie,
+        reminder: reminder,
+        scheduled_for: scheduled,
+        status: true,
+        created_at: scheduled
+      )
+    end
+  end
+end
+
+# ============================================================
 # SENSATIONS
 # ============================================================
 puts "Création des sensations..."
