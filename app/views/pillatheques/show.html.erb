@@ -5,7 +5,7 @@
         <h1 class="pillami-page-title text-3xl font-bold text-gray-900">Ma Pillathèque</h1>
         <p class="pillami-page-subtitle mt-2 text-sm text-gray-600"><%= @medicaments.count %> médicament(s)</p>
       </div>
-      <%= link_to medicaments_path, class: "pillami-btn-primary inline-block px-4 py-2 text-center" do %>
+      <%= link_to medicaments_path,class: "pillami-btn-primary inline-block px-4 py-2 text-center", id: "add_med" do %>
         + Ajouter un médicament
       <% end %>
     </div>
