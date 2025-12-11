@@ -1,6 +1,266 @@
 require "json"
 require "open-uri"
 
+# ============================================================
+# SEED DE DÉVELOPPEMENT - Users, Médicaments, Reminders, Sensations
+# ============================================================
+
+puts "Nettoyage des données existantes..."
+Sensation.destroy_all
+Reminder.destroy_all
+User.destroy_all
+# On ne détruit pas les médicaments car ils viennent de l'API
+
+# ============================================================
+# RÉCUPÉRATION MÉDICAMENTS API
+# ============================================================
+puts "Récupération des médicaments depuis l'API..."
+
+url = "https://medicaments-api.giygas.dev/medicament/ozempic"
+response = URI.parse(url).read
+items = JSON.parse(response)
+
+items.each do |med|
+  nom = med["elementPharmaceutique"]
+  next if nom.blank?
+
+  Medicament.find_or_create_by!(nom: nom) do |m|
+    m.format = med["formePharmaceutique"]
+    m.prise = med["voiesAdministration"]
+    m.ordonnance = !med["conditions"].nil?
+  end
+  puts "  -> #{nom}"
+end
+
+# ============================================================
+# UTILISATEURS
+# ============================================================
+puts "Création des utilisateurs..."
+
+maxence = User.create!(
+  email: "maxence@gmail.com",
+  password: "password",
+  prenom: "Maxence",
+  nom: "Maho"
+)
+
+mamie = User.create!(
+  email: "mamie@gmail.com",
+  password: "password",
+  prenom: "Mamie",
+  nom: "Maho"
+)
+
+papa = User.create!(
+  email: "papa@gmail.com",
+  password: "password",
+  prenom: "Papa",
+  nom: "Maho"
+)
+
+puts "3 utilisateurs créés"
+
+# ============================================================
+# PILLATHÈQUE - Médicaments par utilisateur
+# ============================================================
+puts "Ajout des médicaments aux pillathèques..."
+
+# Maxence - Gastro
+PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "DOLIPRANECAPS 1000 mg"))
+PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "SMECTA 3 g FRAISE"))
+PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "IMODIUMCAPS 2 mg"))
+
+# Mamie - Diabète
+PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "METFORMINE ACCORD 1000 mg"))
+PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "JANUVIA 100 mg"))
+PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "INSULINE ASPARTE SANOFI 100 unités/ml"))
+PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "OZEMPIC 1 mg"))
+
+# ============================================================
+# REMINDERS
+# ============================================================
+puts "Création des reminders..."
+
+# Maxence - Gastro (1 semaine de traitement)
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "DOLIPRANECAPS 1000 mg"),
+  time: Time.parse("12:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "comprimé",
+  active: true,
+  repeat_for_weeks: 1
+)
+
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "SMECTA 3 g FRAISE"),
+  time: Time.parse("14:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "sachet",
+  active: true,
+  repeat_for_weeks: 1
+)
+
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "IMODIUMCAPS 2 mg"),
+  time: Time.parse("10:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 2,
+  measure: "gélule",
+  active: true,
+  repeat_for_weeks: 1
+)
+
+# Mamie - Diabète type 2 (traitement de fond)
+Reminder.create!(
+  user: mamie,
+  calendrier: mamie.calendrier,
+  medicament: Medicament.find_by(nom: "METFORMINE ACCORD 1000 mg"),
+  time: Time.parse("12:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "comprimé",
+  active: true,
+  repeat_for_weeks: 10
+)
+
+# Alternative au combo Sitagliptine/Metformine (doublon de Metformine) :
+# Medicament.find_by(nom: "JANUVIA 100 mg") - Sitagliptine seule, 1x/jour
+
+Reminder.create!(
+  user: mamie,
+  calendrier: mamie.calendrier,
+  medicament: Medicament.find_by(nom: "JANUVIA 100 mg"),
+  time: Time.parse("08:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "comprimé",
+  active: true,
+  repeat_for_weeks: 10
+)
+
+Reminder.create!(
+  user: mamie,
+  calendrier: mamie.calendrier,
+  medicament: Medicament.find_by(nom: "INSULINE ASPARTE SANOFI 100 unités/ml"),
+  time: Time.parse("20:00"),
+  days_of_week: %w[Monday Wednesday Friday Sunday],
+  quantity: 1,
+  measure: "injection",
+  active: true,
+  repeat_for_weeks: 10
+)
+
+# Mamie - Ozempic 1x/semaine (injection hebdomadaire)
+# Reminder.create!(
+#   user: mamie,
+#   calendrier: mamie.calendrier,
+#   medicament: Medicament.find_by(nom: "OZEMPIC 1 mg"),
+#   time: Time.parse("09:00"),
+#   days_of_week: %w[Sunday],
+#   quantity: 1,
+#   measure: "injection",
+#   active: true,
+#   repeat_for_weeks: 10
+# )
+
+
+# ============================================================
+# SENSATIONS
+# ============================================================
+puts "Création des sensations..."
+
+# Maxence - 1 semaine de gastro
+Sensation.create!(user: maxence, content: "Début de la gastro, nausées et crampes abdominales.", created_at: 7.days.ago)
+Sensation.create!(user: maxence, content: "Nuit difficile, diarrhée fréquente. Très fatigué.", created_at: 6.days.ago)
+Sensation.create!(user: maxence, content: "Le Smecta semble aider, moins de crampes.", created_at: 5.days.ago)
+Sensation.create!(user: maxence, content: "Toujours fatigué mais les symptômes diminuent.", created_at: 4.days.ago)
+Sensation.create!(user: maxence, content: "Meilleur appétit, j'ai pu manger un peu de riz.", created_at: 3.days.ago)
+Sensation.create!(user: maxence, content: "Presque rétabli, juste une légère fatigue.", created_at: 2.days.ago)
+Sensation.create!(user: maxence, content: "RAS, je me sens bien. Fin du traitement.", created_at: 1.day.ago)
+
+# Mamie - 2 semaines de suivi diabète
+Sensation.create!(user: mamie, content: "Glycémie stable ce matin : 1.2 g/L.", created_at: 14.days.ago)
+Sensation.create!(user: mamie, content: "Légère fatigue en fin de journée.", created_at: 13.days.ago)
+Sensation.create!(user: mamie, content: "Injection Ozempic bien tolérée.", created_at: 12.days.ago)
+Sensation.create!(user: mamie, content: "Glycémie un peu haute après le repas : 1.8 g/L.", created_at: 11.days.ago)
+Sensation.create!(user: mamie, content: "Bonne journée, pas de malaise.", created_at: 10.days.ago)
+Sensation.create!(user: mamie, content: "Petit vertige ce matin, glycémie basse : 0.7 g/L.", created_at: 9.days.ago)
+Sensation.create!(user: mamie, content: "Mieux aujourd'hui après ajustement du repas.", created_at: 8.days.ago)
+Sensation.create!(user: mamie, content: "RAS, glycémie normale.", created_at: 7.days.ago)
+Sensation.create!(user: mamie, content: "Injection Ozempic dimanche, légère nausée.", created_at: 6.days.ago)
+Sensation.create!(user: mamie, content: "Nausée passée, tout va bien.", created_at: 5.days.ago)
+Sensation.create!(user: mamie, content: "Glycémie stable : 1.1 g/L.", created_at: 4.days.ago)
+Sensation.create!(user: mamie, content: "Bonne forme générale.", created_at: 3.days.ago)
+Sensation.create!(user: mamie, content: "Légère soif inhabituelle.", created_at: 2.days.ago)
+Sensation.create!(user: mamie, content: "RAS, contrôle glycémique satisfaisant.", created_at: 1.day.ago)
+
+
+# ============================================================
+# RÉSUMÉ
+# ============================================================
+puts ""
+puts "=" * 60
+puts "SEED TERMINÉ AVEC SUCCÈS!"
+puts "=" * 60
+puts "Utilisateurs: #{User.count}"
+puts "Médicaments: #{Medicament.count}"
+puts "Reminders: #{Reminder.count}"
+puts "Sensations: #{Sensation.count}"
+puts ""
+puts "Comptes de test:"
+puts "  - maxence@gmail.com / password"
+puts "  - mamie@gmail.com / password"
+puts "  - papa@gmail.com / password"
+puts "=" * 60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #//////////// SEED POUR MEDICAMENTS COURANTS EN FRANCE /////////////
 
 # Médicaments les plus couramment utilisés en France
