@@ -4,25 +4,25 @@
   class="pillami-calendar-container"
 >
   <div class="pillami-calendar-main">
+    <% if current_user && current_user != @user %>
+      <% owner_name = @user.try(:prenom).presence || @user.try(:nom).presence || @user.email.split('@').first %>
+      <div class="pillami-calendar-owner-card">
+        <div class="pillami-calendar-owner-avatar">
+          <% if @user.photo.attached? %>
+            <%= cl_image_tag @user.photo.key, crop: :fill, width: 64, height: 64, class: "pillami-calendar-owner-img" %>
+          <% else %>
+            <span><%= owner_name.first.upcase %></span>
+          <% end %>
+        </div>
+        <div class="pillami-calendar-owner-info">
+          <p><%= owner_name %></p>
+        </div>
+      </div>
+    <% end %>
+
     <div class="pillami-calendar-header">
       <!-- Titre semaine -->
       <div>
-        <% if current_user && current_user != @user %>
-          <% owner_name = @user.try(:prenom).presence || @user.try(:nom).presence || @user.email.split('@').first %>
-          <div class="pillami-calendar-owner">
-            <div class="pillami-calendar-owner-avatar">
-              <% if @user.photo.attached? %>
-                <%= cl_image_tag @user.photo.key, crop: :fill, width: 48, height: 48, class: "pillami-calendar-owner-img" %>
-              <% else %>
-                <span><%= owner_name.first.upcase %></span>
-              <% end %>
-            </div>
-            <div class="pillami-calendar-owner-info">
-              <p>Calendrier de</p>
-              <strong><%= owner_name %></strong>
-            </div>
-          </div>
-        <% end %>
         <h1 class="pillami-calendar-week-range">
           <%= l(@week_days.first, format: "%d %B") %> — <%= l(@week_days.last, format: "%d %B %Y") %>
         </h1>

@@ -1,9 +1,9 @@
 <div class="sensations-container">
-  <h1 class="pillami-page-title font-bold text-gray-900 pb-2">Mes sensations</h1>
-  <h2 class="m-2 text-center">
-    <span class="">Comment vous sentez-vous</span>
-    <span class="text-nowrap">aujourd'hui ?</span>
-  </h2>
+  <div class="max-w-2xl mx-auto space-y-8">
+    <div class="text-center">
+      <h2 class="h2-entourage text-3xl font-bold text-gray-900">Mes sensations</h2>
+      <p class="p-entourage mt-2 text-sm text-gray-600">Comment vous sentez-vous ?</p>
+    </div>
   <%= form_with model: Sensation.new, url: user_sensations_path(@user) do |f| %>
     <label for="sensation_content">
       <%= f.text_area :content,
