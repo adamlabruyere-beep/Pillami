@@ -22,7 +22,7 @@
                 <%= link_to "Supprimer",
                   user_reminder_path(@user, reminder),
                   class: "pillami-btn-sm pillami-btn-secondary",
-                  data: {turbo_method: :delete}%>
+                  data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer ce rappel ?" }%>
               </div>
             </div>
           </div>
