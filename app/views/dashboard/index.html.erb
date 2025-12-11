@@ -67,12 +67,11 @@
                 <% end %>
               </div>
               <div>
-                <p class="font-medium text-gray-900"><%= entourage.user.prenom %> <%= entourage.user.nom %></p>
-                <p class="text-sm text-gray-500"><%= entourage.user.email %></p>
+                <p class="font-medium text-gray-900"><%= entourage.user.prenom.capitalize %> <%= entourage.user.nom.capitalize %></p>
               </div>
             </div>
 
-            <%= link_to "calendrier de #{entourage.user.prenom}",
+            <%= link_to "son calendrier",
                         user_calendrier_path(entourage.user),
                         class: "entourage-calendrier-btn" %>
           </li>
