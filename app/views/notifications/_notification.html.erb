@@ -21,7 +21,7 @@
         <%= link_to user_notification_path(notification.user, notification),
             data: { turbo_method: :patch },
             class: "text-sm text-blue-600 hover:text-blue-800 hover:underline" do %>
-          Prise confirmée ?
+          Marquer comme pris ?
         <% end %>
       <% else %>
         <span class="text-xs text-gray-400">Validée</span>
