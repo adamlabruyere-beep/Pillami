@@ -9,22 +9,18 @@ body {
 
 /* ===== Container principal ===== */
 .sensations-container {
-  min-height: 100vh;
   padding: 20px;
   max-width: 900px;
   margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .sensations-container {
-    padding-top: 80px; /* espace pour sidebar */
-  }
+  padding-top: 80px; /* espace pour sidebar */
+  min-height: calc(100vh - 80px);
 }
 
 @media (max-width: 767px) {
   .sensations-container {
     padding-top: 70px; /* top bar mobile */
     padding-bottom: 80px; /* si bottom nav */
+    min-height: calc(100vh - 70px);
   }
 }
 
