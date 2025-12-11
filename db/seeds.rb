@@ -76,13 +76,53 @@ maxence_entourage.add_member(papa)
 # ============================================================
 puts "Création des reminders..."
 
-# Maxence - Gastro (1 semaine de traitement)
+# Maxence - Gastro SEMAINE PASSÉE (traitement intensif tous les jours)
 Reminder.create!(
   user: maxence,
   calendrier: maxence.calendrier,
   medicament: Medicament.find_by(nom: "DOLIPRANECAPS 1000 mg"),
   time: Time.parse("12:00"),
   days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "comprimé",
+  active: false,
+  repeat_for_weeks: 1,
+  created_at: 7.days.ago
+)
+
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "SMECTA 3 g FRAISE"),
+  time: Time.parse("14:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "sachet",
+  active: false,
+  repeat_for_weeks: 1,
+  created_at: 7.days.ago
+)
+
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "IMODIUMCAPS 2 mg"),
+  time: Time.parse("10:00"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 2,
+  measure: "gélule",
+  active: false,
+  repeat_for_weeks: 1,
+  created_at: 7.days.ago
+)
+
+# Maxence - Gastro SEMAINE À VENIR (traitement allégé 2-3 jours)
+Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "DOLIPRANECAPS 1000 mg"),
+  time: Time.parse("12:00"),
+  days_of_week: %w[Monday Wednesday Friday],
   quantity: 1,
   measure: "comprimé",
   active: true,
@@ -94,26 +134,15 @@ Reminder.create!(
   calendrier: maxence.calendrier,
   medicament: Medicament.find_by(nom: "SMECTA 3 g FRAISE"),
   time: Time.parse("14:00"),
-  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  days_of_week: %w[Tuesday Thursday],
   quantity: 1,
   measure: "sachet",
   active: true,
   repeat_for_weeks: 1
 )
 
-Reminder.create!(
-  user: maxence,
-  calendrier: maxence.calendrier,
-  medicament: Medicament.find_by(nom: "IMODIUMCAPS 2 mg"),
-  time: Time.parse("10:00"),
-  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
-  quantity: 2,
-  measure: "gélule",
-  active: true,
-  repeat_for_weeks: 1
-)
-
-# Mamie - Diabète type 2 (traitement de fond)
+# Mamie - Diabète type 2 (2 semaines passées + 10 semaines futures)
+# Les rappels ont commencé il y a 14 jours, en concordance avec les sensations
 Reminder.create!(
   user: mamie,
   calendrier: mamie.calendrier,
@@ -123,11 +152,9 @@ Reminder.create!(
   quantity: 1,
   measure: "comprimé",
   active: true,
-  repeat_for_weeks: 10
+  repeat_for_weeks: 12,
+  created_at: 14.days.ago
 )
-
-# Alternative au combo Sitagliptine/Metformine (doublon de Metformine) :
-# Medicament.find_by(nom: "JANUVIA 100 mg") - Sitagliptine seule, 1x/jour
 
 Reminder.create!(
   user: mamie,
@@ -138,7 +165,8 @@ Reminder.create!(
   quantity: 1,
   measure: "comprimé",
   active: true,
-  repeat_for_weeks: 10
+  repeat_for_weeks: 12,
+  created_at: 14.days.ago
 )
 
 Reminder.create!(
@@ -150,22 +178,23 @@ Reminder.create!(
   quantity: 1,
   measure: "injection",
   active: true,
-  repeat_for_weeks: 10
+  repeat_for_weeks: 12,
+  created_at: 14.days.ago
 )
 
 # Mamie - Ozempic 1x/semaine (injection hebdomadaire)
-# Reminder.create!(
-#   user: mamie,
-#   calendrier: mamie.calendrier,
-#   medicament: Medicament.find_by(nom: "OZEMPIC 1 mg, solution injectable en stylo prérempli"),
-#   time: Time.parse("09:00"),
-#   days_of_week: %w[Sunday],
-#   quantity: 1,
-#   measure: "injection",
-#   active: true,
-#   repeat_for_weeks: 10
-# )
-
+Reminder.create!(
+  user: mamie,
+  calendrier: mamie.calendrier,
+  medicament: Medicament.find_by(nom: "OZEMPIC 1 mg, solution injectable en stylo prérempli"),
+  time: Time.parse("09:00"),
+  days_of_week: %w[Sunday],
+  quantity: 1,
+  measure: "injection",
+  active: true,
+  repeat_for_weeks: 12,
+  created_at: 14.days.ago
+)
 
 # ============================================================
 # SENSATIONS
