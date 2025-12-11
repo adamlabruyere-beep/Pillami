@@ -1,7 +1,7 @@
 <div class="pillami-container">
   <div class="pillami-main">
     <div class="reminder-header">
-      <h1 class="section-title">Mes Rappels</h1>
+      <h1 class="pillami-page-title text-3xl font-bold text-gray-900">Mes Rappels</h1>
       <%= link_to 'Ajouter', new_user_reminder_path(@user), class: "pillami-btn-primary-1" %>
     </div>
     <% if @reminders.any? %>
@@ -15,8 +15,12 @@
                 <%= reminder.time.present? ? reminder.time.strftime("%H:%M") : "Non définie" %> |
                 <%= pluralize_fr(reminder.quantity, reminder.measure) %>
                 |
-                <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
-                <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
+                <% if reminder.days_of_week&.count == 7 %>
+                  Quotidien
+                <% else %>
+                  <%= pluralize_fr(reminder.days_of_week&.count || 0, "jour") %> :
+                  <%= reminder.days_of_week&.map { |day| I18n.t("date.day_names")[Date::DAYNAMES.index(day)] }&.join(", ") || "Aucun" %>
+                <% end %>
               </p>
               <div class="reminder-actions">
                 <%= link_to "Supprimer",
