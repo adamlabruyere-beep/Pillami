@@ -5,9 +5,9 @@ $card: #FFFFFF;
 
 // --- Container ---
 .pillami-container {
-  min-height: 100vh;
   padding: 18px;
   padding-top: 50px;
+  min-height: calc(100vh - 50px);
 }
 
 // --- Main ---

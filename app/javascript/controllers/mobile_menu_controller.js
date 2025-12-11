@@ -3,6 +3,15 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["nav", "overlay", "openIcon", "closeIcon", "logo", "logoPlaceholder"]
 
+  connect() {
+    this.beforeCache = this.close.bind(this)
+    document.addEventListener("turbo:before-cache", this.beforeCache)
+  }
+
+  disconnect() {
+    document.removeEventListener("turbo:before-cache", this.beforeCache)
+  }
+
   toggle() {
     if (this.navTarget.classList.contains("-translate-x-full")) {
       this.open()

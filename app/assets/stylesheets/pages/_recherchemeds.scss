@@ -2,7 +2,7 @@
 .medicaments-container {
   padding-top: 80px; /* Ajustez selon la hauteur de votre navbar */
   background-color: #FEFCFB;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
 }
 
 .medicaments-wrapper {
@@ -167,6 +167,12 @@ button[data-turbo-frame="_top"][type="submit"] {
 }
 
 span.text-blue-800 {
+  margin-top: 10px;
+  display: inline-block;
+}
+
+
+span.text-green-800 {
   margin-top: 10px;
   display: inline-block;
 }

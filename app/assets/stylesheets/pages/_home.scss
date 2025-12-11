@@ -6,17 +6,16 @@ body {
 
 // ===== Container principal =====
 .pillami-container {
-  min-height: 100vh;
   background-color: $background;
   padding: 0;
+  padding-top: 70px; // Espace pour le header fixe
+  padding-bottom: 80px; // Si bottom nav
+  min-height: calc(100vh - 70px);
 
   @media (min-width: 768px) {
-    padding-top: 80px; // Espace pour sidebar
-  }
-
-  @media (max-width: 767px) {
-    padding-top: 70px; // Espace pour top bar mobile
-    padding-bottom: 80px; // Si bottom nav
+    padding-top: 80px; // Espace pour la sidebar fixe
+    padding-bottom: 0;
+    min-height: calc(100vh - 80px);
   }
 }
 
