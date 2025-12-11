@@ -1,14 +1,11 @@
 <!-- app/views/dashboard/index.html.erb -->
-
 <div class="dash-container mx-auto px-4 py-6 space-y-6">
-
   <!-- Progression du jour -->
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
     <div class="flex items-center justify-between mb-3">
       <h3 class="text-lg font-medium text-gray-900">Ma progression du jour</h3>
       <span class="text-sm font-semibold text-blue-600"><%= @taken_today %>/<%= @total_reminders_today %> pris</span>
     </div>
-
     <% if @total_reminders_today > 0 %>
       <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
         <div class="h-4 rounded-full transition-all duration-500 <%= @progress_percentage == 100 ? 'bg-green-500' : 'bg-blue-600' %>"
@@ -28,7 +25,6 @@
       <p class="text-sm text-gray-500">Aucun rappel prévu pour aujourd'hui.</p>
     <% end %>
   </div>
-
   <!-- Médicaments du dernier rappel -->
   <h2 class="text-xl font-semibold text-gray-900 mb-4">Dernier rappel</h2>
 <% if @last_reminder && @last_reminder.medicament.present? %>
@@ -56,7 +52,6 @@
       <h3 class="text-lg font-medium text-gray-900">Personnes que je suis (<%= @following.count %>)</h3>
       <p class="text-sm text-gray-500 mt-1">Ces personnes vous ont ajouté à leur entourage</p>
     </div>
-
     <% if @following.any? %>
       <ul class="divide-y divide-gray-200">
         <% @following.each do |entourage| %>
@@ -69,15 +64,13 @@
                   <%= entourage.user.email[0].upcase %>
                 <% end %>
               </div>
-              <div>
-                <p class="font-medium text-gray-900"><%= entourage.user.prenom %> <%= entourage.user.nom %></p>
-                <p class="text-sm text-gray-500"><%= entourage.user.email %></p>
+              <div class="">
+                <p class="font-medium text-gray-900"><%= entourage.user.prenom.capitalize %> <%= entourage.user.nom.capitalize %></p>
               </div>
             </div>
-
-            <%= link_to "calendrier de #{entourage.user.prenom}",
-                        user_calendrier_path(entourage.user),
-                        class: "entourage-calendrier-btn" %>
+            <%= link_to "Calendrier",
+                          user_calendrier_path(entourage.user),
+                          class: "entourage-calendrier-btn whitespace-nowrap" %>
           </li>
         <% end %>
       </ul>
@@ -88,7 +81,5 @@
       </div>
     <% end %>
   </div>
-
   <%= render "shared/back_button" %>
-
 </div>

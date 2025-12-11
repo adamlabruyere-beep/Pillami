@@ -40,7 +40,7 @@
               <%= button_to entourage_entourage_member_path(membership),
                     method: :delete,
                     data: { turbo_confirm: "Êtes-vous sûr de vouloir retirer #{membership.user.prenom} de votre entourage ?" },
-                    class: "text-red-600 hover:text-red-800 text-sm font-medium" do %>
+                    class: "text-red-600 hover:text-red-800 text-sm font-medium whitespace-nowrap" do %>
                 Retirer
               <% end %>
             </li>
@@ -77,7 +77,7 @@
               </div>
               <%= link_to "Calendrier",
                           user_calendrier_path(entourage.user),
-                          class: "entourage-calendrier-btn" %>
+                          class: "entourage-calendrier-btn whitespace-nowrap" %>
             </li>
           <% end %>
         </ul>

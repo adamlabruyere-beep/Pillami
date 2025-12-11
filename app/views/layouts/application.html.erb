@@ -21,7 +21,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title><%= meta_title %></title>
     <meta name="description" content="<%= meta_description %>">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="author" content="Pillami">
     <meta name="keywords" content="médicaments, rappels, santé, pillulier, suivi médical, traitement">
     <!-- Facebook Open Graph -->
@@ -50,17 +50,48 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Pillami",
-      "description": "<%= meta_description %>",
-      "url": "https://pillami.space",
-      "applicationCategory": "HealthApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR"
-      }
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://pillami.space/#organization",
+          "name": "Pillami",
+          "url": "https://pillami.space",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://pillami.space/android-chrome-512x512.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "<%= meta_description %>"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://pillami.space/#website",
+          "url": "https://pillami.space",
+          "name": "Pillami",
+          "description": "<%= meta_description %>",
+          "publisher": {
+            "@id": "https://pillami.space/#organization"
+          },
+          "inLanguage": "fr-FR"
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Pillami",
+          "description": "<%= meta_description %>",
+          "url": "https://pillami.space",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          },
+          "provider": {
+            "@id": "https://pillami.space/#organization"
+          }
+        }
+      ]
     }
     </script>
   </head>
