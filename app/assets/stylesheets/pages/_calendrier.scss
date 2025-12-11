@@ -13,7 +13,7 @@ body {
 
 // ===== Container principal =====
 .pillami-calendar-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   background-color: $background;
   padding-top: 60px;
   padding-bottom: 100px;
@@ -30,6 +30,7 @@ body {
     padding-top: 70px;
     padding-left: 16px;
     padding-right: 16px;
+    min-height: calc(100vh - 70px);
   }
 
   @media (min-width: 768px) {
@@ -37,6 +38,7 @@ body {
     padding-bottom: 0;
     padding-left: 20px;
     padding-right: 20px;
+    min-height: calc(100vh - 80px);
   }
 }
 

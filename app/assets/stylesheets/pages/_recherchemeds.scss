@@ -2,7 +2,7 @@
 .medicaments-container {
   padding-top: 80px; /* Ajustez selon la hauteur de votre navbar */
   background-color: #FEFCFB;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
 }
 
 .medicaments-wrapper {

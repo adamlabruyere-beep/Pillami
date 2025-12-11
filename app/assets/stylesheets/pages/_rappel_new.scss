@@ -5,7 +5,7 @@ $light-blue: #84A9C0; // fond du tick
 .pillami-page-form-wrapper {
   padding-top: 80px;
   padding-bottom: 40px;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
 }
 
 /* --- FORM CONTAINER --- */
