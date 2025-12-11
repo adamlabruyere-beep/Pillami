@@ -1,48 +1,43 @@
 <div class="sensations-container">
-  <h1>Comment vous sentez-vous aujourd'hui ?</h1>
-    <%= form_with model: Sensation.new, url: user_sensations_path(@user) do |f| %>
-      <label for="sensation_content">
-        <span class="text-sm font-medium text-gray-700">
-          Prenons soin de vous ensemble.
-        </span>
-
-        <%= f.text_area :content,
+  <h1 class="pillami-page-title font-bold text-gray-900 pb-2">Mes sensations</h1>
+  <h2 class="m-2 text-center">
+    <span class="">Comment vous sentez-vous</span>
+    <span class="text-nowrap">aujourd'hui ?</span>
+  </h2>
+  <%= form_with model: Sensation.new, url: user_sensations_path(@user) do |f| %>
+    <label for="sensation_content">
+      <%= f.text_area :content,
           id: "sensation_content",
           rows: 4,
-          class: "mt-0.5 w-full resize-none rounded border-gray-300 shadow-sm sm:text-sm",
-          placeholder: "Je me sens..."
+          class: "mt-0.5 w-full resize-none rounded border-gray-300 shadow-sm text-xl",
+          placeholder: "Après mon Doliprane, je me suis senti un peu vaseux."
         %>
-      </label>
-
-      <div class="mt-1.5 flex items-center justify-end gap-2">
-        <button type="button"
-                class="rounded border border-transparent px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
-                onclick="document.getElementById('sensation_content').value = ''">
-          Clear
-        </button>
-
-        <%= f.submit "Save",
-          class: "rounded border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-900 shadow-sm transition-colors hover:bg-gray-100" %>
-      </div>
-    <% end %>
-
-    <ul class="mt-6 space-y-2">
-      <% @sensations.each do |sensation| %>
-        <li class="p-3 bg-gray-100 rounded">
+    </label>
+    <div class="mt-1.5 flex items-center justify-end gap-2">
+      <%= f.submit "Save",
+          class: "rounded border border-gray-300 px-4 py-2 text-lg font-medium text-gray-900 shadow-sm transition-colors hover:bg-gray-100" %>
+    </div>
+  <% end %>
+  <ul class="mt-6 space-y-2">
+    <% @sensations.each do |sensation| %>
+      <div class="flex p-3 bg-gray-100 rounded justify-between text-lg">
+        <div class = "w-8/12">
           <%= sensation.content %>
-          <span class="text-xs text-gray-500">
-            • <%= time_ago_in_words(sensation.created_at) %>
-
-            <%= link_to "Supprimer",
+          <div>
+            <span class="text-xs text-gray-500">
+              <%= time_ago_in_words(sensation.created_at) %>
+            </span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center">
+          <%= link_to "Supprimer",
               user_sensation_path(@user, sensation),
-              data: { turbo_method: :delete },
+              data: { turbo_method: :delete, turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette sensation ?" },
               class: "rounded border border-transparent px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
             %>
-
-          </span>
-        </li>
-      <% end %>
-    </ul>
-
+        </div>
+      </div>
+    <% end %>
+  </ul>
   <%= render "shared/back_button" %>
 </div>
