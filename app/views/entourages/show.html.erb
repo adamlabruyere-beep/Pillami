@@ -4,7 +4,6 @@
       <h2 class="h2-entourage text-3xl font-bold text-gray-900">Mon entourage</h2>
       <p class="p-entourage mt-2 text-sm text-gray-600">Gérez les personnes qui peuvent suivre vos traitements</p>
     </div>
-
     <!-- Ajouter un membre -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h3 class="text-lg font-medium text-gray-900 mb-4">Autoriser à me suivre</h3>
@@ -17,13 +16,11 @@
               class: "px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer" %>
       <% end %>
     </div>
-
     <!-- Liste des membres -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">Accompagnats (<%= @members.count %>)</h3>
       </div>
-
       <% if @members.any? %>
         <ul class="divide-y divide-gray-200">
           <% @entourage.entourage_members.each do |membership| %>
@@ -56,14 +53,12 @@
         </div>
       <% end %>
     </div>
-
     <!-- Personnes que je suis -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">Personnes que je suis (<%= @following.count %>)</h3>
         <p class="text-sm text-gray-500 mt-1">Ces personnes vous ont ajouté à leur entourage :</p>
       </div>
-
       <% if @following.any? %>
         <ul class="divide-y divide-gray-200">
           <% @following.each do |entourage| %>
@@ -76,12 +71,11 @@
                     <%= entourage.user.email[0].upcase %>
                   <% end %>
                 </div>
-                <div>
+                <div class="">
                   <p class="font-medium text-gray-900"><%= entourage.user.prenom.capitalize %> <%= entourage.user.nom.capitalize %></p>
                 </div>
               </div>
-
-              <%= link_to "son calendrier",
+              <%= link_to "Calendrier",
                           user_calendrier_path(entourage.user),
                           class: "entourage-calendrier-btn" %>
             </li>
@@ -94,7 +88,6 @@
         </div>
       <% end %>
     </div>
-
     <%= render "shared/back_button" %>
   </div>
 </div>
