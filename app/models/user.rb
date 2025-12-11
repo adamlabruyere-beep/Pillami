@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :nom, presence: true
 
   has_one :pillatheque, dependent: :destroy
-  has_one :calendrier
+  has_one :calendrier, dependent: :destroy
 
   has_many :reminders, dependent: :destroy
   has_many :sensations, dependent: :destroy
