@@ -13,8 +13,7 @@
     <!-- CARTE D'EN-TÊTE DES MÉDICAMENTS -->
     <div class="pillami-medicament-card bg-white rounded-lg shadow p-4 mb-2">
       <div class="pillami-medicament-card-info flex justify-between items-center gap-3 font-semibold text-gray-700">
-        <div class="pillami-medicament-info flex-1 min-w-0">Nom du
-          médicament</div>
+        <div class="pillami-medicament-info flex-1 min-w-0">Nom du médicament</div>
         <div class="pillami-medicament-ordonnance" style="width: 120px; text-align: center;">Sous ordonnance</div>
       </div>
     </div>
@@ -24,27 +23,36 @@
         <% @medicaments.each do |medicament| %>
           <div class="pillami-medicament-card bg-white rounded-lg shadow p-4">
             <div class="pillami-medicament-card-body flex justify-between items-start gap-3">
+
+              <!-- NOM + FORMAT dans une seule div -->
               <div class="pillami-medicament-info flex-1 min-w-0">
-                <h3 class="pillami-medicament-name text-sm font-medium text-gray-900 wrap-break-word"><%= medicament.nom %></h3>
-                <p class="pillami-medicament-format text-sm text-gray-500 mt-1"><%= medicament.format %></p>
+                <div>
+                  <h3 class="pillami-medicament-name text-sm font-medium text-gray-900 wrap-break-word">
+                    <%= medicament.nom %>
+                  </h3>
+                  <p class="pillami-medicament-format text-sm text-gray-500 mt-1">
+                    <%= medicament.format %>
+                  </p>
+                </div>
               </div>
-              <div class="pillami-medicament-ordonnance" style="width: 120px; text-align: center;">
+
+              <!-- ORDONNANCE + RETIRER dans la même div -->
+              <div class="pillami-medicament-ordonnance flex flex-col items-center" style="width: 120px; text-align: center;">
                 <% if medicament.ordonnance %>
-                  <span class="pillami-pill-tag pillami-pill-ordonnance-oui">Oui</span>
+                  <span class="pillami-pill-tag pillami-pill-ordonnance-oui mb-2">Oui</span>
                 <% else %>
-                  <span class="pillami-pill-tag pillami-pill-ordonnance-non">Non</span>
-                <% end %>
-              </div>
-              <div class="pillami-medicament-action" style="width: 120px; text-align: center;">
-                <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
-                <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
-                          method: :delete,
-                          data: { turbo_confirm: "Êtes-vous sûr de supprimer ce médicament de votre pillothèque ?" },
-                          class: "pillami-btn-action" do %>
-                          Retirer
+                  <span class="pillami-pill-tag pillami-pill-ordonnance-non mb-2">Non</span>
                 <% end %>
 
+                <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
+                <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
+                      method: :delete,
+                      data: { turbo_confirm: "Êtes-vous sûr de supprimer ce médicament de votre pillothèque ?" },
+                      class: "pillami-btn-action" do %>
+                  Retirer
+                <% end %>
               </div>
+
             </div>
           </div>
         <% end %>

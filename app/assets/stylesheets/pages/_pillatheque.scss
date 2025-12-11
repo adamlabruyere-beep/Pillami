@@ -1,10 +1,7 @@
 /* --- PAGE WRAPPER --- */
 .pillami-page-wrapper {
   min-height: calc(100vh - 80px);
-  padding-top: 80px;
-  padding-bottom: 40px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 80px 16px 40px;
 }
 
 .pillami-page-container {
@@ -18,8 +15,10 @@
   flex-direction: column;
   gap: 8px;
   margin-bottom: 32px;
+}
 
-  @media (min-width: 640px) {
+@media (min-width: 640px) {
+  .pillami-page-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -40,8 +39,8 @@
 
 .btn-container {
   display: flex;
-  gap: 10px;       /* espace entre les boutons */
-  flex-wrap: wrap;  /* permet de passer à la ligne si trop petit */
+  gap: 10px;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -52,12 +51,11 @@
   padding: 12px 16px;
   border-radius: 10px;
   text-align: center;
-  width: auto; /* ne prend pas toute la largeur */
-  white-space: nowrap; /* empêche le retour à la ligne du texte */
+  white-space: nowrap;
 }
 
 .pillami-btn-action {
-  color: #b91c1c;             /* rouge foncé */
+  color: #b91c1c;
   font-size: 15px !important;
   border-radius: 12px;
   padding: 4px 10px;
@@ -89,14 +87,17 @@
 .pillami-medicament-card-body {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* pour aligner verticalement les éléments */
+  align-items: center; /* centre verticalement les éléments */
   gap: 12px;
-  flex-wrap: wrap;     /* permet le passage à la ligne si trop petit */
+  flex-wrap: wrap;
 }
 
 .pillami-medicament-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* CENTRAGE VERTICAL */
 }
 
 .pillami-medicament-name {
@@ -119,14 +120,13 @@
 }
 
 .pillami-pill-ordonnance-oui {
-  background-color: #dbeafe;  /* bleu clair */
-  color: #1e3a8a;             /* bleu foncé */
+  background-color: #dbeafe;
+  color: #1e3a8a;
 }
 
 .pillami-pill-ordonnance-non {
-  background-color: #d1fae5;  /* vert clair */
+  background-color: #d1fae5;
   color: #065f46;
-         /* vert foncé */
 }
 
 /* CARD VIDE */
@@ -138,17 +138,14 @@
 
 @media (max-width: 480px) {
   .pillami-page-title {
-    font-size: px;
+    font-size: 20px;
   }
 
   .pillami-page-subtitle {
     font-size: 12px;
   }
 
-  /* Boutons en ligne et plus petits */
   .btn-container {
-    flex-direction: row;
-    flex-wrap: wrap;
     gap: 6px;
   }
 
@@ -158,38 +155,21 @@
     padding: 6px 10px;
   }
 
-  /* Carte médicaments et colonnes */
   .pillami-medicament-card-body {
-    flex-direction: row;
-    flex-wrap: wrap; /* autorise le passage à la ligne si trop petit */
+    flex-wrap: wrap;
     gap: 8px;
     align-items: center;
   }
 
   .pillami-medicament-info {
     flex: 2 1 50%;
-    min-width: 0;
     font-size: 12px;
-    word-break: break-word; /* permet de casser les mots longs */
-  }
-
-  .pillami-medicament-ordonnance,
-  .pillami-medicament-action {
-    flex: 1 1 25%;
-    font-size: 11px;
-    text-align: center;
-    min-width: 0;
-  }
-
-  .pillami-pill-tag {
-    font-size: 15px;
-    padding: 5px 10px;
+    word-break: break-word;
   }
 }
 
 .pillami-medicament-card-info {
   flex-wrap: none;
-
 }
 
 #add_med {
@@ -197,8 +177,21 @@
   padding: 10px;
 }
 
-.pillami-medicament-action {
-  text-align: right !important;
-  padding-right: 10px;
-  margin-top: -10px
+/* Aligner verticalement la div ordonnance + Retirer */
+.pillami-medicament-ordonnance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  text-align: center;
+}
+
+/* Ajouter un peu de padding top au bouton Retirer */
+.pillami-medicament-ordonnance .pillami-btn-action {
+  margin-top: 20px; /* ou la valeur que tu souhaites */
+}
+/* Baisser la pastille Oui/Non dans la div ordonnance */
+.pillami-medicament-ordonnance .pillami-pill-tag {
+  margin-top: 10px; /* augmente la valeur si tu veux encore plus bas */
 }
