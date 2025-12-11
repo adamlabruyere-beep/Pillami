@@ -38,10 +38,12 @@
               <div class="pillami-medicament-action" style="width: 120px; text-align: center;">
                 <% pillatheque_medicament = @pillatheque.pillatheque_medicaments.find_by(medicament: medicament) %>
                 <%= button_to pillatheque_pillatheque_medicament_path(@pillatheque, pillatheque_medicament),
-                      method: :delete,
-                      class: "pillami-btn-action" do %>
-                  Retirer
+                          method: :delete,
+                          data: { turbo_confirm: "Êtes-vous sûr de supprimer ce médicament de votre pillothèque ?" },
+                          class: "pillami-btn-action" do %>
+                          Retirer
                 <% end %>
+
               </div>
             </div>
           </div>
