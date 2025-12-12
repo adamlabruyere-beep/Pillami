@@ -37,7 +37,14 @@ papa = User.create!(
   nom: "Maho"
 )
 
-puts "3 utilisateurs créés"
+papi = User.create!(
+  email: "papi@gmail.com",
+  password: "password",
+  prenom: "Papi",
+  nom: "Maho"
+)
+
+puts "4 utilisateurs créés"
 
 # ============================================================
 # PILLATHÈQUE - Médicaments par utilisateur
@@ -48,6 +55,7 @@ puts "Ajout des médicaments aux pillathèques..."
 PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "DOLIPRANECAPS 1000 mg"))
 PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "SMECTA 3 g FRAISE"))
 PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "IMODIUMCAPS 2 mg"))
+PillathequeMedicament.create!(pillatheque: maxence.pillatheque, medicament: Medicament.find_by(nom: "NUROFENFLASH 400 mg"))
 
 # Mamie - Diabète
 PillathequeMedicament.create!(pillatheque: mamie.pillatheque, medicament: Medicament.find_by(nom: "METFORMINE ACCORD 1000 mg"))
@@ -64,9 +72,13 @@ puts "Configuration des entourages..."
 maxence_entourage = Entourage.create!(user: maxence, name: "Entourage de Maxence")
 mamie_entourage = Entourage.create!(user: mamie, name: "Entourage de Mamie")
 papa_entourage = Entourage.create!(user: papa, name: "Entourage de Papa")
+papi_entourage = Entourage.create!(user: papi, name: "Entourage de Papi")
 
 # Maxence suit Mamie (Maxence est membre de l'entourage de Mamie)
 mamie_entourage.add_member(maxence)
+
+# Maxence suit Papi (Maxence est membre de l'entourage de Papi)
+papi_entourage.add_member(maxence)
 
 # Papa est accompagnant de Maxence (Papa est membre de l'entourage de Maxence)
 maxence_entourage.add_member(papa)
@@ -141,6 +153,19 @@ Reminder.create!(
   repeat_for_weeks: 1
 )
 
+# Maxence - Nurofen Flash (reminder actif)
+nurofen_reminder = Reminder.create!(
+  user: maxence,
+  calendrier: maxence.calendrier,
+  medicament: Medicament.find_by(nom: "NUROFENFLASH 400 mg"),
+  time: 10.minutes.ago.strftime("%H:%M"),
+  days_of_week: %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday],
+  quantity: 1,
+  measure: "comprimé",
+  active: true,
+  repeat_for_weeks: 1
+)
+
 # Mamie - Diabète type 2 (2 semaines passées + 10 semaines futures)
 # Les rappels ont commencé il y a 14 jours, en concordance avec les sensations
 Reminder.create!(
@@ -200,6 +225,15 @@ Reminder.create!(
 # NOTIFICATIONS (médicaments pris)
 # ============================================================
 puts "Création des notifications pour les médicaments déjà pris..."
+
+# Notification non validée pour Maxence - Nurofen Flash (il y a 10 min)
+Notification.create!(
+  user: maxence,
+  reminder: nurofen_reminder,
+  scheduled_for: 10.minutes.ago,
+  status: false,
+  created_at: 10.minutes.ago
+)
 
 # Récupérer les reminders de Maxence (semaine passée)
 maxence_reminders_past = Reminder.where(user: maxence, active: false)
@@ -288,6 +322,7 @@ puts "Comptes de test:"
 puts "  - maxence@gmail.com / password"
 puts "  - mamie@gmail.com / password"
 puts "  - papa@gmail.com / password"
+puts "  - papi@gmail.com / password"
 puts "=" * 60
 
 
