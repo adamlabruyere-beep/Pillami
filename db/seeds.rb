@@ -22,12 +22,22 @@ maxence = User.create!(
   prenom: "Maxence",
   nom: "Maho"
 )
+maxence.photo.attach(
+  io: URI.open("https://res.cloudinary.com/dpyoe1s3a/image/upload/v1765532719/photo_ouz47p.jpg"),
+  filename: "maxence_photo.jpg",
+  content_type: "image/jpeg"
+)
 
 mamie = User.create!(
   email: "mamie@gmail.com",
   password: "password",
   prenom: "Mamie",
   nom: "Maho"
+)
+mamie.photo.attach(
+  io: URI.open("https://res.cloudinary.com/dpyoe1s3a/image/upload/v1765532832/mamie_onmbk0.avif"),
+  filename: "mamie_photo.avif",
+  content_type: "image/avif"
 )
 
 papa = User.create!(
@@ -36,12 +46,22 @@ papa = User.create!(
   prenom: "Papa",
   nom: "Maho"
 )
+papa.photo.attach(
+  io: URI.open("https://res.cloudinary.com/dpyoe1s3a/image/upload/v1765532970/papa_a22zyh.avif"),
+  filename: "papa_photo.avif",
+  content_type: "image/avif"
+)
 
 papi = User.create!(
   email: "papi@gmail.com",
   password: "password",
   prenom: "Papi",
   nom: "Maho"
+)
+papi.photo.attach(
+  io: URI.open("https://res.cloudinary.com/dpyoe1s3a/image/upload/v1765532890/papi_bcve6q.avif"),
+  filename: "papi_photo.avif",
+  content_type: "image/avif"
 )
 
 puts "4 utilisateurs créés"
